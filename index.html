@@ -875,42 +875,51 @@
     </style>
 </head>
 <body>
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="container top-bar-content">
-            <div class="top-links">
-                <a href="#"><i class="fas fa-globe-americas"></i> Global Marketplace</a>
-                <a href="#"><i class="fas fa-language"></i> English | Español | Français | 中文</a>
-            </div>
-            <div class="top-links">
-                <a href="#"><i class="fas fa-fingerprint"></i> Biometric Login</a>
-                <a href="#"><i class="fas fa-shield-alt"></i> QuantumSecured™</a>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="top-links">
+                    <a href="#"><i class="fas fa-globe-americas"></i> Global Marketplace</a>
+                    <a href="#"><i class="fas fa-language"></i> English | Español | Français | 中文</a>
+                </div>
+                <div class="top-links">
+                    <a href="#"><i class="fas fa-fingerprint"></i> Biometric Login</a>
+                    <a href="#"><i class="fas fa-shield-alt"></i> QuantumSecured™</a>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <!-- Main Header -->
-    <header>
+        
         <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <span>O</span><span>n</span><span>a</span><span>y</span>
-                    <span>P</span><span>o</span><span>n</span><span>a</span><span>y</span>
-                    <div class="secure-badge">
-                        <i class="fas fa-lock"></i> QuantumSecured™
+            <div class="main-header">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <span>O</span><span>n</span><span>a</span><span>y</span>
+                        <span>P</span><span>o</span><span>n</span><span>a</span><span>y</span>
+                        <div class="secure-badge">
+                            <i class="fas fa-lock"></i> QuantumSecured™
+                        </div>
+                    </a>
+                    
+                    <div class="search-bar">
+                        <div class="search-container">
+                            <input type="text" placeholder="Search for products, categories..." id="search-input">
+                            <div class="search-options">
+                                <button class="search-option-btn" id="image-search-btn" title="Image Search">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                                <button class="search-option-btn" id="voice-search-btn" title="Voice Search">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            <button class="search-main-btn"><i class="fas fa-search"></i> Search</button>
+                        </div>
                     </div>
-                </a>
-                
-                <div class="search-bar">
-                    <div class="search-container">
-                        <input type="text" placeholder="Search for products, categories...">
-                        <button><i class="fas fa-search"></i> Search</button>
+                    
+                    <div class="user-actions">
+                        <a href="#" id="sign-in-link"><i class="fas fa-user"></i> Sign In</a>
+                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
                     </div>
-                </div>
-                
-                <div class="user-actions">
-                    <a href="#"><i class="fas fa-user"></i> Sign In</a>
-                    <a href="#"><i class="fas fa-shopping-cart"></i></a>
                 </div>
             </div>
         </div>
@@ -918,34 +927,54 @@
         <nav>
             <div class="container">
                 <div class="nav-links">
-                    <a href="#">
+                    <a href="index.html">
                         <i class="fas fa-home"></i>
                         <span>Home</span>
                     </a>
                     
-                    <a href="#">
+                    <a href="electronics.html">
                         <i class="fas fa-mobile-alt"></i>
                         <span>Electronics</span>
                     </a>
                     
-                    <a href="#">
+                    <a href="fashion.html">
                         <i class="fas fa-tshirt"></i>
                         <span>Fashion</span>
                     </a>
                     
-                    <a href="#">
+                    <a href="home-garden.html">
                         <i class="fas fa-home"></i>
                         <span>Home & Garden</span>
                     </a>
                     
-                    <a href="#">
+                    <a href="fmcg.html">
                         <i class="fas fa-apple-alt"></i>
                         <span>FMCG & Perishables</span>
                     </a>
                     
+                    <a href="#" class="active">
+                        <i class="fas fa-store"></i>
+                        <span>Sellers</span>
+                    </a>
+                    
                     <a href="#">
-                        <i class="fas fa-fire"></i>
-                        <span>Deals</span>
+                        <i class="fas fa-tools"></i>
+                        <span>Seller Tools</span>
+                    </a>
+                    
+                    <a href="#">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Analytics</span>
+                    </a>
+                    
+                    <a href="#">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Fulfillment</span>
+                    </a>
+                    
+                    <a href="#">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Payments</span>
                     </a>
                 </div>
             </div>
