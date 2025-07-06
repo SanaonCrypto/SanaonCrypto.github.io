@@ -869,8 +869,6 @@
                 font-size: 28px;
             }
         }
-    </style>
-
 /* Seller Portal Specific Styles */
 .seller-hero {
     background: linear-gradient(rgba(0,0,0,0.7), url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3') center/cover;
@@ -1016,3 +1014,6 @@
     border-radius: 4px;
     cursor: pointer;
 }
+    </style>
+
+
