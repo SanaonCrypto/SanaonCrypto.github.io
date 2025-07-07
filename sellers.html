@@ -103,7 +103,6 @@
             font-size: 32px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
             letter-spacing: -1px;
-            /* Removed underline as requested */
             text-decoration: none !important;
         }
         
@@ -230,12 +229,10 @@
             justify-content: space-between;
             overflow-x: auto;
             padding-bottom: 5px;
-            /* Sleek scrollbar styling */
             scrollbar-width: thin;
             scrollbar-color: var(--primary-blue) rgba(255,255,255,0.1);
         }
         
-        /* Sleek scrollbar for Chrome, Edge, Safari */
         .nav-links::-webkit-scrollbar {
             height: 6px;
         }
@@ -266,6 +263,23 @@
         
         .nav-links a:hover {
             background: rgba(255,255,255,0.2);
+        }
+        
+        .nav-links a.active {
+            background: rgba(255,255,255,0.3);
+            position: relative;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 3px;
+            background: var(--primary-yellow);
+            border-radius: 3px 3px 0 0;
         }
         
         .nav-links i {
@@ -588,6 +602,91 @@
             background: #75a315;
         }
         
+        /* Inventory Management */
+        .inventory-tools {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .inventory-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .inventory-section h3 {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+            color: var(--primary-dark);
+        }
+        
+        .inventory-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        
+        .inventory-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .inventory-item:last-child {
+            border-bottom: none;
+        }
+        
+        .inventory-thumb {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+            color: var(--primary-blue);
+        }
+        
+        .inventory-info {
+            flex: 1;
+        }
+        
+        .inventory-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .inventory-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .action-btn:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
         /* Footer */
         footer {
             background: linear-gradient(to right, var(--primary-dark), #152a6e);
@@ -848,6 +947,10 @@
                 border-radius: 20px;
                 padding: 5px;
             }
+            
+            .calculator-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -870,6 +973,10 @@
             
             .seller-hero p {
                 font-size: 18px;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -952,7 +1059,7 @@
                         <span>FMCG & Perishables</span>
                     </a>
                     
-                    <a href="#" class="active">
+                    <a href="sellers.html" class="active">
                         <i class="fas fa-store"></i>
                         <span>Sellers</span>
                     </a>
@@ -1160,6 +1267,121 @@
             </div>
         </div>
     </section>
+    
+    <!-- Inventory Management Section -->
+    <section class="inventory-management">
+        <div class="container">
+            <h2 class="section-title">Inventory Management</h2>
+            <p class="section-subtitle">Manage your products efficiently with our inventory tools</p>
+            
+            <div class="inventory-tools">
+                <div class="inventory-section">
+                    <h3>Add New Product</h3>
+                    <form id="add-product-form">
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" class="form-control" placeholder="Enter product name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" required>
+                                <option value="">Select category</option>
+                                <option>Electronics</option>
+                                <option>Fashion</option>
+                                <option>Home & Garden</option>
+                                <option>FMCG</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Price ($)</label>
+                            <input type="number" class="form-control" min="0" step="0.01" placeholder="Enter price" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" class="form-control" min="0" placeholder="Enter quantity" required>
+                        </div>
+                        <button type="submit" class="btn btn-seller" style="width: 100%;">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="inventory-section">
+                    <h3>Current Inventory</h3>
+                    <div class="inventory-list">
+                        <div class="inventory-item">
+                            <div class="inventory-thumb">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="inventory-info">
+                                <h4>Premium Smartphone</h4>
+                                <p>Electronics | $599.99 | 42 in stock</p>
+                            </div>
+                            <div class="inventory-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="inventory-thumb">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <div class="inventory-info">
+                                <h4>Designer T-Shirt</h4>
+                                <p>Fashion | $39.99 | 87 in stock</p>
+                            </div>
+                            <div class="inventory-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="inventory-thumb">
+                                <i class="fas fa-blender"></i>
+                            </div>
+                            <div class="inventory-info">
+                                <h4>Professional Blender</h4>
+                                <p>Home & Garden | $129.99 | 15 in stock</p>
+                            </div>
+                            <div class="inventory-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="inventory-item">
+                            <div class="inventory-thumb">
+                                <i class="fas fa-wine-bottle"></i>
+                            </div>
+                            <div class="inventory-info">
+                                <h4>Organic Olive Oil</h4>
+                                <p>FMCG | $19.99 | 56 in stock</p>
+                            </div>
+                            <div class="inventory-actions">
+                                <button class="action-btn">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer>
@@ -1313,6 +1535,16 @@
                 });
             }
             
+            // Add Product Form
+            const addProductForm = document.getElementById('add-product-form');
+            if (addProductForm) {
+                addProductForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Product added successfully!');
+                    addProductForm.reset();
+                });
+            }
+            
             // Modal functionality
             const modal = document.getElementById('registration-modal');
             const openModalBtn = document.getElementById('start-selling-btn');
@@ -1387,6 +1619,15 @@
                     // This would start voice recognition in a real implementation
                 });
             }
+            
+            // Force HTTPS redirect
+            if(location.protocol !== 'https:') {
+                location.replace(`https:${location.href.substring(location.protocol.length)}`);
+            }
+            
+            // Initialize backend system
+            console.log("Seller Portal Initialized");
+            console.log("All systems operational");
         });
     </script>
 </body>
