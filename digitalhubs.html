@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Hub | OnayPonay Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="top-links">
+                    <a href="#"><i class="fas fa-gavel"></i> Underparticipated Bids</a>
+                    <a href="#"><i class="fas fa-headset"></i> 24/7 Support</a>
+                    <a href="#"><i class="fas fa-map-marker-alt"></i> Track Order</a>
+                    <a href="#"><i class="fab fa-bitcoin"></i> Crypto Payments</a>
+                </div>
+                <div class="top-links">
+                    <div id="google_translate_element"></div>
+                    <div class="night-mode-toggle">
+                        <input type="checkbox" id="night-mode-toggle" class="toggle-checkbox">
+                        <label for="night-mode-toggle" class="toggle-label">
+                            <i class="fas fa-moon"></i>
+                            <i class="fas fa-sun"></i>
+                            <span class="toggle-ball"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="main-header">
+                <div class="header-content">
+                    <a href="index.html" class="logo">
+                        <span>O</span><span>n</span><span>a</span><span>y</span>
+                        <span>P</span><span>o</span><span>n</span><span>a</span><span>y</span>
+                        <div class="secure-badge">
+                            <i class="fas fa-lock"></i> QuantumSecured™
+                        </div>
+                    </a>
+                    
+                    <div class="search-bar">
+                        <div class="search-container">
+                            <input type="text" placeholder="Search digital services..." id="search-input">
+                            <div class="search-options">
+                                <button class="search-option-btn" id="image-search-btn" title="Image Search">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                                <button class="search-option-btn" id="voice-search-btn" title="Voice Search">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            <button class="search-main-btn"><i class="fas fa-search"></i> Search</button>
+                        </div>
+                    </div>
+                    
+                    <div class="user-actions">
+                        <a href="#" id="sign-in-link"><i class="fas fa-user"></i> Sign In</a>
+                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav>
+            <div class="container">
+                <div class="nav-links">
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a href="electronics.html">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Electronics</span>
+                    </a>
+                    
+                    <a href="digitalhub.html" class="active">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>Digital Hub</span>
+                    </a>
+                    
+                    <!-- Digital Hub Subcategories -->
+                    <a href="#blockchain">
+                        <i class="fab fa-bitcoin"></i>
+                        <span>Blockchain</span>
+                    </a>
+                    
+                    <a href="#ai">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Services</span>
+                    </a>
+                    
+                    <a href="#gaming">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Gaming</span>
+                    </a>
+                    
+                    <a href="#security">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </a>
+                    
+                    <a href="#marketing">
+                        <i class="fas fa-bullhorn"></i>
+                        <span>Marketing</span>
+                    </a>
+                    
+                    <a href="#business">
+                        <i class="fas fa-headset"></i>
+                        <span>Business</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Digital Hub Hero Section -->
+    <section class="hero" style="background: linear-gradient(105deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.7) 100%), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');">
+        <div class="hero-content">
+            <h1>Digital Assets Marketplace</h1>
+            <p>Buy and sell digital services, NFTs, crypto assets, and AI solutions</p>
+            <a href="#" class="btn">Explore Digital Assets</a>
+            <a href="sellers.html" class="btn purchase-btn">Sell Digital Services</a>
+        </div>
+    </section>
+
+    <!-- Digital Categories -->
+    <section class="container" style="margin: 40px auto;">
+        <h2 class="section-title">Digital Asset Categories</h2>
+        <div class="categories-grid">
+            <!-- Blockchain & Crypto -->
+            <div class="category-card" id="blockchain">
+                <div class="category-icon">
+                    <i class="fab fa-bitcoin"></i>
+                </div>
+                <h3>Blockchain & Crypto</h3>
+                <ul>
+                    <li>Smart Contract Development</li>
+                    <li>NFT Auctions</li>
+                    <li>Crypto Wallet Services</li>
+                    <li>Token Creation</li>
+                    <li>DeFi Solutions</li>
+                </ul>
+            </div>
+            
+            <!-- AI & Quantum -->
+            <div class="category-card" id="ai">
+                <div class="category-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI & Quantum</h3>
+                <ul>
+                    <li>AI Model Development</li>
+                    <li>Machine Learning Solutions</li>
+                    <li>Quantum Algorithm Design</li>
+                    <li>Natural Language Processing</li>
+                    <li>Quantum-Secured Systems</li>
+                </ul>
+            </div>
+            
+            <!-- Gaming & Metaverse -->
+            <div class="category-card" id="gaming">
+                <div class="category-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Gaming & Metaverse</h3>
+                <ul>
+                    <li>Game Asset Creation</li>
+                    <li>Metaverse Development</li>
+                    <li>VR/AR Experiences</li>
+                    <li>Play-to-Earn Systems</li>
+                    <li>Game Economy Design</li>
+                </ul>
+            </div>
+            
+            <!-- Cybersecurity -->
+            <div class="category-card" id="security">
+                <div class="category-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Cybersecurity</h3>
+                <ul>
+                    <li>Ethical Hacking</li>
+                    <li>Penetration Testing</li>
+                    <li>Blockchain Security Audits</li>
+                    <li>Smart Contract Auditing</li>
+                    <li>Quantum-Resistant Encryption</li>
+                </ul>
+            </div>
+            
+            <!-- Digital Marketing -->
+            <div class="category-card" id="marketing">
+                <div class="category-icon">
+                    <i class="fas fa-bullhorn"></i>
+                </div>
+                <h3>Digital Marketing</h3>
+                <ul>
+                    <li>SEO & SEM Services</li>
+                    <li>Social Media Management</li>
+                    <li>Content Strategy</li>
+                    <li>Influencer Marketing</li>
+                    <li>Analytics & Reporting</li>
+                </ul>
+            </div>
+            
+            <!-- Business Services -->
+            <div class="category-card" id="business">
+                <div class="category-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>Business Services</h3>
+                <ul>
+                    <li>Virtual Call Centers</li>
+                    <li>Customer Support Solutions</li>
+                    <li>Data Annotation</li>
+                    <li>Process Automation</li>
+                    <li>Back Office Operations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Digital Assets -->
+    <section class="container" style="margin: 60px auto;">
+        <h2 class="section-title">Featured Digital Assets</h2>
+        <div class="digital-assets">
+            <!-- Asset 1: NFT Collection -->
+            <div class="asset-card">
+                <div class="asset-image">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="asset-info">
+                    <h3>CryptoPunk NFT Collection</h3>
+                    <p>Rare digital collectibles on the Ethereum blockchain</p>
+                    <div class="asset-meta">
+                        <span><i class="fab fa-ethereum"></i> 15 ETH</span>
+                        <span><i class="fas fa-history"></i> 2 days left</span>
+                    </div>
+                    <button class="btn">Place Bid</button>
+                </div>
+            </div>
+            
+            <!-- Asset 2: AI Service -->
+            <div class="asset-card">
+                <div class="asset-image">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="asset-info">
+                    <h3>Custom AI Chatbot</h3>
+                    <p>AI-powered customer service solution for websites</p>
+                    <div class="asset-meta">
+                        <span><i class="fas fa-dollar-sign"></i> $1,299</span>
+                        <span><i class="fas fa-certificate"></i> Fixed Price</span>
+                    </div>
+                    <button class="btn">Buy Now</button>
+                </div>
+            </div>
+            
+            <!-- Asset 3: Smart Contract -->
+            <div class="asset-card">
+                <div class="asset-image">
+                    <i class="fas fa-file-contract"></i>
+                </div>
+                <div class="asset-info">
+                    <h3>Smart Contract Development</h3>
+                    <p>Custom Ethereum smart contracts for your business</p>
+                    <div class="asset-meta">
+                        <span><i class="fas fa-dollar-sign"></i> $2,499</span>
+                        <span><i class="fas fa-code-branch"></i> ERC-20/ERC-721</span>
+                    </div>
+                    <button class="btn">Place Bid</button>
+                </div>
+            </div>
+            
+            <!-- Asset 4: SEO Service -->
+            <div class="asset-card">
+                <div class="asset-image">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="asset-info">
+                    <h3>SEO Optimization Package</h3>
+                    <p>Complete SEO solution for your website</p>
+                    <div class="asset-meta">
+                        <span><i class="fas fa-dollar-sign"></i> $899</span>
+                        <span><i class="fas fa-clock"></i> 30 days</span>
+                    </div>
+                    <button class="btn">Buy Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <span style="color: var(--primary-red);">O</span>
+                <span style="color: var(--primary-blue);">n</span>
+                <span style="color: var(--primary-yellow);">a</span>
+                <span style="color: var(--primary-green);">y</span>
+                <span style="color: var(--primary-red);">P</span>
+                <span style="color: var(--primary-blue);">o</span>
+                <span style="color: var(--primary-yellow);">n</span>
+                <span style="color: var(--primary-green);">a</span>
+                <span style="color: var(--primary-red);">y</span>
+            </div>
+            
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="sellers.html"><i class="fas fa-chevron-right"></i> Seller Portal</a></li>
+                        <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Become a Seller</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="electronics.html"><i class="fas fa-chevron-right"></i> Electronics</a></li>
+                        <li><a href="fashion.html"><i class="fas fa-chevron-right"></i> Fashion</a></li>
+                        <li><a href="home-garden.html"><i class="fas fa-chevron-right"></i> Home & Garden</a></li>
+                        <li><a href="fmcg.html"><i class="fas fa-chevron-right"></i> FMCG</a></li>
+                        <li><a href="digitalhub.html"><i class="fas fa-chevron-right"></i> Digital Hub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Account</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> My Account</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Purchase History</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Referral Program</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Bidding Activity</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping & Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-badge">SHOP WITH CONFIDENCE ON ONAYPONAY</div>
+            
+            <div class="footer-bottom">
+                <p>Copyright © 2025 OnayPonay Inc. All Rights Reserved.</p>
+                <p style="margin-top: 10px;">
+                    <a href="#" style="margin: 0 10px;">Privacy Policy</a> | 
+                    <a href="#" style="margin: 0 10px;">Terms of Use</a> | 
+                    <a href="#" style="margin: 0 10px;">Cookie Policy</a> | 
+                    <a href="#" style="margin: 0 10px;">Bidding Agreement</a>
+                </p>
+                <div class="security-statement">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Your security is our priority. All transactions are protected with QuantumSecured™ encryption.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
