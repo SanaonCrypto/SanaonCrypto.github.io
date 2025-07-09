@@ -1,4 +1,11 @@
 // scripts.js
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,ar,ur',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
 document.addEventListener('DOMContentLoaded', function() {
     // 1. Referral code copy functionality
     const copyBtn = document.querySelector('.copy-btn');
@@ -72,17 +79,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // 7. Google Translate
     function googleTranslateElementInit() {
         new google.translate.TranslateElement(
-            { pageLanguage: 'en', includedLanguages: 'en,es,fr,zh-CN,de,ru,ja,ar', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+            { pageLanguage: 'en', includedLanguages: 'en,es,fr,zh-CN,de,ru,ja,ar,ur', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
             'google_translate_element'
         );
     }
     
     // Load Google Translate script
     function loadGoogleTranslate() {
-        const script = document.createElement('script');
-        script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-        document.head.appendChild(script);
-    }
+  if (typeof google !== 'undefined' && google.translate) {
+    googleTranslateElementInit();
+  } else {
+    const script = document.createElement('script');
+    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    document.head.appendChild(script);
+  }
+}
     
     // Only load if element exists
     if (document.getElementById('google_translate_element')) {
