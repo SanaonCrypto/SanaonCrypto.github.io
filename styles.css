@@ -249,7 +249,7 @@ body.night-mode header {
 
 .logo span:nth-child(1) { color: var(--primary-red); }
 .logo span:nth-child(2) { color: var(--primary-blue); }
-.logo span:nth-child(7) { color: var(--primary-yellow); }
+.logo span:nth-child(3) { color: var(--primary-yellow); }
 .logo span:nth-child(4) { color: var(--primary-green); }
 .logo span:nth-child(5) { color: var(--primary-red); }
 .logo span:nth-child(6) { color: var(--primary-blue); }
