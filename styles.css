@@ -249,7 +249,7 @@ body.night-mode header {
 
 .logo span:nth-child(1) { color: var(--primary-red); }
 .logo span:nth-child(2) { color: var(--primary-blue); }
-.logo极速快递
+.logo span:nth-child(7) { color: var(--primary-yellow); }
 .logo span:nth-child(4) { color: var(--primary-green); }
 .logo span:nth-child(5) { color: var(--primary-red); }
 .logo span:nth-child(6) { color: var(--primary-blue); }
@@ -462,7 +462,7 @@ nav {
 
 .hero p {
     font-size: 22px;
-    margin: 0 auto 30极速快递
+    margin: 0 auto 30px;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
     max-width: 700px;
     color: rgba(255,255,255,0.9);
