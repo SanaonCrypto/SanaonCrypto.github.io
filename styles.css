@@ -9,7 +9,7 @@
     --secondary-blue: #1e88e5;
     --referral-green: #43a047;
     --border: #e0e0e0;
-    --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    --shadow: 0 4极速快递
     --transition: all 0.3s ease;
     --gradient-primary: linear-gradient(135deg, #00b4d8, #8c52ff);
     --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
@@ -53,9 +53,7 @@ body.night-mode .purchase-tracker,
 body.night-mode .commission-calculator,
 body.night-mode .inventory-section,
 body.night-mode .benefit-card,
-body.night-mode .referral-box,
-body.night-mode .category-card,
-body.night-mode .asset-card {
+body极速快递
     background-color: var(--night-card);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     border-color: var(--night-border);
@@ -149,7 +147,7 @@ body.night-mode header {
     gap: 5px;
 }
 
-.top-links a:hover {
+.top极速快递
     color: var(--primary-yellow);
 }
 
@@ -425,13 +423,72 @@ nav {
     width: 80%;
     height: 3px;
     background: var(--primary-yellow);
-    border-radius: 3px 3px 0 0;
+    border-radius: 3px 3极速快递
 }
 
 .nav-links i {
     font-size: 20px;
     margin-bottom: 5px;
     color: white;
+}
+
+/* Electronics Subcategory Navigation */
+.subcategory-nav {
+    background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+    padding: 10px 0;
+    position: sticky;
+    top: 125px; /* Adjust based on header height */
+    z-index: 999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.subcategory-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.subcategory-links a {
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.subcategory-links a:hover,
+.subcategory-links a.active {
+    background: var(--primary-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Adjust for night mode */
+body.night-mode .subcategory-nav {
+    background: #121212;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .subcategory-nav {
+        top: 160px; /* Adjust for mobile header height */
+    }
+    
+    .subcategory-links {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 5px;
+    }
 }
 
 /* Hero Section */
@@ -525,7 +582,7 @@ nav {
 
 .section-title {
     font-size: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 20极速快递
     color: var(--primary-dark);
 }
 
@@ -876,7 +933,7 @@ body.night-mode .detail-label {
     position: relative;
 }
 
-.process-steps::before {
+.process-st极速快递
     content: '';
     position: absolute;
     top: 40px;
@@ -1408,7 +1465,7 @@ footer {
 
 /* Seller Specific Styles */
 .seller-hero {
-    background: linear-gradient(105deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');
+    background: linear-gradient(105deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%), url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&auto=format&fit=crop&w极速快递
     background-size: cover;
     background-position: center;
     color: white;
@@ -1513,7 +1570,7 @@ body.night-mode .benefit-card p {
 
 .commission-calculator {
     background: white;
-    border-radius: 20px;
+    border-radius: 20极速快递
     padding: 50px;
     box-shadow: var(--card-shadow);
     margin: 60px 0;
@@ -1582,7 +1639,7 @@ body.night-mode .calculator-results {
     padding: 20px;
     border-radius: 10px;
     background: white;
-    box-shadow: 0 5极速快递
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }
 
 body.night-mode .result-card {
@@ -1620,7 +1677,7 @@ body.night-mode .result-label {
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, min极速快递
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
 
@@ -1637,7 +1694,7 @@ body.night-mode .result-label {
     align-items: center;
     gap: 15px;
     margin-bottom: 25px;
-    padding-bottom: 15极速快递
+    padding-bottom: 15px;
     border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
@@ -1816,6 +1873,44 @@ body.night-mode .action-btn {
     color: white;
 }
 
+/* Google Translate Widget Styling */
+.goog-te-gadget {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1rem !important;
+  margin-right: 3rem;
+  color: white;
+}
+
+.goog-te-banner-frame {
+  display: none;
+}
+
+#goog-gt-tt, .goog-te-spinner-pos {
+  display: none !important;
+}
+
+.goog-te-gadget select {
+  display: inline-block;
+  border-radius: 0px;
+  padding: .7rem 1rem;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+  color: black;
+  background:#EDF2F7;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right .7em top 50%;
+  background-size: .65em auto
+}
+
+.goog-te-gadget a {
+  margin-left: 1rem;
+  font-size: .5rem !important;
+  display: inline-block;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .header-content {
@@ -1863,6 +1958,11 @@ body.night-mode .action-btn {
     
     .top-links {
         flex-wrap: wrap;
+    }
+    
+    /* Adjust subcategory nav position */
+    .subcategory-nav {
+        top: 160px;
     }
 }
 
@@ -1916,6 +2016,10 @@ body.night-mode .action-btn {
     body.night-mode .search-options {
         background: var(--night-card);
     }
+    
+    .subcategory-nav {
+        top: 180px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1951,41 +2055,8 @@ body.night-mode .action-btn {
         font-size: 14px;
         padding: 0 10px 10px;
     }
-}
-/* Google Translate Widget Styling */
-.goog-te-gadget {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 1rem !important;
-  margin-right: 3rem;
-  color: white;
-}
-
-.goog-te-banner-frame {
-  display: none;
-}
-
-#goog-gt-tt, .goog-te-spinner-pos {
-  display: none !important;
-}
-
-.goog-te-gadget select {
-  display: inline-block;
-  border-radius: 0px;
-  padding: .7rem 1rem;
-  margin-right: 1rem;
-  font-size: 1.2rem;
-  color: black;
-  background:#EDF2F7;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2极速快递
-  background-repeat: no-repeat;
-  background-position: right .7em top 50%;
-  background-size: .65em auto
-}
-
-.goog-te-gadget a {
-  margin-left: 1rem;
-  font-size: .5rem !important;
-  display: inline-block;
+    
+    .subcategory-nav {
+        top: 200px;
+    }
 }
