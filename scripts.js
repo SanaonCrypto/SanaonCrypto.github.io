@@ -1,10 +1,10 @@
 // scripts.js
 function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'en',
-    includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,ar,ur',
-    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-  }, 'google_translate_element');
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,ar,ur',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const copyBtn = document.querySelector('.copy-btn');
     if (copyBtn) {
         copyBtn.addEventListener('click', function() {
-            alert("Referral code ONAY-PURCH-3 copied to clipboard!");
+            navigator.clipboard.writeText("ONAY-PURCH-3");
             copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
             setTimeout(() => {
                 copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy Referral Code';
@@ -40,14 +40,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // 4. HTTPS enforcement
-    if(location.protocol !== 'https:') {
+    // 4. HTTPS enforcement (only in production)
+    if(location.protocol !== 'https:' && location.hostname !== 'localhost') {
         location.replace(`https:${location.href.substring(location.protocol.length)}`);
     }
     
     // 5. Search functionality
     const imageSearchBtn = document.getElementById('image-search-btn');
     const voiceSearchBtn = document.getElementById('voice-search-btn');
+    const searchInput = document.getElementById('search-input');
     
     if (imageSearchBtn) {
         imageSearchBtn.addEventListener('click', function() {
@@ -61,46 +62,43 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert(`Searching for: ${this.value}`);
+            }
+        });
+    }
+    
     // 6. Night Mode Toggle
     const nightModeToggle = document.getElementById('night-mode-toggle');
-    if (nightMode极速快递
+    if (nightModeToggle) {
         nightModeToggle.addEventListener('change', function() {
             document.body.classList.toggle('night-mode', this.checked);
-            // Save preference to localStorage
-            localStorage.setItem('nightMode', this.checked);
+            localStorage.setItem('nightMode', this.checked ? 'true' : 'false');
         });
         
-        // Check for saved preference
+        // Initialize night mode from saved preference
         if (localStorage.getItem('nightMode') === 'true') {
             nightModeToggle.checked = true;
             document.body.classList.add('night-mode');
         }
     }
     
-    // 7. Google Translate
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement(
-            { pageLanguage: 'en', includedLanguages: 'en,es,fr,zh-CN,de,ru,ja,ar,ur', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
-            'google_translate_element'
-        );
+    // 7. Google Translate Initialization
+    function initGoogleTranslate() {
+        if (document.getElementById('google_translate_element')) {
+            if (typeof google !== 'undefined' && google.translate) {
+                googleTranslateElementInit();
+            } else {
+                const script = document.createElement('script');
+                script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+                script.async = true;
+                document.head.appendChild(script);
+            }
+        }
     }
-    
-    // Load Google Translate script
-    function loadGoogleTranslate() {
-  if (typeof google !== 'undefined' && google.translate) {
-    googleTranslateElementInit();
-  } else {
-    const script = document.createElement('script');
-    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.head.appendChild(script);
-  }
-}
-    
-    // Only load if element exists
-    if (document.getElementById('google_translate_element')) {
-        loadGoogleTranslate();
-    }
+    initGoogleTranslate();
     
     // 8. Seller Commission Calculator
     const calcBtn = document.getElementById('calculate-btn');
@@ -110,22 +108,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const commissionRate = parseFloat(document.getElementById('commission-rate').value) || 15;
             const commission = sales * (commissionRate / 100);
             const earnings = sales - commission;
-            const profit = earnings * 10;
             
             document.getElementById('commission-amount').textContent = `$${commission.toFixed(2)}`;
             document.getElementById('earnings-amount').textContent = `$${earnings.toFixed(2)}`;
-            document.getElementById('profit-amount').textContent = `$${profit.toFixed(2)}`;
         });
         
-        // Trigger initial calculation
+        // Initial calculation
         if (document.getElementById('sale-amount')) {
             calcBtn.click();
         }
     }
     
-    // 9. Electronics page specific functionality
+    // 9. Auction countdown timers
     const countdownElements = document.querySelectorAll('.time-remaining');
     countdownElements.forEach(element => {
+        // Set default end time (48 hours from now)
+        if (!element.dataset.end) {
+            const endDate = new Date();
+            endDate.setHours(endDate.getHours() + 48);
+            element.dataset.end = endDate.toISOString();
+        }
+        
         const endTime = new Date(element.dataset.end).getTime();
         
         function updateCountdown() {
@@ -141,20 +144,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             
-            element.querySelector('.countdown').textContent = `${days}d ${hours}h ${minutes}m`;
+            let countdownSpan = element.querySelector('.countdown');
+            if (!countdownSpan) {
+                countdownSpan = document.createElement('span');
+                countdownSpan.className = 'countdown';
+                element.appendChild(countdownSpan);
+            }
+            
+            countdownSpan.textContent = `${days}d ${hours}h ${minutes}m`;
         }
         
         updateCountdown();
         setInterval(updateCountdown, 60000);
     });
     
-    // Bid placement functionality
+    // 10. Bid placement functionality
     const bidButtons = document.querySelectorAll('.place-bid-btn');
     const bidModal = document.getElementById('bid-modal');
     const closeModal = document.querySelector('.close-modal');
     const confirmBid = document.querySelector('.confirm-bid');
     
-    if (bidButtons.length) {
+    if (bidButtons.length && bidModal) {
         bidButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const productCard = this.closest('.product-card');
@@ -174,30 +184,37 @@ document.addEventListener('DOMContentLoaded', function() {
     if (confirmBid) {
         confirmBid.addEventListener('click', function() {
             const bidAmount = document.getElementById('bid-amount').value;
+            if (!bidAmount) {
+                alert('Please enter a bid amount');
+                return;
+            }
             alert(`Bid of $${bidAmount} placed successfully!`);
             bidModal.style.display = 'none';
         });
     }
     
-    // Watchlist functionality
+    // 11. Watchlist functionality
     const watchlistButtons = document.querySelectorAll('.watchlist-btn');
     watchlistButtons.forEach(button => {
+        // Initialize icon
+        if (!button.querySelector('i')) {
+            button.innerHTML = '<i class="far fa-heart"></i>';
+        }
+        
         button.addEventListener('click', function() {
             const icon = this.querySelector('i');
             if (icon.classList.contains('far')) {
-                icon.classList.remove('far');
-                icon.classList.add('fas');
+                icon.classList.replace('far', 'fas');
                 this.style.color = 'var(--primary-red)';
                 alert('Added to watchlist!');
             } else {
-                icon.classList.remove('fas');
-                icon.classList.add('far');
+                icon.classList.replace('fas', 'far');
                 this.style.color = '';
             }
         });
     });
     
-    // 10. Set active state for subcategory navigation
+    // 12. Subcategory navigation active state
     const subcategoryLinks = document.querySelectorAll('.subcategory-links a');
     if (subcategoryLinks.length > 0) {
         const currentPage = window.location.pathname.split('/').pop();
@@ -205,20 +222,18 @@ document.addEventListener('DOMContentLoaded', function() {
         subcategoryLinks.forEach(link => {
             if (link.getAttribute('href') === currentPage) {
                 link.classList.add('active');
-            } else {
-                link.classList.remove('active');
             }
             
-            // Add click handler to update active state
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
                 subcategoryLinks.forEach(otherLink => {
                     otherLink.classList.remove('active');
                 });
                 this.classList.add('active');
+                console.log(`Navigating to: ${this.getAttribute('href')}`);
             });
         });
     }
     
-    // Initialize backend system
     console.log("Marketplace System Initialized");
 });
