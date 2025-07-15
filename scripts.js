@@ -1,4 +1,4 @@
-// scripts.js
+// Updated scripts.js
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize user state
     let currentUser = {
@@ -16,10 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const signupBtn = document.getElementById('signup-btn');
     const googleSignupBtn = document.getElementById('google-signup-btn');
+    const baiduSignupBtn = document.getElementById('baidu-signup-btn');
+    const vkSignupBtn = document.getElementById('vk-signup-btn');
     const copyReferralBtn = document.getElementById('copy-referral-btn');
     const buyOptBtn = document.getElementById('buy-opt-btn');
     const bidModal = document.getElementById('bid-modal');
     const optModal = document.getElementById('opt-modal');
+    const signinModal = document.getElementById('signin-modal');
+    const signinLink = document.getElementById('sign-in-link');
     const closeModals = document.querySelectorAll('.close-modal');
     const confirmBidBtn = document.querySelector('.confirm-bid');
     const confirmOptPurchaseBtn = document.getElementById('confirm-opt-purchase');
@@ -29,25 +33,29 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Google Translate
     function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,ar,ur',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-        }, 'google_translate_element');
+        if (typeof google !== 'undefined' && google.translate) {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,zh-CN,ja,ru,ar,ur',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    }
+    
+    // Load Google Translate API
+    function loadGoogleTranslate() {
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.head.appendChild(script);
     }
     
     // Initialize Google Translate
     function initGoogleTranslate() {
         if (document.getElementById('google_translate_element')) {
-            if (typeof google !== 'undefined' && google.translate) {
-                googleTranslateElementInit();
-            } else {
-                const script = document.createElement('script');
-                script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-                script.async = true;
-                document.head.appendChild(script);
-            }
+            window.googleTranslateElementInit = googleTranslateElementInit;
+            loadGoogleTranslate();
         }
     }
     
@@ -67,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // User Authentication
-    function signUpWithGoogle() {
-        // Simulated Google signup
+    function signUpWithProvider(provider) {
+        // Simulated signup
         currentUser = {
             isLoggedIn: true,
             purchases: {
@@ -86,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('referral-count').textContent = currentUser.referrals;
         document.getElementById('bonus-purchases').textContent = currentUser.purchases.earned;
         
-        alert('Account created! You have received 3 free purchases.');
+        alert(`Account created with ${provider}! You have received 3 free purchases.`);
     }
     
     // Referral Program
@@ -162,7 +170,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Event Listeners
-    googleSignupBtn.addEventListener('click', signUpWithGoogle);
+    googleSignupBtn.addEventListener('click', () => signUpWithProvider('Google'));
+    baiduSignupBtn.addEventListener('click', () => signUpWithProvider('Baidu'));
+    vkSignupBtn.addEventListener('click', () => signUpWithProvider('VK'));
     
     copyReferralBtn.addEventListener('click', function() {
         navigator.clipboard.writeText(currentUser.referralCode);
@@ -176,6 +186,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     buyOptBtn.addEventListener('click', function() {
         optModal.style.display = 'block';
+    });
+    
+    signinLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        signinModal.style.display = 'block';
     });
     
     // Bid Modal
@@ -231,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.addEventListener('click', function() {
             bidModal.style.display = 'none';
             optModal.style.display = 'none';
+            signinModal.style.display = 'none';
         });
     });
     
@@ -241,6 +257,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (event.target === optModal) {
             optModal.style.display = 'none';
+        }
+        if (event.target === signinModal) {
+            signinModal.style.display = 'none';
         }
     });
     
