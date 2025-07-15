@@ -1,4 +1,4 @@
-/* Updated styles.css */
+/* styles.css - Updated with sign-in page styles */
 /* ====== VARIABLES ====== */
 :root {
     /* Color Scheme */
@@ -10,18 +10,16 @@
     --primary-dark: #0f172a;
     --secondary-blue: #1e88e5;
     --referral-green: #43a047;
-    
-    /* UI Elements */
+    --buyer-color: #3498db;
+    --seller-color: #e74c3c;
+    --platform-color: #9b59b6;
+    --runner-up-color: #f39c12;
+    --light-gray: #f5f7fa;
     --border: #e0e0e0;
     --shadow: 0 4px 12px rgba(0,0,0,0.1);
     --hover-shadow: 0 8px 20px rgba(0,0,0,0.15);
     --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
     --transition: all 0.3s ease;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, #00b4d8, #8c52ff);
-    --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
-    --gradient-seller: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
     
     /* Night Mode */
     --night-bg: #121212;
@@ -62,9 +60,8 @@ body.night-mode .top-bar {
 body.night-mode header,
 body.night-mode .purchase-system,
 body.night-mode .purchase-tracker,
-body.night-mode .commission-calculator,
-body.night-mode .inventory-section,
-body.night-mode .benefit-card,
+body.night-mode .signin-container,
+body.night-mode .incentive-card,
 body.night-mode .category-card,
 body.night-mode .product-card,
 body.night-mode .modal-content {
@@ -177,14 +174,6 @@ body.night-mode .section-subtitle {
     background: #75a315;
 }
 
-.btn-seller {
-    background: var(--primary-green);
-}
-
-.btn-seller:hover {
-    background: #75a315;
-}
-
 .signup-option, .signin-option {
     display: inline-block;
     padding: 12px 25px;
@@ -220,6 +209,126 @@ body.night-mode .signin-option {
 .signup-prompt {
     margin-top: 20px;
     text-align: center;
+}
+
+/* ====== SIGN IN PAGE ====== */
+.signin-container {
+    display: flex;
+    gap: 40px;
+    margin: 60px auto;
+}
+
+.signin-section {
+    flex: 1;
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: var(--card-shadow);
+}
+
+.signin-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.signin-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f7fa;
+    text-decoration: none;
+    color: var(--primary-dark);
+    font-weight: 500;
+    transition: var(--transition);
+    border: 1px solid var(--border);
+}
+
+.signin-option:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.signin-option i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+.signin-divider {
+    position: relative;
+    text-align: center;
+    margin: 30px 0;
+}
+
+.signin-divider span {
+    background: white;
+    padding: 0 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.signin-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--border);
+}
+
+.signin-form .form-group {
+    margin-bottom: 20px;
+}
+
+.signin-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.signin-form input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+}
+
+.signin-benefits {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.benefit-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: var(--card-shadow);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.benefit-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--hover-shadow);
+}
+
+.benefit-card i {
+    font-size: 40px;
+    color: var(--primary-blue);
+    margin-bottom: 15px;
 }
 
 /* ====== HEADER & NAVIGATION ====== */
@@ -1366,6 +1475,10 @@ footer {
     
     .opt-content {
         grid-template-columns: 1fr;
+    }
+    
+    .signin-container {
+        flex-direction: column;
     }
     
     .top-links {
