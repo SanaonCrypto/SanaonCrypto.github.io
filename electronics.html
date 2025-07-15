@@ -6,6 +6,89 @@
     <title>Electronics Marketplace | OnayPonay</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .category-hero {
+            background: linear-gradient(105deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%), url('https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .purchase-banner {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .purchase-status {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .purchase-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--secondary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .purchase-badge.completed {
+            background: var(--referral-green);
+        }
+        
+        .opt-banner {
+            background: linear-gradient(135deg, #152a6e 0%, #0d1b2a 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .opt-value {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 15px 0;
+            color: var(--primary-yellow);
+        }
+        
+        .referral-mini {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        
+        @media (max-width: 768px) {
+            .purchase-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .purchase-status {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -45,7 +128,7 @@
                     
                     <div class="search-bar">
                         <div class="search-container">
-                            <input type="text" placeholder="Search for electronics, gadgets, and devices..." id="search-input">
+                            <input type="text" placeholder="Search electronics, gadgets, and devices..." id="search-input">
                             <div class="search-options">
                                 <button class="search-option-btn" id="image-search-btn" title="Image Search">
                                     <i class="fas fa-camera"></i>
@@ -103,223 +186,242 @@
                         <i class="fas fa-store"></i>
                         <span>Sellers</span>
                     </a>
-                    
-                    <a href="how-it-works.html">
-                        <i class="fas fa-info-circle"></i>
-                        <span>How It Works</span>
-                    </a>
                 </div>
             </div>
         </nav>
-  
-    <div class="subcategory-nav">
-    <div class="subcategory-links">
-        <a href="smartphones.html" class="active">
-            <i class="fas fa-mobile-alt"></i> Smartphones
-        </a>
-        <a href="laptops.html">
-            <i class="fas fa-laptop"></i> Laptops & PCs
-        </a>
-        <!-- Add other subcategories here -->
-    </div>
-</div>
-
     </header>
 
     <!-- Electronics Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+    <section class="category-hero">
+        <div class="container">
             <h1>Electronics & Gadgets Marketplace</h1>
-            <p>Discover cutting-edge technology, gadgets, and electronics at auction prices</p>
+            <p>Discover cutting-edge technology at auction prices with guaranteed purchases</p>
             <div class="hero-buttons">
                 <a href="#featured" class="btn">Shop Now</a>
                 <a href="sellers.html" class="btn purchase-btn">Sell Electronics</a>
             </div>
-            <div class="security-tag">
-                <i class="fas fa-bolt"></i> Quantum-Encrypted Transactions
-            </div>
         </div>
     </section>
 
-    <!-- Electronics Subcategories -->
-    <section class="container">
-        <h2 class="section-title">Electronics Categories</h2>
-        <div class="subcategory-scroller">
-            <div class="subcategory-card" id="smartphones">
-                <i class="fas fa-mobile-alt"></i>
-                <h3>Smartphones</h3>
+    <main class="container">
+        <!-- Purchase Banner -->
+        <div class="purchase-banner">
+            <div>
+                <h3><i class="fas fa-gift"></i> Your Purchase Status</h3>
+                <p>All accounts start with 3 free purchases. Bid as much as you want per item!</p>
             </div>
-            <div class="subcategory-card" id="laptops">
-                <i class="fas fa-laptop"></i>
-                <h3>Laptops & PCs</h3>
+            <div class="purchase-status">
+                <div class="purchase-badge completed">1</div>
+                <div class="purchase-badge completed">2</div>
+                <div class="purchase-badge">3</div>
+                <div class="purchase-badge referral">+1</div>
             </div>
-            <div class="subcategory-card">
-                <i class="fas fa-tablet-alt"></i>
-                <h3>Tablets</h3>
-            </div>
-            <div class="subcategory-card">
-                <i class="fas fa-tv"></i>
-                <h3>TVs & Monitors</h3>
-            </div>
-            <div class="subcategory-card" id="audio">
-                <i class="fas fa-headphones"></i>
-                <h3>Audio Devices</h3>
-            </div>
-            <div class="subcategory-card">
-                <i class="fas fa-camera"></i>
-                <h3>Cameras</h3>
-            </div>
-            <div class="subcategory-card" id="gaming">
-                <i class="fas fa-gamepad"></i>
-                <h3>Gaming</h3>
-            </div>
-            <div class="subcategory-card" id="accessories">
-                <i class="fas fa-plug"></i>
-                <h3>Accessories</h3>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Electronics Products -->
-    <section id="featured" class="container">
-        <div class="section-header">
-            <h2 class="section-title">Featured Electronics</h2>
-            <div class="filter-options">
-                <select id="sort-by">
-                    <option>Sort By: Newest</option>
-                    <option>Sort By: Ending Soonest</option>
-                    <option>Sort By: Price: Low to High</option>
-                    <option>Sort By: Price: High to Low</option>
-                </select>
-                <select id="category-filter">
-                    <option>All Categories</option>
-                    <option>Smartphones</option>
-                    <option>Laptops</option>
-                    <option>Audio</option>
-                    <option>Cameras</option>
-                    <option>Gaming</option>
-                </select>
-            </div>
+            <a href="#" class="btn">View Purchase Dashboard</a>
         </div>
         
-        <div class="product-grid">
-            <!-- Product Card 1 -->
-            <div class="product-card">
-                <div class="product-image-carousel">
-                    <img src="https://images.unsplash.com/photo-1595941069915-4e0b82d0e9a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Smartphone">
-                    <div class="carousel-controls">
-                        <button><i class="fas fa-chevron-left"></i></button>
-                        <button><i class="fas fa-chevron-right"></i></button>
-                    </div>
+        <!-- Electronics Subcategories -->
+        <section>
+            <h2 class="section-title">Electronics Categories</h2>
+            <div class="subcategory-scroller">
+                <div class="subcategory-card" id="smartphones">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Smartphones</h3>
                 </div>
-                <div class="product-info">
-                    <h3>Quantum X Pro Smartphone</h3>
-                    <p class="product-description">6.7" AMOLED, 256GB, 5G, AI Camera System</p>
-                    <div class="bid-info">
-                        <div class="current-bid">
-                            <span>Current Bid:</span>
-                            <span class="bid-amount">$349.99</span>
-                        </div>
-                        <div class="bids-count">
-                            <i class="fas fa-gavel"></i> 12 bids
-                        </div>
-                    </div>
-                    <div class="time-remaining">
-                        <i class="fas fa-clock"></i> <span class="countdown">2d 14h 32m</span>
-                    </div>
-                    <button class="btn place-bid-btn">Place Bid</button>
-                    <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
+                <div class="subcategory-card" id="laptops">
+                    <i class="fas fa-laptop"></i>
+                    <h3>Laptops & PCs</h3>
+                </div>
+                <div class="subcategory-card">
+                    <i class="fas fa-tablet-alt"></i>
+                    <h3>Tablets</h3>
+                </div>
+                <div class="subcategory-card">
+                    <i class="fas fa-tv"></i>
+                    <h3>TVs & Monitors</h3>
+                </div>
+                <div class="subcategory-card" id="audio">
+                    <i class="fas fa-headphones"></i>
+                    <h3>Audio Devices</h3>
+                </div>
+                <div class="subcategory-card">
+                    <i class="fas fa-camera"></i>
+                    <h3>Cameras</h3>
+                </div>
+                <div class="subcategory-card" id="gaming">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Gaming</h3>
+                </div>
+                <div class="subcategory-card" id="accessories">
+                    <i class="fas fa-plug"></i>
+                    <h3>Accessories</h3>
                 </div>
             </div>
-            
-            <!-- Product Card 2 -->
-<div class="product-card">
-    <div class="product-image-carousel">
-        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop">
-        <div class="carousel-controls">
-            <button><i class="fas fa-chevron-left"></i></button>
-            <button><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-    <div class="product-info">
-        <h3>NeuralBook Pro Laptop</h3>
-        <p class="product-description">16" Retina, M2 Pro, 32GB RAM, 1TB SSD</p>
-        <div class="bid-info">
-            <div class="current-bid">
-                <span>Current Bid:</span>
-                <span class="bid-amount">$1,299.00</span>
-            </div>
-            <div class="bids-count">
-                <i class="fas fa-gavel"></i> 8 bids
+        </section>
+        
+        <!-- OPT Token Banner -->
+        <div class="opt-banner">
+            <h3><i class="fas fa-coins"></i> OnayPonayTikens (OPT)</h3>
+            <p>After your 3 free purchases, buy OPT tokens for more bids</p>
+            <div class="opt-value">1 OPT = $0.02 USD</div>
+            <p>1 Bid = 50 OPT ($1.00) | Smart Contracts powered by Qubetics</p>
+            <div class="referral-mini">
+                <i class="fas fa-user-plus"></i> Refer friends to earn free purchases
             </div>
         </div>
-        <div class="time-remaining">
-            <i class="fas fa-clock"></i> <span class="countdown">1d 9h 15m</span>
-        </div>
-        <button class="btn place-bid-btn">Place Bid</button>
-        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
-    </div>
-</div>
 
-<!-- Product Card 3 -->
-<div class="product-card">
-    <div class="product-image-carousel">
-        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Headphones">
-        <div class="carousel-controls">
-            <button><i class="fas fa-chevron-left"></i></button>
-            <button><i class="fas fa-chevron-right"></i></button>
-        </div>
-    </div>
-    <div class="product-info">
-        <h3>QuantumSound Pro Headphones</h3>
-        <p class="product-description">Wireless Noise Cancelling, 40hr battery</p>
-        <div class="bid-info">
-            <div class="current-bid">
-                <span>Current Bid:</span>
-                <span class="bid-amount">$129.00</span>
+        <!-- Featured Electronics Products -->
+        <section id="featured">
+            <div class="section-header">
+                <h2 class="section-title">Featured Electronics</h2>
+                <div class="filter-options">
+                    <select id="sort-by">
+                        <option>Sort By: Newest</option>
+                        <option>Sort By: Ending Soonest</option>
+                        <option>Sort By: Price: Low to High</option>
+                        <option>Sort By: Price: High to Low</option>
+                    </select>
+                    <select id="category-filter">
+                        <option>All Categories</option>
+                        <option>Smartphones</option>
+                        <option>Laptops</option>
+                        <option>Audio</option>
+                        <option>Cameras</option>
+                        <option>Gaming</option>
+                    </select>
+                </div>
             </div>
-            <div class="bids-count">
-                <i class="fas fa-gavel"></i> 5 bids
-            </div>
-        </div>
-        <div class="time-remaining">
-            <i class="fas fa-clock"></i> <span class="countdown">18h 32m</span>
-        </div>
-        <button class="btn place-bid-btn">Place Bid</button>
-        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
-    </div>
-</div>
             
-            <!-- Product Card 4 -->
-            <div class="product-card">
-                <div class="product-image-carousel">
-                    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Camera">
-                    <div class="carousel-controls">
-                        <button><i class="fas fa-chevron-left"></i></button>
-                        <button><i class="fas fa-chevron-right"></i></button>
+            <div class="product-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <div class="product-image-carousel">
+                        <img src="https://images.unsplash.com/photo-1595941069915-4e0b82d0e9a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Smartphone">
+                        <div class="carousel-controls">
+                            <button><i class="fas fa-chevron-left"></i></button>
+                            <button><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>Quantum X Pro Smartphone</h3>
+                        <p class="product-description">6.7" AMOLED, 256GB, 5G, AI Camera System</p>
+                        <div class="bid-info">
+                            <div class="current-bid">
+                                <span>Current Bid:</span>
+                                <span class="bid-amount">$349.99</span>
+                            </div>
+                            <div class="bids-count">
+                                <i class="fas fa-gavel"></i> 12 bids
+                            </div>
+                        </div>
+                        <div class="time-remaining">
+                            <i class="fas fa-clock"></i> <span class="countdown">2d 14h 32m</span>
+                        </div>
+                        <button class="btn place-bid-btn">Place Bid</button>
+                        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
                     </div>
                 </div>
-                <div class="product-info">
-                    <h3>4K Mirrorless Camera</h3>
-                    <p class="product-description">24.2MP, 4K Video, 5-Axis Stabilization</p>
-                    <div class="bid-info">
-                        <div class="current-bid">
-                            <span>Current Bid:</span>
-                            <span class="bid-amount">$799.00</span>
-                        </div>
-                        <div class="bids-count">
-                            <i class="fas fa-gavel"></i> 9 bids
+                
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <div class="product-image-carousel">
+                        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Laptop">
+                        <div class="carousel-controls">
+                            <button><i class="fas fa-chevron-left"></i></button>
+                            <button><i class="fas fa-chevron-right"></i></button>
                         </div>
                     </div>
-                    <div class="time-remaining">
-                        <i class="fas fa-clock"></i> <span class="countdown">6h 15m</span>
+                    <div class="product-info">
+                        <h3>NeuralBook Pro Laptop</h3>
+                        <p class="product-description">16" Retina, M2 Pro, 32GB RAM, 1TB SSD</p>
+                        <div class="bid-info">
+                            <div class="current-bid">
+                                <span>Current Bid:</span>
+                                <span class="bid-amount">$1,299.00</span>
+                            </div>
+                            <div class="bids-count">
+                                <i class="fas fa-gavel"></i> 8 bids
+                            </div>
+                        </div>
+                        <div class="time-remaining">
+                            <i class="fas fa-clock"></i> <span class="countdown">1d 9h 15m</span>
+                        </div>
+                        <button class="btn place-bid-btn">Place Bid</button>
+                        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
                     </div>
-                    <button class="btn place-bid-btn">Place Bid</button>
-                    <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <div class="product-image-carousel">
+                        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Headphones">
+                        <div class="carousel-controls">
+                            <button><i class="fas fa-chevron-left"></i></button>
+                            <button><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>QuantumSound Pro Headphones</h3>
+                        <p class="product-description">Wireless Noise Cancelling, 40hr battery</p>
+                        <div class="bid-info">
+                            <div class="current-bid">
+                                <span>Current Bid:</span>
+                                <span class="bid-amount">$129.00</span>
+                            </div>
+                            <div class="bids-count">
+                                <i class="fas fa-gavel"></i> 5 bids
+                            </div>
+                        </div>
+                        <div class="time-remaining">
+                            <i class="fas fa-clock"></i> <span class="countdown">18h 32m</span>
+                        </div>
+                        <button class="btn place-bid-btn">Place Bid</button>
+                        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                </div>
+                
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <div class="product-image-carousel">
+                        <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Camera">
+                        <div class="carousel-controls">
+                            <button><i class="fas fa-chevron-left"></i></button>
+                            <button><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <h3>4K Mirrorless Camera</h3>
+                        <p class="product-description">24.2MP, 4K Video, 5-Axis Stabilization</p>
+                        <div class="bid-info">
+                            <div class="current-bid">
+                                <span>Current Bid:</span>
+                                <span class="bid-amount">$799.00</span>
+                            </div>
+                            <div class="bids-count">
+                                <i class="fas fa-gavel"></i> 9 bids
+                            </div>
+                        </div>
+                        <div class="time-remaining">
+                            <i class="fas fa-clock"></i> <span class="countdown">6h 15m</span>
+                        </div>
+                        <button class="btn place-bid-btn">Place Bid</button>
+                        <button class="btn watchlist-btn"><i class="far fa-heart"></i></button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <!-- Referral Section -->
+        <section class="referral-section-mini">
+            <div class="container">
+                <div class="referral-box">
+                    <h3>Earn Free Purchases</h3>
+                    <p>Share your referral code and get +1 free purchase for each friend who signs up</p>
+                    <div class="referral-code">ONAY-USER-8X2F</div>
+                    <button class="btn copy-btn"><i class="fas fa-copy"></i> Copy Referral Code</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -362,7 +464,7 @@
                         <li><a href="#"><i class="fas fa-chevron-right"></i> My Account</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Purchase History</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Referral Program</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Bidding Activity</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> OPT Wallet</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -371,7 +473,7 @@
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping & Returns</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Smart Contract Docs</a></li>
                     </ul>
                 </div>
             </div>
@@ -388,11 +490,30 @@
                 </p>
                 <div class="security-statement">
                     <i class="fas fa-shield-alt"></i>
-                    <span>Your security is our priority. All transactions are protected with QuantumSecured™ encryption.</span>
+                    <span>All transactions secured by Qubetics blockchain. OPT token ledgers maintained on Qubetics network.</span>
                 </div>
             </div>
         </div>
     </footer>
+    
+    <!-- Bid Modal -->
+    <div id="bid-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Place Your Bid</h2>
+            <p>You're bidding on: <span id="bid-item-name">Product Name</span></p>
+            <form class="bid-form">
+                <label for="bid-amount">Your Bid Amount ($)</label>
+                <input type="number" id="bid-amount" min="0" step="0.01" required>
+                <div class="bid-minimum">Minimum bid: $<span id="min-bid">0.00</span></div>
+                <button type="button" class="btn confirm-bid">Confirm Bid</button>
+                <div class="bid-terms">
+                    <input type="checkbox" id="terms-agree" required>
+                    <label for="terms-agree">I agree to the <a href="#">bidding terms</a></label>
+                </div>
+            </form>
+        </div>
+    </div>
     
     <script src="scripts.js"></script>
 </body>
