@@ -3,77 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Hub | OnayPonay Marketplace</title>
+    <title>Digital Hub - OnayPonay Marketplace</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .digital-hero {
-            background: linear-gradient(105deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.7) 100%), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-            margin-bottom: 40px;
-            position: relative;
-        }
-        
-        .digital-purchase-system {
-            background: linear-gradient(135deg, #2c3e50 0%, #1a2530 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            color: white;
-        }
-        
-        .digital-steps {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .digital-step {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-            padding: 20px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-        }
-        
-        .digital-step i {
-            font-size: 36px;
-            margin-bottom: 15px;
-            color: var(--primary-yellow);
-        }
-        
-        .asset-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--primary-green);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        
-        .asset-card .btn {
-            margin-top: 15px;
-            width: 100%;
-        }
-        
-        .opt-conversion {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            display: inline-block;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -113,7 +45,7 @@
                     
                     <div class="search-bar">
                         <div class="search-container">
-                            <input type="text" placeholder="Search digital services..." id="search-input">
+                            <input type="text" placeholder="Search digital products..." id="search-input">
                             <div class="search-options">
                                 <button class="search-option-btn" id="image-search-btn" title="Image Search">
                                     <i class="fas fa-camera"></i>
@@ -146,7 +78,7 @@
                         <i class="fas fa-mobile-alt"></i>
                         <span>Electronics</span>
                     </a>
-
+                    
                     <a href="fashion.html">
                         <i class="fas fa-tshirt"></i>
                         <span>Fashion</span>
@@ -167,212 +99,290 @@
                         <span>Digital Hub</span>
                     </a>
                     
-                    <a href="sellers.html">
-                        <i class="fas fa-store"></i>
-                        <span>Sellers</span>
+                    <!-- Updated: Replaced Sellers with Sign In -->
+                    <a href="signin.html">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Sign In</span>
+                    </a>
+                    
+                    <a href="how-it-works.html">
+                        <i class="fas fa-info-circle"></i>
+                        <span>How It Works</span>
                     </a>
                 </div>
             </div>
         </nav>
     </header>
-
-    <!-- Digital Hub Hero Section -->
-    <section class="digital-hero">
-        <div class="container">
-            <h1>Digital Assets Marketplace</h1>
-            <p>Buy and sell digital services, NFTs, crypto assets, and AI solutions</p>
-            <div class="hero-buttons">
-                <a href="#featured" class="btn">Explore Digital Assets</a>
-                <a href="sellers.html" class="btn purchase-btn">Sell Digital Services</a>
-            </div>
-        </div>
-    </section>
-
+    
     <main class="container">
-        <!-- Digital Purchase System -->
-        <section class="digital-purchase-system">
-            <h2><i class="fas fa-sync-alt"></i> How Digital Purchases Work</h2>
-            <p>All users get 3 free purchases for digital assets. Refer friends to earn more!</p>
-            
-            <div class="digital-steps">
-                <div class="digital-step">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>1. Sign Up</h3>
-                    <p>Get 3 free purchases immediately</p>
-                </div>
-                <div class="digital-step">
-                    <i class="fas fa-gavel"></i>
-                    <h3>2. Bid & Win</h3>
-                    <p>Use your purchases to win digital assets</p>
-                </div>
-                <div class="digital-step">
-                    <i class="fas fa-coins"></i>
-                    <h3>3. Use OPT</h3>
-                    <p>Buy OPT tokens for more bids after free purchases</p>
-                </div>
-                <div class="digital-step">
-                    <i class="fas fa-users"></i>
-                    <h3>4. Refer Friends</h3>
-                    <p>Earn +1 free purchase per referral</p>
-                </div>
-            </div>
-            
-            <div class="opt-conversion">
-                <p><i class="fas fa-exchange-alt"></i> 1 OPT = $0.02 USD | 1 Bid = 50 OPT</p>
+        <!-- Digital Hub Hero Section -->
+        <section class="category-hero">
+            <div class="hero-content">
+                <h1>Digital Products Hub</h1>
+                <p>Discover digital assets, software, NFTs and more with 50% starting bids</p>
             </div>
         </section>
-
-        <!-- Digital Categories -->
-        <section>
-            <h2 class="section-title">Digital Asset Categories</h2>
-            <div class="categories-grid">
-                <!-- Blockchain & Crypto -->
-                <div class="category-card" id="blockchain">
-                    <div class="category-icon">
-                        <i class="fab fa-bitcoin"></i>
-                    </div>
-                    <h3>Blockchain & Crypto</h3>
-                    <ul>
-                        <li>Smart Contract Development</li>
-                        <li>NFT Auctions</li>
-                        <li>Crypto Wallet Services</li>
-                        <li>Token Creation</li>
-                        <li>DeFi Solutions</li>
-                    </ul>
-                </div>
-                
-                <!-- AI & Quantum -->
-                <div class="category-card" id="ai">
-                    <div class="category-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h3>AI & Quantum</h3>
-                    <ul>
-                        <li>AI Model Development</li>
-                        <li>Machine Learning Solutions</li>
-                        <li>Quantum Algorithm Design</li>
-                        <li>Natural Language Processing</li>
-                        <li>Quantum-Secured Systems</li>
-                    </ul>
-                </div>
-                
-                <!-- Gaming & Metaverse -->
-                <div class="category-card" id="gaming">
-                    <div class="category-icon">
-                        <i class="fas fa-gamepad"></i>
-                    </div>
-                    <h3>Gaming & Metaverse</h3>
-                    <ul>
-                        <li>Game Asset Creation</li>
-                        <li>Metaverse Development</li>
-                        <li>VR/AR Experiences</li>
-                        <li>Play-to-Earn Systems</li>
-                        <li>Game Economy Design</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Digital Assets -->
-        <section id="featured">
-            <div class="section-header">
-                <h2 class="section-title">Featured Digital Assets</h2>
-                <div class="filter-options">
-                    <select id="sort-by">
-                        <option>Sort By: Newest</option>
-                        <option>Sort By: Ending Soonest</option>
-                        <option>Sort By: Price: Low to High</option>
-                        <option>Sort By: Price: High to Low</option>
-                    </select>
-                    <select id="category-filter">
-                        <option>All Categories</option>
-                        <option>Blockchain</option>
-                        <option>AI Services</option>
-                        <option>Gaming</option>
-                        <option>NFTs</option>
-                    </select>
-                </div>
-            </div>
+        
+        <!-- Featured Digital Products -->
+        <section class="featured-products">
+            <h2 class="section-title">Featured Digital Products</h2>
+            <p class="section-subtitle">Instant delivery after winning bid</p>
             
-            <div class="digital-assets">
-                <!-- Asset 1: NFT Collection -->
-                <div class="asset-card">
-                    <div class="asset-image">
-                        <i class="fas fa-coins"></i>
-                        <span class="asset-badge">NFT</span>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-palette"></i>
                     </div>
-                    <div class="asset-info">
-                        <h3>CryptoPunk NFT Collection</h3>
-                        <p>Rare digital collectibles on the Ethereum blockchain</p>
-                        <div class="asset-meta">
-                            <span><i class="fab fa-ethereum"></i> 15 ETH</span>
-                            <span><i class="fas fa-history"></i> 2 days left</span>
+                    <div class="product-info">
+                        <h3>Premium UI Kit</h3>
+                        <p>Complete design system with 100+ components for web & mobile</p>
+                        
+                        <div class="market-price">
+                            <div class="label">Market Price:</div>
+                            <div class="value">$149.00</div>
                         </div>
-                        <button class="btn place-bid-btn">Place Bid</button>
+                        
+                        <div class="bid-info">
+                            <div class="starting-bid">$74.50</div>
+                            <div class="save-percent">SAVE 50%</div>
+                        </div>
+                        
+                        <button class="bid-btn">Place Bid</button>
                     </div>
                 </div>
                 
-                <!-- Asset 2: AI Service -->
-                <div class="asset-card">
-                    <div class="asset-image">
-                        <i class="fas fa-brain"></i>
-                        <span class="asset-badge">AI Service</span>
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-code"></i>
                     </div>
-                    <div class="asset-info">
-                        <h3>Custom AI Chatbot</h3>
-                        <p>AI-powered customer service solution for websites</p>
-                        <div class="asset-meta">
-                            <span><i class="fas fa-dollar-sign"></i> $1,299</span>
-                            <span><i class="fas fa-certificate"></i> Fixed Price</span>
+                    <div class="product-info">
+                        <h3>WordPress Theme</h3>
+                        <p>Responsive e-commerce theme with premium plugins included</p>
+                        
+                        <div class="market-price">
+                            <div class="label">Market Price:</div>
+                            <div class="value">$79.00</div>
                         </div>
-                        <button class="btn">Buy Now</button>
+                        
+                        <div class="bid-info">
+                            <div class="starting-bid">$39.50</div>
+                            <div class="save-percent">SAVE 50%</div>
+                        </div>
+                        
+                        <button class="bid-btn">Place Bid</button>
                     </div>
                 </div>
                 
-                <!-- Asset 3: Smart Contract -->
-                <div class="asset-card">
-                    <div class="asset-image">
-                        <i class="fas fa-file-contract"></i>
-                        <span class="asset-badge">Smart Contract</span>
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-music"></i>
                     </div>
-                    <div class="asset-info">
-                        <h3>Smart Contract Development</h3>
-                        <p>Custom Ethereum smart contracts for your business</p>
-                        <div class="asset-meta">
-                            <span><i class="fas fa-dollar-sign"></i> $2,499</span>
-                            <span><i class="fas fa-code-branch"></i> ERC-20/ERC-721</span>
+                    <div class="product-info">
+                        <h3>Music Sample Pack</h3>
+                        <p>200+ royalty-free loops and samples for music production</p>
+                        
+                        <div class="market-price">
+                            <div class="label">Market Price:</div>
+                            <div class="value">$89.00</div>
                         </div>
-                        <button class="btn place-bid-btn">Place Bid</button>
+                        
+                        <div class="bid-info">
+                            <div class="starting-bid">$44.50</div>
+                            <div class="save-percent">SAVE 50%</div>
+                        </div>
+                        
+                        <button class="bid-btn">Place Bid</button>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="product-info">
+                        <h3>3D Model Collection</h3>
+                        <p>Premium 3D assets for game development and animation</p>
+                        
+                        <div class="market-price">
+                            <div class="label">Market Price:</div>
+                            <div class="value">$199.00</div>
+                        </div>
+                        
+                        <div class="bid-info">
+                            <div class="starting-bid">$99.50</div>
+                            <div class="save-percent">SAVE 50%</div>
+                        </div>
+                        
+                        <button class="bid-btn">Place Bid</button>
                     </div>
                 </div>
             </div>
         </section>
         
-        <!-- Qubetics Blockchain Section -->
-        <section class="qubetics-section">
-            <div class="container">
-                <h2 class="section-title">Powered by Qubetics Blockchain</h2>
-                <div class="qubetics-features">
-                    <div class="feature">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Quantum Security</h3>
-                        <p>All smart contracts protected with quantum-resistant encryption</p>
+        <!-- Digital Categories -->
+        <section class="category-section">
+            <h2 class="section-title">Digital Categories</h2>
+            
+            <div class="category-grid">
+                <a href="#" class="category-card">
+                    <i class="fas fa-code"></i>
+                    <h3>Website Templates</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile App Kits</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Graphic Assets</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-photo-video"></i>
+                    <h3>Stock Media</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Game Assets</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-gem"></i>
+                    <h3>NFT Collections</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-book"></i>
+                    <h3>E-books & Courses</h3>
+                </a>
+                
+                <a href="#" class="category-card">
+                    <i class="fas fa-plug"></i>
+                    <h3>Plugins & Extensions</h3>
+                </a>
+            </div>
+        </section>
+        
+        <!-- How Digital Bidding Works -->
+        <section class="bidding-explainer">
+            <div class="explainer-content">
+                <h2>How Digital Bidding Works</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Find Digital Assets</h4>
+                            <p>Browse our extensive collection of digital products from creators worldwide</p>
+                        </div>
                     </div>
-                    <div class="feature">
-                        <i class="fas fa-coins"></i>
-                        <h3>OPT Token Integration</h3>
-                        <p>Use OPT for bids, smart contracts, and escrow services</p>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Place Your Bid</h4>
+                            <p>Bid starts at 50% of market value - bid what you think it's worth</p>
+                        </div>
                     </div>
-                    <div class="feature">
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Instant Delivery</h4>
+                            <p>If you win, get immediate access to download your digital product</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="value-proposition">
+                    <div class="value-card">
                         <i class="fas fa-bolt"></i>
-                        <h3>Instant Settlement</h3>
-                        <p>Transactions completed in seconds on the blockchain</p>
+                        <h3>Instant Access</h3>
+                        <p>Download immediately after winning bid</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <i class="fas fa-infinity"></i>
+                        <h3>Unlimited Usage</h3>
+                        <p>Royalty-free license for personal and commercial use</p>
+                    </div>
+                    
+                    <div class="value-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>Free Updates</h3>
+                        <p>Receive future updates to digital products</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- NFT Marketplace -->
+        <section class="nft-section">
+            <div class="nft-header">
+                <h2>NFT Marketplace</h2>
+                <p>Discover unique digital collectibles secured on blockchain</p>
+            </div>
+            
+            <div class="nft-grid">
+                <div class="nft-card">
+                    <div class="nft-image">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="nft-info">
+                        <h3>Digital Art Collection</h3>
+                        <div class="creator">
+                            <i class="fas fa-user"></i>
+                            <span>Artist: CryptoPixels</span>
+                        </div>
+                        <div class="bid-info">
+                            <div class="current-bid">Current Bid: 0.25 ETH</div>
+                            <div class="starting-bid">Starting: 0.15 ETH</div>
+                        </div>
+                        <button class="bid-btn">Place Bid</button>
+                    </div>
+                </div>
+                
+                <div class="nft-card">
+                    <div class="nft-image">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <div class="nft-info">
+                        <h3>Virtual Real Estate</h3>
+                        <div class="creator">
+                            <i class="fas fa-user"></i>
+                            <span>Creator: MetaWorld</span>
+                        </div>
+                        <div class="bid-info">
+                            <div class="current-bid">Current Bid: 1.2 ETH</div>
+                            <div class="starting-bid">Starting: 0.8 ETH</div>
+                        </div>
+                        <button class="bid-btn">Place Bid</button>
+                    </div>
+                </div>
+                
+                <div class="nft-card">
+                    <div class="nft-image">
+                        <i class="fas fa-baseball-ball"></i>
+                    </div>
+                    <div class="nft-info">
+                        <h3>Sports Collectibles</h3>
+                        <div class="creator">
+                            <i class="fas fa-user"></i>
+                            <span>Creator: SportChain</span>
+                        </div>
+                        <div class="bid-info">
+                            <div class="current-bid">Current Bid: 0.45 ETH</div>
+                            <div class="starting-bid">Starting: 0.3 ETH</div>
+                        </div>
+                        <button class="bid-btn">Place Bid</button>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
+    
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -393,7 +403,8 @@
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="sellers.html"><i class="fas fa-chevron-right"></i> Seller Portal</a></li>
+                        <!-- Updated: Changed Seller Portal to Sign In -->
+                        <li><a href="signin.html"><i class="fas fa-chevron-right"></i> Sign In</a></li>
                         <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Become a Seller</a></li>
                     </ul>
@@ -404,7 +415,6 @@
                         <li><a href="electronics.html"><i class="fas fa-chevron-right"></i> Electronics</a></li>
                         <li><a href="fashion.html"><i class="fas fa-chevron-right"></i> Fashion</a></li>
                         <li><a href="home-garden.html"><i class="fas fa-chevron-right"></i> Home & Garden</a></li>
-                        <li><a href="fmcg.html"><i class="fas fa-chevron-right"></i> FMCG</a></li>
                         <li><a href="digitalhub.html"><i class="fas fa-chevron-right"></i> Digital Hub</a></li>
                     </ul>
                 </div>
@@ -440,30 +450,11 @@
                 </p>
                 <div class="security-statement">
                     <i class="fas fa-shield-alt"></i>
-                    <span>All transactions secured by Qubetics blockchain. OPT token ledgers maintained on Qubetics network.</span>
+                    <span>All transactions secured by blockchain. OPT token ledgers maintained on our secure network.</span>
                 </div>
             </div>
         </div>
     </footer>
-    
-    <!-- Bid Modal -->
-    <div id="bid-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Place Your Bid</h2>
-            <p>You're bidding on: <span id="bid-item-name">Product Name</span></p>
-            <form class="bid-form">
-                <label for="bid-amount">Your Bid Amount ($)</label>
-                <input type="number" id="bid-amount" min="0" step="0.01" required>
-                <div class="bid-minimum">Minimum bid: $<span id="min-bid">0.00</span></div>
-                <button type="button" class="btn confirm-bid">Confirm Bid</button>
-                <div class="bid-terms">
-                    <input type="checkbox" id="terms-agree" required>
-                    <label for="terms-agree">I agree to the <a href="#">bidding terms</a></label>
-                </div>
-            </form>
-        </div>
-    </div>
     
     <script src="scripts.js"></script>
 </body>
