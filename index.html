@@ -99,11 +99,6 @@
                         <span>Digital Hub</span>
                     </a>
                     
-                    <a href="sellers.html">
-                        <i class="fas fa-store"></i>
-                        <span>Sellers</span>
-                    </a>
-                    
                     <a href="how-it-works.html">
                         <i class="fas fa-info-circle"></i>
                         <span>How It Works</span>
@@ -366,6 +361,49 @@
         </section>
     </main>
     
+    <!-- Sign In Modal -->
+    <div id="signin-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-title">
+                <h2>Sign In to OnayPonay</h2>
+                <p>Access your account to start buying or selling</p>
+            </div>
+            
+            <div class="user-type-selector">
+                <div class="user-type buyer">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Buyer</h3>
+                    <p>Purchase items and bid on auctions</p>
+                </div>
+                <div class="user-type seller">
+                    <i class="fas fa-store"></i>
+                    <h3>Seller</h3>
+                    <p>List products and manage inventory</p>
+                </div>
+            </div>
+            
+            <div class="signin-options">
+                <a href="#" class="signin-option google">
+                    <i class="fab fa-google"></i>
+                    <span>Continue with Google</span>
+                </a>
+                <a href="#" class="signin-option baidu">
+                    <i class="fab fa-baidu"></i>
+                    <span>Continue with Baidu</span>
+                </a>
+                <a href="#" class="signin-option vk">
+                    <i class="fab fa-vk"></i>
+                    <span>Continue with VK</span>
+                </a>
+            </div>
+            
+            <p style="text-align: center; margin-top: 20px; color: #666;">
+                New to OnayPonay? <a href="#" style="color: var(--primary-blue);">Create an account</a>
+            </p>
+        </div>
+    </div>
+    
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -386,7 +424,6 @@
                     <h3>Quick Links</h3>
                     <ul class="footer-links">
                         <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
-                        <li><a href="sellers.html"><i class="fas fa-chevron-right"></i> Seller Portal</a></li>
                         <li><a href="how-it-works.html"><i class="fas fa-chevron-right"></i> How It Works</a></li>
                         <li><a href="#"><i class="fas fa-chevron-right"></i> Become a Seller</a></li>
                     </ul>
@@ -484,28 +521,6 @@
             <div class="crypto-note">
                 <i class="fas fa-info-circle"></i>
                 <span>OPT tokens are issued on our blockchain. Purchases are non-refundable.</span>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Sign In Modal -->
-    <div id="signin-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Sign In to OnayPonay</h2>
-            <div class="signin-options">
-                <a href="#" class="signin-option" id="modal-google-signin">
-                    <i class="fab fa-google"></i> Google
-                </a>
-                <a href="#" class="signin-option" id="modal-baidu-signin">
-                    <i class="fab fa-baidu"></i> Baidu
-                </a>
-                <a href="#" class="signin-option" id="modal-vk-signin">
-                    <i class="fab fa-vk"></i> VK
-                </a>
-            </div>
-            <div class="signup-prompt">
-                <p>Don't have an account? <a href="#" id="signup-link">Sign up here</a></p>
             </div>
         </div>
     </div>
