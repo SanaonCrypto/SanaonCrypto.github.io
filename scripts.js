@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Bid Modal
-    document.querySelectorAll('.place-bid-btn').forEach(button => {
+    document.querySelectorAll('.bid-btn').forEach(button => {
         button.addEventListener('click', function() {
             if (!currentUser.isLoggedIn) {
                 signinModal.style.display = 'flex';
