@@ -1,4 +1,3 @@
-/* styles.css - Updated with sign-in page styles */
 /* ====== VARIABLES ====== */
 :root {
     /* Color Scheme */
@@ -12,14 +11,19 @@
     --referral-green: #43a047;
     --buyer-color: #3498db;
     --seller-color: #e74c3c;
-    --platform-color: #9b59b6;
-    --runner-up-color: #f39c12;
     --light-gray: #f5f7fa;
+    
+    /* UI Elements */
     --border: #e0e0e0;
     --shadow: 0 4px 12px rgba(0,0,0,0.1);
     --hover-shadow: 0 8px 20px rgba(0,0,0,0.15);
     --card-shadow: 0 10px 30px rgba(0,0,0,0.1);
     --transition: all 0.3s ease;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #00b4d8, #8c52ff);
+    --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    --gradient-seller: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
     
     /* Night Mode */
     --night-bg: #121212;
@@ -60,8 +64,9 @@ body.night-mode .top-bar {
 body.night-mode header,
 body.night-mode .purchase-system,
 body.night-mode .purchase-tracker,
-body.night-mode .signin-container,
-body.night-mode .incentive-card,
+body.night-mode .commission-calculator,
+body.night-mode .inventory-section,
+body.night-mode .benefit-card,
 body.night-mode .category-card,
 body.night-mode .product-card,
 body.night-mode .modal-content {
@@ -174,6 +179,14 @@ body.night-mode .section-subtitle {
     background: #75a315;
 }
 
+.btn-seller {
+    background: var(--primary-green);
+}
+
+.btn-seller:hover {
+    background: #75a315;
+}
+
 .signup-option, .signin-option {
     display: inline-block;
     padding: 12px 25px;
@@ -209,126 +222,6 @@ body.night-mode .signin-option {
 .signup-prompt {
     margin-top: 20px;
     text-align: center;
-}
-
-/* ====== SIGN IN PAGE ====== */
-.signin-container {
-    display: flex;
-    gap: 40px;
-    margin: 60px auto;
-}
-
-.signin-section {
-    flex: 1;
-    background: white;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: var(--card-shadow);
-}
-
-.signin-options {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin: 30px 0;
-}
-
-.signin-option {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    border-radius: 10px;
-    background: #f5f7fa;
-    text-decoration: none;
-    color: var(--primary-dark);
-    font-weight: 500;
-    transition: var(--transition);
-    border: 1px solid var(--border);
-}
-
-.signin-option:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow);
-}
-
-.signin-option i {
-    margin-right: 10px;
-    font-size: 20px;
-}
-
-.signin-divider {
-    position: relative;
-    text-align: center;
-    margin: 30px 0;
-}
-
-.signin-divider span {
-    background: white;
-    padding: 0 15px;
-    position: relative;
-    z-index: 1;
-}
-
-.signin-divider::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--border);
-}
-
-.signin-form .form-group {
-    margin-bottom: 20px;
-}
-
-.signin-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-}
-
-.signin-form input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 16px;
-}
-
-.form-options {
-    display: flex;
-    justify-content: space-between;
-    margin: 20px 0;
-}
-
-.signin-benefits {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.benefit-card {
-    background: white;
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: var(--card-shadow);
-    text-align: center;
-    transition: var(--transition);
-}
-
-.benefit-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--hover-shadow);
-}
-
-.benefit-card i {
-    font-size: 40px;
-    color: var(--primary-blue);
-    margin-bottom: 15px;
 }
 
 /* ====== HEADER & NAVIGATION ====== */
@@ -1214,7 +1107,7 @@ body.night-mode .escrow-info li {
     color: var(--primary-green);
 }
 
-/* ====== MODALS ====== */
+/* ====== SIGN-IN MODAL ====== */
 .modal {
     display: none;
     position: fixed;
@@ -1230,11 +1123,12 @@ body.night-mode .escrow-info li {
 
 .modal-content {
     background: white;
-    padding: 30px;
-    border-radius: 15px;
+    padding: 40px;
+    border-radius: 20px;
     max-width: 500px;
-    width: 100%;
+    width: 90%;
     position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 body.night-mode .modal-content {
@@ -1245,7 +1139,7 @@ body.night-mode .modal-content {
 .close-modal {
     position: absolute;
     top: 15px;
-    right: 20px;
+    right: 25px;
     font-size: 28px;
     cursor: pointer;
     color: #777;
@@ -1256,86 +1150,159 @@ body.night-mode .modal-content {
     color: var(--primary-red);
 }
 
-.bid-form {
-    margin-top: 20px;
+.modal-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--primary-dark);
 }
 
-.bid-form label {
+body.night-mode .modal-title {
+    color: var(--night-text);
+}
+
+.modal-title h2 {
+    color: var(--primary-blue);
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+body.night-mode .modal-title h2 {
+    color: var(--secondary-blue);
+}
+
+.user-type-selector {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0 30px;
+}
+
+.user-type {
+    flex: 1;
+    text-align: center;
+    padding: 20px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 2px solid var(--border);
+    background: var(--light-gray);
+}
+
+body.night-mode .user-type {
+    background: var(--night-card);
+    border-color: var(--night-border);
+}
+
+.user-type:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.user-type.selected {
+    border-color: var(--primary-blue);
+    background: rgba(0, 100, 210, 0.05);
+}
+
+body.night-mode .user-type.selected {
+    border-color: var(--secondary-blue);
+    background: rgba(30, 136, 229, 0.1);
+}
+
+.user-type.buyer.selected {
+    border-color: var(--buyer-color);
+    background: rgba(52, 152, 219, 0.05);
+}
+
+body.night-mode .user-type.buyer.selected {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+.user-type.seller.selected {
+    border-color: var(--seller-color);
+    background: rgba(231, 76, 60, 0.05);
+}
+
+body.night-mode .user-type.seller.selected {
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.user-type i {
+    font-size: 36px;
+    margin-bottom: 10px;
     display: block;
-    margin-bottom: 8px;
+}
+
+.user-type.buyer i {
+    color: var(--buyer-color);
+}
+
+.user-type.seller i {
+    color: var(--seller-color);
+}
+
+.signin-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.signin-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 20px;
+    border-radius: 10px;
+    background: var(--light-gray);
+    text-decoration: none;
+    color: var(--primary-dark);
     font-weight: 500;
-}
-
-.bid-form input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
+    transition: var(--transition);
     border: 1px solid var(--border);
-    font-size: 18px;
-    margin-bottom: 15px;
 }
 
-body.night-mode .bid-form input {
+body.night-mode .signin-option {
     background: var(--night-card);
     color: var(--night-text);
     border-color: var(--night-border);
 }
 
-.bid-minimum {
-    margin: 8px 0 15px;
-    color: #666;
-    font-weight: 500;
+.signin-option:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow);
 }
 
-.confirm-bid {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    margin-top: 10px;
+.signin-option.google:hover {
+    background: #f0f7ff;
+    border-color: var(--primary-blue);
 }
 
-.bid-terms {
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.signin-option.baidu:hover {
+    background: #fff0f0;
+    border-color: #de2910;
 }
 
-.opt-form {
-    margin-top: 20px;
+.signin-option.vk:hover {
+    background: #e6f0ff;
+    border-color: #0077ff;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.signin-option i {
+    font-size: 24px;
+    margin-right: 15px;
+    width: 30px;
+    text-align: center;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
+.signin-option.google i {
+    color: #4285F4;
 }
 
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    font-size: 16px;
+.signin-option.baidu i {
+    color: #de2910;
 }
 
-.crypto-note {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(67, 160, 71, 0.1);
-    border-radius: 8px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.crypto-note i {
-    color: var(--primary-green);
-    font-size: 20px;
+.signin-option.vk i {
+    color: #0077ff;
 }
 
 /* ====== FOOTER ====== */
@@ -1477,12 +1444,12 @@ footer {
         grid-template-columns: 1fr;
     }
     
-    .signin-container {
-        flex-direction: column;
-    }
-    
     .top-links {
         flex-wrap: wrap;
+    }
+    
+    .user-type-selector {
+        flex-direction: column;
     }
 }
 
@@ -1549,6 +1516,10 @@ footer {
         flex-direction: column;
         align-items: center;
     }
+    
+    .modal-content {
+        padding: 30px 20px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1583,9 +1554,5 @@ footer {
     .nav-links a {
         font-size: 14px;
         padding: 0 10px 10px;
-    }
-    
-    .modal-content {
-        padding: 20px;
     }
 }
