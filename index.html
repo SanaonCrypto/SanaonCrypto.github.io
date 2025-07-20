@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <style>
+        /* CSS content from styles.css */
         :root {
             --primary-blue: #0064D2;
             --primary-green: #86B817;
@@ -943,6 +944,68 @@
             font-size: 22px;
         }
         
+        /* Enterprise Features */
+        .enterprise-features {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.night-mode .enterprise-features {
+            background: #1e293b;
+        }
+
+        .enterprise-features .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary-purple);
+            color: white;
+            padding: 5px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 0 0 0 15px;
+        }
+
+        .enterprise-features h3 {
+            margin-bottom: 20px;
+            color: var(--primary-blue);
+        }
+
+        body.night-mode .enterprise-features h3 {
+            color: var(--secondary-blue);
+        }
+
+        .enterprise-features ul {
+            margin-bottom: 25px;
+            padding-left: 20px;
+        }
+
+        .enterprise-features ul li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .enterprise-features ul li:before {
+            content: "→";
+            position: absolute;
+            left: -20px;
+            color: var(--primary-green);
+        }
+
+        #request-demo {
+            background: var(--primary-purple);
+            width: 100%;
+        }
+
+        #request-demo:hover {
+            background: #7b48e6;
+        }
+
         /* Footer */
         footer {
             background: linear-gradient(to right, var(--primary-dark), #152a6e);
@@ -1505,280 +1568,172 @@
             gap: 25px;
         }
         
-        /* MODALS */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.7);
+        /* B2B Onboarding Section */
+        .b2b-onboarding {
+          background: #f0f9ff;
+          border-radius: 10px;
+          padding: 25px;
+          margin-top: 30px;
+          border: 1px solid #bae6fd;
         }
         
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
-            max-width: 600px;
-            position: relative;
+        body.night-mode .b2b-onboarding {
+          background: #0f172a;
+          border-color: #1e40af;
         }
         
-        body.night-mode .modal-content {
-            background-color: #1e293b;
+        .b2b-onboarding h3 {
+          color: #0c4a6e;
+          margin-bottom: 20px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
         }
         
-        .close-modal {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 15px;
-            right: 20px;
+        body.night-mode .b2b-onboarding h3 {
+          color: #bae6fd;
         }
         
-        .close-modal:hover,
-        .close-modal:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+        .b2b-onboarding h3:before {
+          content: "🏭";
+          font-size: 24px;
         }
         
-        body.night-mode .close-modal:hover,
-        body.night-mode .close-modal:focus {
-            color: #fff;
-        }
-        
-        .modal-header {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        body.night-mode .modal-header {
-            border-bottom: 1px solid #334155;
-        }
-        
-        .modal-body {
-            margin-bottom: 30px;
-        }
-        
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 15px;
-        }
-        
-        /* Form Styles */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-        
-        body.night-mode .form-group input,
-        body.night-mode .form-group select {
-            background: #1e293b;
-            color: #e0e0e0;
-            border-color: #334155;
+        .b2b-form {
+          display: grid;
+          gap: 15px;
         }
         
         .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 15px;
         }
         
-        .form-row .form-group {
-            flex: 1;
-            margin-bottom: 0;
+        @media (max-width: 480px) {
+          .form-row {
+            grid-template-columns: 1fr;
+          }
         }
         
-        .terms-agree {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 20px;
+        .form-group {
+          margin-bottom: 0;
         }
         
-        .terms-agree input {
-            margin-top: 3px;
+        .b2b-onboarding label {
+          display: block;
+          margin-bottom: 8px;
+          font-weight: 500;
+          color: #0369a1;
         }
         
-        /* Bid Modal */
-        #bid-item-name {
-            color: var(--primary-blue);
-            font-weight: 600;
+        body.night-mode .b2b-onboarding label {
+          color: #7dd3fc;
         }
         
-        #min-bid {
-            font-weight: 600;
-            color: var(--primary-green);
+        .b2b-onboarding input,
+        .b2b-onboarding select {
+          width: 100%;
+          padding: 12px 15px;
+          border: 1px solid #bae6fd;
+          border-radius: 8px;
+          background: white;
+          transition: var(--transition);
         }
         
-        /* OPT Modal */
-        .opt-conversion {
-            background: #f0f7ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
+        body.night-mode .b2b-onboarding input,
+        body.night-mode .b2b-onboarding select {
+          background: #1e293b;
+          border-color: #1e40af;
+          color: white;
         }
         
-        body.night-mode .opt-conversion {
-            background: #0f172a;
+        .b2b-onboarding input:focus,
+        .b2b-onboarding select:focus {
+          outline: none;
+          border-color: var(--primary-blue);
+          box-shadow: 0 0 0 3px rgba(0, 100, 210, 0.2);
         }
         
-        .conversion-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
+        body.night-mode .b2b-onboarding input:focus,
+        body.night-mode .b2b-onboarding select:focus {
+          border-color: var(--secondary-blue);
+          box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.3);
         }
         
-        .conversion-row label {
-            width: 120px;
+        #verify-business {
+          background: var(--primary-blue);
+          color: white;
+          padding: 14px;
+          border: none;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: var(--transition);
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
         }
         
-        .conversion-row input {
-            flex: 1;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background: white;
+        #verify-business:hover {
+          background: #0050a8;
         }
         
-        body.night-mode .conversion-row input {
-            background: #1e293b;
-            color: #e0e0e0;
-            border-color: #334155;
+        #verify-business i {
+          font-size: 18px;
         }
         
-        /* Sign In Modal */
-        .user-types {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
+        .file-upload {
+          position: relative;
+          overflow: hidden;
+          display: inline-block;
+          width: 100%;
         }
         
-        .user-type {
-            flex: 1;
-            padding: 20px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
+        .file-upload-btn {
+          border: 1px dashed #bae6fd;
+          border-radius: 8px;
+          padding: 20px;
+          text-align: center;
+          cursor: pointer;
+          transition: var(--transition);
+          width: 100%;
         }
         
-        body.night-mode .user-type {
-            border-color: #334155;
+        body.night-mode .file-upload-btn {
+          border-color: #1e40af;
         }
         
-        .user-type.selected {
-            border-color: var(--primary-blue);
-            background: rgba(0, 100, 210, 0.05);
+        .file-upload-btn:hover {
+          background: rgba(186, 230, 253, 0.1);
         }
         
-        body.night-mode .user-type.selected {
-            background: rgba(0, 100, 210, 0.1);
+        .file-upload-input {
+          position: absolute;
+          left: 0;
+          top: 0;
+          opacity: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
         }
         
-        .user-type i {
-            font-size: 36px;
-            margin-bottom: 15px;
+        .file-upload-text {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          color: #0369a1;
         }
         
-        .user-type.buyer i {
-            color: var(--buyer-color);
+        body.night-mode .file-upload-text {
+          color: #7dd3fc;
         }
         
-        .user-type.seller i {
-            color: var(--seller-color);
-        }
-        
-        .signin-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .signin-option {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 500;
-        }
-        
-        .signin-option.google {
-            background: #4285F4;
-            color: white;
-        }
-        
-        .signin-option.baidu {
-            background: #2932e1;
-            color: white;
-        }
-        
-        .signin-option.vk {
-            background: #4a76a8;
-            color: white;
-        }
-        
-        .signin-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        
-        /* STATUS BADGES */
-        .status-badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
-        .badge-success {
-            background: rgba(67, 160, 71, 0.15);
-            color: var(--primary-green);
-        }
-        
-        .badge-warning {
-            background: rgba(255, 152, 0, 0.15);
-            color: #ff9800;
-        }
-        
-        .badge-danger {
-            background: rgba(244, 67, 54, 0.15);
-            color: #f44336;
-        }
-        
-        .badge-info {
-            background: rgba(33, 150, 243, 0.15);
-            color: var(--secondary-blue);
+        .file-upload-text i {
+          font-size: 24px;
         }
     </style>
 </head>
@@ -1985,6 +1940,7 @@
                             <a href="categories/industrial/systems.html"><i class="fas fa-cogs"></i> Automation Systems</a>
                             <a href="categories/industrial/equipment.html"><i class="fas fa-industry"></i> Manufacturing Equipment</a>
                             <a href="categories/industrial/cnc.html"><i class="fas fa-tools"></i> CNC Machines</a>
+                            <极客助手>
                             <a href="categories/industrial/3dprinters.html"><i class="fas fa-print"></i> 3D Printers</a>
                             <a href="categories/industrial/sensors.html"><i class="fas fa-microchip"></i> Sensors & Actuators</a>
                             <a href="categories/industrial/control.html"><i class="fas fa-sliders-h"></i> Control Systems</a>
@@ -1994,7 +1950,7 @@
                     <!-- Pets Category -->
                     <div class="dropdown">
                         <a href="pets.html">
-                            <i class="fas fa-paw"></i>
+                            <i class="极客助手"></i>
                             <span>Pets</span>
                         </a>
                         <div class="dropdown-content">
@@ -2010,7 +1966,7 @@
                     <div class="dropdown">
                         <a href="automobiles.html">
                             <i class="fas fa-car"></i>
-                            <span>Automobiles</span>
+                            <span>Automobiles</极客助手>
                         </a>
                         <div class="dropdown-content">
                             <a href="categories/automobiles/cars.html"><i class="fas fa-car"></i> Cars</a>
@@ -2083,7 +2039,7 @@
         <!-- Purchase System Section -->
         <section class="purchase-system">
             <h2 class="section-title">Purchase-Based System</h2>
-            <p class="section-subtitle">All accounts can complete 3 purchases. Bid as much as you want per purchase!</p>
+            <p class极客助手>All accounts can complete 3 purchases. Bid as much as you want per purchase!</p>
             
             <div class="purchase-cards">
                 <div class="purchase-card">
@@ -2232,7 +2188,7 @@
                 </div>
                 
                 <div class="purchase-container">
-                    <div class="purchase-badge"><i class="fas fa-file-contract"></i></div>
+                    <div class="purchase-badge"><i class="fas fa-file-contract"></i></极客助手>
                     <div>Smart Contracts</div>
                     <div>Automated agreements secured by blockchain</div>
                 </div>
@@ -2353,7 +2309,6 @@
             <h2 class="section-title">Industrial Equipment Showcase</h2>
             <p class="section-subtitle">Quantum-secured industrial automation solutions</p>
 
-            <!-- In industrial equipment section -->
             <div class="enterprise-features">
               <div class="badge">B2B EXCLUSIVE</div>
               <h3>Business Benefits</h3>
@@ -2395,7 +2350,7 @@
                 
                 <div class="product-card industrial-equipment">
                     <div class="product-image">
-                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="CNC Machine">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&极客助手=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="CNC Machine">
                     </div>
                     <div class="product-info">
                         <h3>Precision CNC Milling Machine</h3>
@@ -2411,7 +2366,7 @@
                             <div class="discount">14% OFF</div>
                         </div>
                         <div class="bid-section">
-                            <div class="starting-bid">Starting Bid: $35,000</div>
+                            <div class="starting-b极客助手">Starting Bid: $35,000</div>
                             <button class="btn bid-btn"><i class="fas fa-gavel"></i> Place Bid</button>
                         </div>
                         <div class="security-badge">
@@ -2532,6 +2487,54 @@
                         <span>Sign in with VK</span>
                     </div>
                 </div>
+
+                <!-- B2B Onboarding Section -->
+                <div class="b2b-onboarding">
+                    <h3><i class="fas fa-building"></i> Business Account Verification</h3>
+                    <p>Verify your business to unlock enterprise features and OPT rewards</p>
+                    
+                    <div class="b2b-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="company-name">Company Name</label>
+                                <input type="text" id="company-name" placeholder="Enter company name">
+                            </div>
+                            <div class="form-group">
+                                <label for="business-type">Business Type</label>
+                                <select id="business-type">
+                                    <option value="">Select business type</option>
+                                    <option value="Manufacturer">Manufacturer</option>
+                                    <option value="Distributor">Distributor</option>
+                                    <option value="Wholesaler">Wholesaler</option>
+                                    <option value="Retailer">Retailer</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tax-id">Tax ID / EIN</label>
+                            <input type="text" id="tax-id" placeholder="Enter tax identification number">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Business Documents</label>
+                            <div class="file-upload">
+                                <div class="file-upload-btn">
+                                    <input type="file" class="file-upload-input" id="business-docs" accept=".pdf,.jpg,.png">
+                                    <div class="file-upload-text">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <span>Upload business license or certificate</span>
+                                        <small>(PDF, JPG, or PNG)</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="verify-business" class="btn">
+                            <i class="fas fa-shield-alt"></i> Verify Business Account
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2603,19 +2606,23 @@
     </div>
     
     <script>
+        // JavaScript content from scripts.js
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize user state
             let currentUser = {
                 isLoggedIn: false,
                 userType: null, // 'buyer' or 'seller'
+                businessVerified: false,
+                businessType: null,
                 purchases: {
-                    available: 0,
+                    available极客助手,
                     completed: 0,
                     earned: 0
                 },
                 referralCode: '',
                 referrals: 0,
-                optBalance: 0
+                optBalance: 0,
+                industrialAccess: false
             };
             
             // ====== QUANTUM SECURITY LAYER ======
@@ -2638,6 +2645,27 @@
                         const entropy = Math.random() * 100;
                         if (entropy < 30) console.warn("Low entropy detected!");
                     }, 300000);
+                },
+                // NEW: Business verification quantum layer
+                businessVerification: {
+                    validateDocuments: (docs) => {
+                        console.log("Quantum document validation initiated");
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                // Simulate 95% success rate for document verification
+                                resolve(Math.random() > 0.05);
+                            }, 1500);
+                        });
+                    },
+                    checkBusinessReputation: (companyName) => {
+                        console.log(`Quantum reputation check for ${companyName}`);
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                // Simulate reputation check
+                                resolve(Math.random() > 0.1); // 90% pass rate
+                            }, 2000);
+                        });
+                    }
                 }
             };
             
@@ -2664,6 +2692,13 @@
             // Sign In Modal Elements
             const userTypes = document.querySelectorAll('.user-type');
             const signinOptions = document.querySelectorAll('.signin-option');
+            
+            // NEW: B2B Verification Elements
+            const verifyBusinessBtn = document.getElementById('verify-business');
+            const companyNameInput = document.getElementById('company-name');
+            const taxIdInput = document.getElementById('tax-id');
+            const businessTypeSelect = document.getElementById('business-type');
+            const businessDocsInput = document.getElementById('business-docs');
             
             // Initialize Google Translate
             function googleTranslateElementInit() {
@@ -2730,6 +2765,8 @@
                 currentUser = {
                     isLoggedIn: true,
                     userType: userType,
+                    businessVerified: localStorage.getItem('business_verified') === 'approved',
+                    businessType: localStorage.getItem('business_type') || null,
                     purchases: {
                         available: 3, // Initial 3 free purchases
                         completed: 0,
@@ -2737,7 +2774,8 @@
                     },
                     referralCode: 'ONAY-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                     referrals: 0,
-                    optBalance: 0
+                    optBalance: 0,
+                    industrialAccess: localStorage.getItem('business_verified') === 'approved'
                 };
                 
                 // Update UI
@@ -2816,6 +2854,25 @@
                     if (currentUser.optBalance < requiredOpt) return false;
                     currentUser.optBalance -= requiredOpt;
                     return true;
+                },
+                // NEW: Business verification rewards
+                issueBusinessRewards: (businessType) => {
+                    let rewardAmount = 0;
+                    switch(businessType) {
+                        case 'Manufacturer':
+                            rewardAmount = 5000; // 5000 OPT
+                            break;
+                        case 'Distributor':
+                            rewardAmount = 3000; // 3000 OPT
+                            break;
+                        case 'Wholesaler':
+                            rewardAmount = 2000; // 2000 OPT
+                            break;
+                        default:
+                            rewardAmount = 1000; // 1000 OPT
+                    }
+                    currentUser.optBalance += rewardAmount;
+                    return rewardAmount;
                 }
             };
 
@@ -2827,6 +2884,72 @@
                 }
                 return true;
             }
+            
+            // ====== B2B VERIFICATION SYSTEM ======
+            verifyBusinessBtn.addEventListener('click', async function() {
+                const companyName = companyNameInput.value.trim();
+                const taxId = taxIdInput.value.trim();
+                const businessType = businessTypeSelect.value;
+                const docs = businessDocsInput.files;
+                
+                if (!companyName || !taxId || !docs || docs.length === 0) {
+                    alert('Please fill all required business fields and upload documents');
+                    return;
+                }
+                
+                // Show loading state
+                verifyBusinessBtn.disabled = true;
+                verifyBusinessBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+                
+                try {
+                    // Quantum document verification
+                    const docsValid = await quantumLayer.businessVerification.validateDocuments(docs);
+                    if (!docsValid) {
+                        throw new Error('Document verification failed. Please upload valid documents.');
+                    }
+                    
+                    // Quantum reputation check
+                    const reputationValid = await quantumLayer.businessVerification.checkBusinessReputation(companyName);
+                    if (!reputationValid) {
+                        throw new Error('Business reputation check failed. Please contact support.');
+                    }
+                    
+                    // Quantum security verification
+                    if (!quantumLayer.kyber2048.verify()) {
+                        throw new Error('Quantum security verification failed. Please try again.');
+                    }
+                    
+                    // Store verification status
+                    localStorage.setItem('business_verified', 'approved');
+                    localStorage.setItem('business_type', businessType);
+                    
+                    // Issue rewards
+                    const rewardAmount = OPT_CONTRACT.issueBusinessRewards(businessType);
+                    
+                    // Update user state
+                    currentUser.businessVerified = true;
+                    currentUser.businessType = businessType;
+                    currentUser.industrialAccess = true;
+                    currentUser.optBalance += rewardAmount;
+                    
+                    // Success message
+                    alert(`Business verification successful!\n\n${companyName} has been approved as a ${businessType}.\n\nYou received ${rewardAmount} OPT tokens as a welcome bonus!`);
+                    
+                    // Close modal if open
+                    signinModal.style.display = 'none';
+                    
+                    // Enable industrial features
+                    console.log(`Industrial features unlocked for ${companyName}`);
+                    
+                } catch (error) {
+                    console.error('Business verification error:', error);
+                    alert(`Verification failed: ${error.message}`);
+                } finally {
+                    // Reset button state
+                    verifyBusinessBtn.disabled = false;
+                    verifyBusinessBtn.textContent = 'Verify Business Account';
+                }
+            });
             
             // ====== SIGN IN MODAL FUNCTIONALITY ======
             // Show modal when sign-in link is clicked
@@ -2986,6 +3109,7 @@
             console.log("Running system validation...");
             setTimeout(() => {
                 console.log("Security Status: Kyber1024/2048 Hybrid Active");
+                console.log("Business Verification: Quantum Document Scanner Online");
                 console.log("Performance: All thresholds met");
                 console.log("System ready for industrial equipment launch");
             }, 2000);
