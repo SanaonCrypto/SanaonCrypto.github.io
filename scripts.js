@@ -1,4 +1,3 @@
-// scripts.js
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize user state
     let currentUser = {
@@ -13,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
         referrals: 0,
         optBalance: 0
     };
-      // ====== QUANTUM SECURITY LAYER ====== [Added per v4.0 Plan]
+    
+    // ====== QUANTUM SECURITY LAYER ======
     const quantumLayer = {
         kyber1024: {
             verify: () => {
@@ -102,9 +102,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('nightMode', this.checked);
         });
     }
-
     
-    // ====== QUANTUM SECURITY TRANSACTION HANDLER ====== [Added per v4.0 Plan]
+    // ====== QUANTUM SECURITY TRANSACTION HANDLER ======
     function handleTransaction(amount) {
         if (amount > 50000) { // High-value transaction
             if (!quantumLayer.kyber2048.verify()) {
@@ -172,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Referral applied! You have received +1 free purchase.');
     }
     
-// ====== UPDATED PURCHASE SYSTEM WITH QUANTUM SECURITY ====== [Modified per v4.0 Plan]
+    // ====== UPDATED PURCHASE SYSTEM WITH QUANTUM SECURITY ======
     function completePurchase(transactionValue = 100) {
         if (!currentUser.isLoggedIn) {
             alert('Please sign in first');
@@ -199,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return false;
     }
 
-    // ====== OPT TOKEN ECONOMY ====== [Added per v4.0 Plan]
+    // ====== OPT TOKEN ECONOMY ======
     const OPT_CONTRACT = {
         buyOptTokens: (amount) => {
             const usdAmount = amount * 0.02;
@@ -325,7 +324,8 @@ document.addEventListener('DOMContentLoaded', function() {
     confirmOptPurchaseBtn.addEventListener('click', function() {
         const optAmount = parseInt(optAmountInput.value) || 0;
         if (optAmount >= 50) {
-            buyOptTokens(optAmount);
+            OPT_CONTRACT.buyOptTokens(optAmount);
+            alert(`Successfully purchased ${optAmount} OPT tokens!`);
             optModal.style.display = 'none';
         } else {
             alert('Minimum purchase is 50 OPT ($1.00)');
@@ -377,10 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
         applyReferralCode(referralCode);
     }
     
-    console.log("Marketplace System Initialized");
-});
-
- // ====== SYSTEM VALIDATION ====== [Added per v4.0 Plan]
+    // ====== SYSTEM VALIDATION ======
     console.log("Running system validation...");
     setTimeout(() => {
         console.log("Security Status: Kyber1024/2048 Hybrid Active");
