@@ -42,6 +42,64 @@
             margin: 0 auto;
             padding: 0 20px;
         }
+                /* NEW STYLES FOR B2B SECTION */
+        .b2b-onboarding {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .b2b-onboarding h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        #verify-business {
+            background: var(--primary-green);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+        }
+        
+        #verify-business:hover {
+            background: #75a314;
+        }
+    </style>
+</head>
+<body>
         
         /* Header Styles */
         header {
@@ -810,6 +868,40 @@
         </div>
     </div>
 
+     <!-- NEW B2B SIGNUP SECTION -->
+            <div class="b2b-onboarding">
+                <h3>Business Registration</h3>
+                <div class="form-group">
+                    <label>Company Name</label>
+                    <input type="text" id="company-name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tax ID</label>
+                        <input type="text" id="tax-id">
+                    </div>
+                    <div class="form-group">
+                        <label>Business Type</label>
+                        <select id="business-type">
+                            <option>Manufacturer</option>
+                            <option>Distributor</option>
+                            <option>Wholesaler</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Verification Documents</label>
+                    <input type="file" id="business-docs" accept=".pdf,.jpg,.png">
+                </div>
+                <button id="verify-business" class="btn">Verify Business Account</button>
+            </div>
+            
+            <p style="text-align: center; margin-top: 20px; color: #666;">
+                New to OnayPonay? <a href="#" style="color: var(--primary-blue);">Create an account</a>
+            </p>
+        </div>
+    </div>
+
     <!-- Marketplace Section with 50% Starting Bids -->
     <section class="marketplace-section">
         <div class="container">
@@ -1109,6 +1201,22 @@
                     const productName = this.closest('.product-card').querySelector('h3').textContent;
                     alert(`You're bidding on: ${productName}\nSign in to place your bid!`);
                 });
+            });
+        });
+
+      
+            // NEW FUNCTIONALITY FOR B2B BUTTON
+            document.getElementById('verify-business').addEventListener('click', function() {
+                const companyName = document.getElementById('company-name').value;
+                const businessType = document.getElementById('business-type').value;
+                
+                if (!companyName) {
+                    alert('Please enter your company name');
+                    return;
+                }
+                
+                alert(`Business verification request submitted for ${companyName} (${businessType}).\nOur team will review your documents within 24 hours.`);
+                signinModal.style.display = 'none';
             });
         });
     </script>
