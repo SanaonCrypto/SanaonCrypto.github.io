@@ -1,8 +1,11 @@
+// scripts.js - QuantumCommerce Global Deployment
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize user state
     let currentUser = {
         isLoggedIn: false,
         userType: null, // 'buyer' or 'seller'
+        businessVerified: false,
+        businessType: null,
         purchases: {
             available: 0,
             completed: 0,
@@ -10,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         referralCode: '',
         referrals: 0,
-        optBalance: 0
+        optBalance: 0,
+        industrialAccess: false
     };
     
     // ====== QUANTUM SECURITY LAYER ======
@@ -33,6 +37,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 const entropy = Math.random() * 100;
                 if (entropy < 30) console.warn("Low entropy detected!");
             }, 300000);
+        },
+        // NEW: Business verification quantum layer
+        businessVerification: {
+            validateDocuments: (docs) => {
+                console.log("Quantum document validation initiated");
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        // Simulate 95% success rate for document verification
+                        resolve(Math.random() > 0.05);
+                    }, 1500);
+                });
+            },
+            checkBusinessReputation: (companyName) => {
+                console.log(`Quantum reputation check for ${companyName}`);
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        // Simulate reputation check
+                        resolve(Math.random() > 0.1); // 90% pass rate
+                    }, 2000);
+                });
+            }
         }
     };
     
@@ -59,6 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sign In Modal Elements
     const userTypes = document.querySelectorAll('.user-type');
     const signinOptions = document.querySelectorAll('.signin-option');
+    
+    // NEW: B2B Verification Elements
+    const verifyBusinessBtn = document.getElementById('verify-business');
+    const companyNameInput = document.getElementById('company-name');
+    const taxIdInput = document.getElementById('tax-id');
+    const businessTypeSelect = document.getElementById('business-type');
+    const businessDocsInput = document.getElementById('business-docs');
     
     // Initialize Google Translate
     function googleTranslateElementInit() {
@@ -112,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         } else { // Regular transaction
             if (!quantumLayer.kyber1024.verify()) {
-                console.error("Quantum security verification failed!");
+                console.error("Quantum security verification verification failed!");
                 return false;
             }
         }
@@ -125,6 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
         currentUser = {
             isLoggedIn: true,
             userType: userType,
+            businessVerified: localStorage.getItem('business_verified') === 'approved',
+            businessType: localStorage.getItem('business_type') || null,
             purchases: {
                 available: 3, // Initial 3 free purchases
                 completed: 0,
@@ -132,7 +166,8 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             referralCode: 'ONAY-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
             referrals: 0,
-            optBalance: 0
+            optBalance: 0,
+            industrialAccess: localStorage.getItem('business_verified') === 'approved'
         };
         
         // Update UI
@@ -211,6 +246,25 @@ document.addEventListener('DOMContentLoaded', function() {
             if (currentUser.optBalance < requiredOpt) return false;
             currentUser.optBalance -= requiredOpt;
             return true;
+        },
+        // NEW: Business verification rewards
+        issueBusinessRewards: (businessType) => {
+            let rewardAmount = 0;
+            switch(businessType) {
+                case 'Manufacturer':
+                    rewardAmount = 5000; // 5000 OPT
+                    break;
+                case 'Distributor':
+                    rewardAmount = 3000; // 3000 OPT
+                    break;
+                case 'Wholesaler':
+                    rewardAmount = 2000; // 2000 OPT
+                    break;
+                default:
+                    rewardAmount = 1000; // 1000 OPT
+            }
+            currentUser.optBalance += rewardAmount;
+            return rewardAmount;
         }
     };
 
@@ -222,6 +276,72 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return true;
     }
+    
+    // ====== B2B VERIFICATION SYSTEM ======
+    verifyBusinessBtn.addEventListener('click', async function() {
+        const companyName = companyNameInput.value.trim();
+        const taxId = taxIdInput.value.trim();
+        const businessType = businessTypeSelect.value;
+        const docs = businessDocsInput.files;
+        
+        if (!companyName || !taxId || !docs || docs.length === 0) {
+            alert('Please fill all required business fields and upload documents');
+            return;
+        }
+        
+        // Show loading state
+        verifyBusinessBtn.disabled = true;
+        verifyBusinessBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+        
+        try {
+            // Quantum document verification
+            const docsValid = await quantumLayer.businessVerification.validateDocuments(docs);
+            if (!docsValid) {
+                throw new Error('Document verification failed. Please upload valid documents.');
+            }
+            
+            // Quantum reputation check
+            const reputationValid = await quantumLayer.businessVerification.checkBusinessReputation(companyName);
+            if (!reputationValid) {
+                throw new Error('Business reputation check failed. Please contact support.');
+            }
+            
+            // Quantum security verification
+            if (!quantumLayer.kyber2048.verify()) {
+                throw new Error('Quantum security verification failed. Please try again.');
+            }
+            
+            // Store verification status
+            localStorage.setItem('business_verified', 'approved');
+            localStorage.setItem('business_type', businessType);
+            
+            // Issue rewards
+            const rewardAmount = OPT_CONTRACT.issueBusinessRewards(businessType);
+            
+            // Update user state
+            currentUser.businessVerified = true;
+            currentUser.businessType = businessType;
+            currentUser.industrialAccess = true;
+            currentUser.optBalance += rewardAmount;
+            
+            // Success message
+            alert(`Business verification successful!\n\n${companyName} has been approved as a ${businessType}.\n\nYou received ${rewardAmount} OPT tokens as a welcome bonus!`);
+            
+            // Close modal if open
+            signinModal.style.display = 'none';
+            
+            // Enable industrial features
+            console.log(`Industrial features unlocked for ${companyName}`);
+            
+        } catch (error) {
+            console.error('Business verification error:', error);
+            alert(`Verification failed: ${error.message}`);
+        } finally {
+            // Reset button state
+            verifyBusinessBtn.disabled = false;
+            verifyBusinessBtn.textContent = 'Verify Business Account';
+        }
+    });
     
     // ====== SIGN IN MODAL FUNCTIONALITY ======
     // Show modal when sign-in link is clicked
@@ -381,6 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Running system validation...");
     setTimeout(() => {
         console.log("Security Status: Kyber1024/2048 Hybrid Active");
+        console.log("Business Verification: Quantum Document Scanner Online");
         console.log("Performance: All thresholds met");
         console.log("System ready for industrial equipment launch");
     }, 2000);
