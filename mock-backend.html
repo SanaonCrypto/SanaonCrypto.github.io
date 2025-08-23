@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OnayPonay - Development Mode (Mock Backend)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0064D2;
+            --primary-green: #86B817;
+            --primary-red: #E53238;
+            --primary-yellow: #F5AF02;
+            --primary-purple: #8c52ff;
+            --primary-dark: #0f172a;
+            --secondary-blue: #1e88e5;
+            --light-gray: #f5f7fa;
+            --border: #e0e0e0;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f7ff 0%, #f9f9f9 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .header h1 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .dev-badge {
+            display: inline-block;
+            background: var(--primary-purple);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .api-section {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .api-section h2 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .endpoint {
+            background: var(--light-gray);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .get { background: #61affe; color: white; }
+        .post { background: #49cc90; color: white; }
+        .put { background: #fca130; color: white; }
+        .delete { background: #f93e3e; color: white; }
+        
+        .url {
+            font-family: monospace;
+            font-size: 16px;
+        }
+        
+        .response {
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-green);
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        
+        pre {
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .test-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .test-btn.call {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        .test-btn.call:hover {
+            background: #0050a8;
+        }
+        
+        .test-btn.clear {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .test-btn.clear:hover {
+            background: #d0d0d0;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .success { background: #e6f7e6; color: #2e7d32; }
+        .error { background: #ffebee; color: #d32f2f; }
+        
+        .toggle-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .toggle-btn {
+            padding: 12px 25px;
+            background: var(--primary-purple);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .toggle-btn:hover {
+            background: #7b48e6;
+            transform: translateY(-2px);
+        }
+        
+        .mock-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .mock-info h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>OnayPonay Mock Backend Environment</h1>
+            <p>Simulates the actual backend API for frontend development</p>
+            <div class="dev-badge">Development Mode</div>
+        </div>
+        
+        <div class="toggle-container">
+            <button class="toggle-btn" id="toggle-mode">Switch to Real API</button>
+        </div>
+        
+        <div class="mock-info">
+            <h3>How This Works</h3>
+            <p>This mock environment simulates your backend API endpoints. All API calls from your frontend will be intercepted and handled by mock services that return realistic responses.</p>
+            <p>When you're ready to switch to the real backend, simply click the "Switch to Real API" button above.</p>
+        </div>
+        
+        <div class="api-section">
+            <h2>Authentication Endpoints</h2>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auth/register</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('register')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('register')">Clear</button>
+                </div>
+                <div class="response" id="register-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auth/login</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('login')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('login')">Clear</button>
+                </div>
+                <div class="response" id="login-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auth/token</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('token')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('token')">Clear</button>
+                </div>
+                <div class="response" id="token-response"></div>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>Auction Endpoints</h2>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auctions</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('create-auction')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('create-auction')">Clear</button>
+                </div>
+                <div class="response" id="create-auction-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auctions/:id/bidders</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('add-bidder')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('add-bidder')">Clear</button>
+                </div>
+                <div class="response" id="add-bidder-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/auctions/:id/run</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('run-auction')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('run-auction')">Clear</button>
+                </div>
+                <div class="response" id="run-auction-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span class="url">/auctions/:id</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('get-auction')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('get-auction')">Clear</button>
+                </div>
+                <div class="response" id="get-auction-response"></div>
+            </div>
+        </div>
+        
+        <div class="api-section">
+            <h2>System Endpoints</h2>
+            
+            <div class="endpoint">
+                <span class="method post">POST</span>
+                <span class="url">/system/stress-test</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('stress-test')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('stress-test')">Clear</button>
+                </div>
+                <div class="response" id="stress-test-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span class="url">/system/analytics</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('analytics')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('analytics')">Clear</button>
+                </div>
+                <div class="response" id="analytics-response"></div>
+            </div>
+            
+            <div class="endpoint">
+                <span class="method get">GET</span>
+                <span class="url">/system/patents</span>
+                <div class="test-buttons">
+                    <button class="test-btn call" onclick="testEndpoint('patents')">Test Endpoint</button>
+                    <button class="test-btn clear" onclick="clearResponse('patents')">Clear</button>
+                </div>
+                <div class="response" id="patents-response"></div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>OnayPonay Marketplace &copy; 2023 | Mock Backend Environment v1.0</p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            useMockBackend: true,
+            apiBaseUrl: 'http://localhost:8000',
+            mockDelay: 500 // Simulate network delay in ms
+        };
+        
+        // DOM Elements
+        const toggleBtn = document.getElementById('toggle-mode');
+        
+        // Update toggle button text
+        function updateToggleButton() {
+            toggleBtn.textContent = CONFIG.useMockBackend ? 
+                'Switch to Real API' : 'Switch to Mock API';
+        }
+        
+        // Toggle between mock and real API
+        toggleBtn.addEventListener('click', function() {
+            CONFIG.useMockBackend = !CONFIG.useMockBackend;
+            updateToggleButton();
+            
+            const mode = CONFIG.useMockBackend ? 'Mock' : 'Real';
+            alert(`Now using ${mode} API mode`);
+        });
+        
+        // Mock API Service
+        const mockAPI = {
+            // Authentication endpoints
+            register: async (data) => {
+                return {
+                    message: "User registered successfully",
+                    api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9),
+                    username: data.username
+                };
+            },
+            
+            login: async (data) => {
+                return {
+                    message: "Login successful",
+                    api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9)
+                };
+            },
+            
+            token: async (data) => {
+                return {
+                    access_token: "mock_jwt_token_" + Math.random().toString(36).substr(2, 12),
+                    token_type: "bearer"
+                };
+            },
+            
+            // Auction endpoints
+            createAuction: async (data) => {
+                return {
+                    auction_id: "auction_" + Date.now(),
+                    item_type: data.item_type,
+                    market_price: data.market_price,
+                    inventory: data.inventory,
+                    reserve: data.reserve || data.market_price * 0.7,
+                    status: "created",
+                    created_at: new Date().toISOString()
+                };
+            },
+            
+            addBidder: async (auctionId, data) => {
+                return {
+                    status: "Bidder added",
+                    bidder_id: data.bidder_id,
+                    max_bid: data.max_bid
+                };
+            },
+            
+            runAuction: async (auctionId) => {
+                const outcomes = ["success", "failed"];
+                const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+                
+                if (outcome === "success") {
+                    return {
+                        status: "success",
+                        winner: "bidder_" + Math.floor(Math.random() * 100),
+                        winning_bid: Math.random() * 1000 + 500,
+                        net_cost: Math.random() * 800 + 400,
+                        distribution: {
+                            onayponay: Math.random() * 200 + 100,
+                            bid_credits: Math.random() * 150 + 75,
+                            winner_refund: Math.random() * 100 + 50,
+                            runner_up_voucher: Math.random() * 50 + 25
+                        },
+                        seller_payout: Math.random() * 900 + 450
+                    };
+                } else {
+                    return {
+                        status: "failed",
+                        reason: "Reserve price not met",
+                        action: "Item relisted with priority"
+                    };
+                }
+            },
+            
+            getAuction: async (auctionId) => {
+                return {
+                    auction_id: auctionId,
+                    item_type: ["replenishable", "unique"][Math.floor(Math.random() * 2)],
+                    market_price: Math.random() * 1000 + 500,
+                    inventory: Math.floor(Math.random() * 10) + 1,
+                    reserve: Math.random() * 800 + 300,
+                    status: ["created", "running", "completed", "failed"][Math.floor(Math.random() * 4)],
+                    created_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+                    bidders: Array(Math.floor(Math.random() * 5) + 1).fill(0).map((_, i) => ({
+                        bidder_id: "bidder_" + i,
+                        max_bid: Math.random() * 1000 + 300,
+                        reputation: Math.random() * 50 + 50,
+                        credits: Math.random() * 1000
+                    })),
+                    log: [
+                        "Auction created",
+                        "Bidder added: bidder_1",
+                        "Bidder added: bidder_2",
+                        "Auction started",
+                        "Bid placed: $650 by bidder_1",
+                        "Bid placed: $720 by bidder_2"
+                    ]
+                };
+            },
+            
+            // System endpoints
+            stressTest: async (data) => {
+                return {
+                    successful_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.8),
+                    failed_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.2),
+                    free_tier_exceeded: Math.random() > 0.7,
+                    daily_load: Array(data.days).fill(0).map((_, i) => ({
+                        day: i + 1,
+                        auctions: data.auctions_per_day,
+                        storage: Math.random() * 10 + 5,
+                        requests: data.auctions_per_day * 5,
+                        bandwidth: Math.random() * 5 + 2
+                    }))
+                };
+            },
+            
+            analytics: async () => {
+                return {
+                    success_rate: Math.random() * 30 + 70,
+                    total_auctions: Math.floor(Math.random() * 100) + 50,
+                    recent_auctions: Array(5).fill(0).map(() => ({
+                        auction_id: "auction_" + Math.floor(Math.random() * 1000),
+                        winner: "bidder_" + Math.floor(Math.random() * 20),
+                        winning_bid: Math.random() * 1000 + 500,
+                        net_cost: Math.random() * 900 + 400,
+                        completed_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
+                    })),
+                    top_bidders: Array(5).fill(0).map((_, i) => [
+                        "bidder_" + (i + 1),
+                        Math.floor(Math.random() * 20) + 5
+                    ])
+                };
+            },
+            
+            patents: async () => {
+                return {
+                    "USPTO-63/789,465": "Bid-Back Pool Allocation System",
+                    "USPTO-63/789,511": "Quantum Verification Mechanism",
+                    "PCT/IB2024/000001": "Zero-Cost Compensation Protocol"
+                };
+            }
+        };
+        
+        // API Service functions
+        const apiService = {
+            // Generic API call function
+            call: async (endpoint, method = 'GET', data = null) => {
+                if (CONFIG.useMockBackend) {
+                    // Simulate network delay
+                    await new Promise(resolve => setTimeout(resolve, CONFIG.mockDelay));
+                    
+                    // Route to appropriate mock function
+                    switch (endpoint) {
+                        case '/auth/register':
+                            return mockAPI.register(data);
+                        case '/auth/login':
+                            return mockAPI.login(data);
+                        case '/auth/token':
+                            return mockAPI.token(data);
+                        case '/auctions':
+                            return mockAPI.createAuction(data);
+                        case '/auctions/:id/bidders':
+                            return mockAPI.addBidder('mock_auction_id', data);
+                        case '/auctions/:id/run':
+                            return mockAPI.runAuction('mock_auction_id');
+                        case '/auctions/:id':
+                            return mockAPI.getAuction('mock_auction_id');
+                        case '/system/stress-test':
+                            return mockAPI.stressTest(data);
+                        case '/system/analytics':
+                            return mockAPI.analytics();
+                        case '/system/patents':
+                            return mockAPI.patents();
+                        default:
+                            throw new Error(`Mock endpoint not implemented: ${endpoint}`);
+                    }
+                } else {
+                    // Real API call
+                    const options = {
+                        method,
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    };
+                    
+                    if (data) {
+                        options.body = JSON.stringify(data);
+                    }
+                    
+                    const response = await fetch(`${CONFIG.apiBaseUrl}${endpoint}`, options);
+                    return response.json();
+                }
+            },
+            
+            // Specific API methods
+            register: (userData) => apiService.call('/auth/register', 'POST', userData),
+            login: (userData) => apiService.call('/auth/login', 'POST', userData),
+            getToken: (userData) => apiService.call('/auth/token', 'POST', userData),
+            createAuction: (auctionData) => apiService.call('/auctions', 'POST', auctionData),
+            addBidder: (auctionId, bidderData) => apiService.call(`/auctions/${auctionId}/bidders`, 'POST', bidderData),
+            runAuction: (auctionId) => apiService.call(`/auctions/${auctionId}/run`, 'POST'),
+            getAuction: (auctionId) => apiService.call(`/auctions/${auctionId}`, 'GET'),
+            stressTest: (params) => apiService.call('/system/stress-test', 'POST', params),
+            getAnalytics: () => apiService.call('/system/analytics', 'GET'),
+            getPatents: () => apiService.call('/system/patents', 'GET')
+        };
+        
+        // Test functions for the demo page
+        async function testEndpoint(endpoint) {
+            const responseElement = document.getElementById(`${endpoint}-response`);
+            responseElement.innerHTML = '<span class="status success">Testing...</span>';
+            
+            try {
+                let response;
+                
+                switch (endpoint) {
+                    case 'register':
+                        response = await apiService.register({
+                            username: 'testuser',
+                            password: 'testpassword'
+                        });
+                        break;
+                    case 'login':
+                        response = await apiService.login({
+                            username: 'testuser',
+                            password: 'testpassword'
+                        });
+                        break;
+                    case 'token':
+                        response = await apiService.getToken({
+                            username: 'testuser',
+                            password: 'testpassword'
+                        });
+                        break;
+                    case 'create-auction':
+                        response = await apiService.createAuction({
+                            item_type: 'unique',
+                            market_price: 1000,
+                            inventory: 1,
+                            reserve: 700
+                        });
+                        break;
+                    case 'add-bidder':
+                        response = await apiService.addBidder('test_auction', {
+                            bidder_id: 'test_bidder',
+                            max_bid: 850
+                        });
+                        break;
+                    case 'run-auction':
+                        response = await apiService.runAuction('test_auction');
+                        break;
+                    case 'get-auction':
+                        response = await apiService.getAuction('test_auction');
+                        break;
+                    case 'stress-test':
+                        response = await apiService.stressTest({
+                            days: 3,
+                            auctions_per_day: 10
+                        });
+                        break;
+                    case 'analytics':
+                        response = await apiService.getAnalytics();
+                        break;
+                    case 'patents':
+                        response = await apiService.getPatents();
+                        break;
+                }
+                
+                responseElement.innerHTML = `
+                    <span class="status success">Success</span>
+                    <pre>${JSON.stringify(response, null, 2)}</pre>
+                `;
+            } catch (error) {
+                responseElement.innerHTML = `
+                    <span class="status error">Error</span>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+        
+        function clearResponse(endpoint) {
+            document.getElementById(`${endpoint}-response`).innerHTML = '';
+        }
+        
+        // Initialize
+        updateToggleButton();
+    </script>
+</body>
+</html>
