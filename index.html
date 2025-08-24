@@ -3128,6 +3128,353 @@
 
     <!-- Before closing body tag -->
     <script src="telemetry.js"></script>
+<script>
+    // Configuration
+    const CONFIG = {
+        useMockBackend: true,
+        apiBaseUrl: 'http://localhost:8000',
+        mockDelay: 500
+    };
 
+    // Mock API Service
+    const mockAPI = {
+        // Authentication endpoints
+        register: async (data) => {
+            return {
+                message: "User registered successfully",
+                api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9),
+                username: data.username
+            };
+        },
+        
+        login: async (data) => {
+            return {
+                message: "Login successful",
+                api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9)
+            };
+        },
+        
+        // Auction endpoints
+        createAuction: async (data) => {
+            return {
+                auction_id: "auction_" + Date.now(),
+                item_type: data.item_type,
+                market_price: data.market_price,
+                inventory: data.inventory,
+                reserve: data.reserve || data.market_price * 0.7,
+                status: "created",
+                created_at: new Date().toISOString()
+            };
+        },
+        
+        addBidder: async (auctionId, data) => {
+            return {
+                status: "Bidder added",
+                bidder_id: data.bidder_id,
+                max_bid: data.max_bid
+            };
+        },
+        
+        runAuction: async (auctionId) => {
+            const outcomes = ["success", "failed"];
+            const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+            
+            if (outcome === "success") {
+                return {
+                    status: "success",
+                    winner: "bidder_" + Math.floor(Math.random() * 100),
+                    winning_bid: Math.random() * 1000 + 500,
+                    net_cost: Math.random() * 800 + 400,
+                    distribution: {
+                        onayponay: Math.random() * 200 + 100,
+                        bid_credits: Math.random() * 150 + 75,
+                        winner_refund: Math.random() * 100 + 50,
+                        runner_up_voucher: Math.random() * 50 + 25
+                    },
+                    seller_payout: Math.random() * 900 + 450
+                };
+            } else {
+                return {
+                    status: "failed",
+                    reason: "Reserve price not met",
+                    action: "Item relisted with priority"
+                };
+            }
+        },
+        
+        getAuction: async (auctionId) => {
+            return {
+                auction_id: auctionId,
+                item_type: ["replenishable", "unique"][Math.floor(Math.random() * 2)],
+                market_price: Math.random() * 1000 + 500,
+                inventory: Math.floor(Math.random() * 10) + 1,
+                reserve: Math.random() * 800 + 300,
+                status: ["created", "running", "completed", "failed"][Math.floor(Math.random() * 4)],
+                created_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
+                bidders: Array(Math.floor(Math.random() * 5) + 1).fill(0).map((_, i) => ({
+                    bidder_id: "bidder_" + i,
+                    max_bid: Math.random() * 1000 + 300,
+                    reputation: Math.random() * 50 + 50,
+                    credits: Math.random() * 1000
+                })),
+                log: [
+                    "Auction created",
+                    "Bidder added: bidder_1",
+                    "Bidder added: bidder_2",
+                    "Auction started",
+                    "Bid placed: $650 by bidder_1",
+                    "Bid placed: $720 by bidder_2"
+                ]
+            };
+        },
+        
+        // System endpoints
+        stressTest: async (data) => {
+            return {
+                successful_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.8),
+                failed_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.2),
+                free_tier_exceeded: Math.random() > 0.7,
+                daily_load: Array(data.days).fill(0).map((_, i) => ({
+                    day: i + 1,
+                    auctions: data.auctions_per_day,
+                    storage: Math.random() * 10 + 5,
+                    requests: data.auctions_per_day * 5,
+                    bandwidth: Math.random() * 5 + 2
+                }))
+            };
+        },
+        
+        analytics: async () => {
+            return {
+                success_rate: Math.random() * 30 + 70,
+                total_auctions: Math.floor(Math.random() * 100) + 50,
+                recent_auctions: Array(5).fill(0).map(() => ({
+                    auction_id: "auction_" + Math.floor(Math.random() * 1000),
+                    winner: "bidder_" + Math.floor(Math.random() * 20),
+                    winning_bid: Math.random() * 1000 + 500,
+                    net_cost: Math.random() * 900 + 400,
+                    completed_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
+                })),
+                top_bidders: Array(5).fill(0).map((_, i) => [
+                    "bidder_" + (i + 1),
+                    Math.floor(Math.random() * 20) + 5
+                ])
+            };
+        },
+        
+        patents: async () => {
+            return {
+                "USPTO-63/789,465": "Bid-Back Pool Allocation System",
+                "USPTO-63/789,511": "Quantum Verification Mechanism",
+                "PCT/IB2024/000001": "Zero-Cost Compensation Protocol"
+            };
+        }
+    };
+
+    // API Service functions
+    const apiService = {
+        // Generic API call function
+        call: async (endpoint, method = 'GET', data = null) => {
+            if (CONFIG.useMockBackend) {
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, CONFIG.mockDelay));
+                
+                // Route to appropriate mock function
+                switch (endpoint) {
+                    case '/auth/register':
+                        return mockAPI.register(data);
+                    case '/auth/login':
+                        return mockAPI.login(data);
+                    case '/auctions':
+                        return mockAPI.createAuction(data);
+                    case '/auctions/:id/bidders':
+                        return mockAPI.addBidder('mock_auction_id', data);
+                    case '/auctions/:id/run':
+                        return mockAPI.runAuction('mock_auction_id');
+                    case '/auctions/:id':
+                        return mockAPI.getAuction('mock_auction_id');
+                    case '/system/stress-test':
+                        return mockAPI.stressTest(data);
+                    case '/system/analytics':
+                        return mockAPI.analytics();
+                    case '/system/patents':
+                        return mockAPI.patents();
+                    default:
+                        throw new Error(`Mock endpoint not implemented: ${endpoint}`);
+                }
+            } else {
+                // Real API call
+                const options = {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                };
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(`${CONFIG.apiBaseUrl}${endpoint}`, options);
+                return response.json();
+            }
+        },
+        
+        // Specific API methods
+        register: (userData) => apiService.call('/auth/register', 'POST', userData),
+        login: (userData) => apiService.call('/auth/login', 'POST', userData),
+        createAuction: (auctionData) => apiService.call('/auctions', 'POST', auctionData),
+        addBidder: (auctionId, bidderData) => apiService.call(`/auctions/${auctionId}/bidders`, 'POST', bidderData),
+        runAuction: (auctionId) => apiService.call(`/auctions/${auctionId}/run`, 'POST'),
+        getAuction: (auctionId) => apiService.call(`/auctions/${auctionId}`, 'GET'),
+        stressTest: (params) => apiService.call('/system/stress-test', 'POST', params),
+        getAnalytics: () => apiService.call('/system/analytics', 'GET'),
+        getPatents: () => apiService.call('/system/patents', 'GET')
+    };
+
+    // Add a mock backend indicator to your UI
+    function addMockBackendIndicator() {
+        const indicator = document.createElement('div');
+        indicator.style.position = 'fixed';
+        indicator.style.top = '10px';
+        indicator.style.right = '10px';
+        indicator.style.background = 'var(--primary-purple)';
+        indicator.style.color = 'white';
+        indicator.style.padding = '8px 15px';
+        indicator.style.borderRadius = '20px';
+        indicator.style.fontSize = '14px';
+        indicator.style.fontWeight = 'bold';
+        indicator.style.zIndex = '1000';
+        indicator.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+        indicator.textContent = 'Mock Backend Active';
+        
+        // Add toggle functionality
+        indicator.style.cursor = 'pointer';
+        indicator.title = 'Click to switch to real backend';
+        indicator.addEventListener('click', function() {
+            CONFIG.useMockBackend = !CONFIG.useMockBackend;
+            indicator.textContent = CONFIG.useMockBackend ? 'Mock Backend Active' : 'Real Backend Active';
+            indicator.style.background = CONFIG.useMockBackend ? 'var(--primary-purple)' : 'var(--primary-green)';
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '50px';
+            notification.style.right = '10px';
+            notification.style.background = 'rgba(0,0,0,0.8)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.textContent = CONFIG.useMockBackend ? 
+                'Using mock backend for development' : 'Using real backend (requires server connection)';
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                if (document.body.contains(notification)) {
+                    document.body.removeChild(notification);
+                }
+            }, 3000);
+        });
+        
+        document.body.appendChild(indicator);
+    }
+
+    // Initialize the mock backend indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        addMockBackendIndicator();
+        
+        // Override the existing signUpWithProvider function to use the apiService
+        if (typeof window.signUpWithProvider === 'function') {
+            const originalSignUpWithProvider = window.signUpWithProvider;
+            
+            window.signUpWithProvider = async function(provider, userType, userData = null) {
+                try {
+                    let response;
+                    if (userData) {
+                        // Registration with username/password
+                        response = await apiService.register(userData);
+                    } else {
+                        // For demo purposes - in a real app, you'd handle OAuth properly
+                        response = await apiService.register({
+                            username: `${provider}_user_${Math.random().toString(36).substr(2, 5)}`,
+                            password: Math.random().toString(36).substr(2, 10)
+                        });
+                    }
+                    
+                    // Update the currentUser object with the response
+                    currentUser = {
+                        isLoggedIn: true,
+                        userType: userType,
+                        apiKey: response.api_key,
+                        username: userData ? userData.username : response.username,
+                        businessVerified: localStorage.getItem('business_verified') === 'approved',
+                        businessType: localStorage.getItem('business_type') || null,
+                        purchases: {
+                            available: 3,
+                            completed: 0,
+                            earned: 0
+                        },
+                        referralCode: 'ONAY-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                        referrals: 0,
+                        optBalance: 0,
+                        industrialAccess: localStorage.getItem('business_verified') === 'approved'
+                    };
+                    
+                    // Update UI
+                    document.getElementById('referral-code-display').textContent = currentUser.referralCode;
+                    document.getElementById('referral-count').textContent = currentUser.referrals;
+                    document.getElementById('bonus-purchases').textContent = currentUser.purchases.earned;
+                    
+                    // Show success message
+                    alert(`Welcome ${userType}! Account created with ${provider}. You have 3 free purchases.`);
+                    
+                    return true;
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    alert('Registration failed. Please try again.');
+                    return false;
+                }
+            };
+        }
+        
+        // Override the completePurchase function to use the apiService
+        if (typeof window.completePurchase === 'function') {
+            const originalCompletePurchase = window.completePurchase;
+            
+            window.completePurchase = async function(transactionValue = 100) {
+                if (!currentUser.isLoggedIn) {
+                    alert('Please sign in first');
+                    return false;
+                }
+                
+                // Quantum security verification
+                if (!handleTransaction(transactionValue)) {
+                    alert('Transaction security verification failed');
+                    return false;
+                }
+                
+                if (currentUser.purchases.available > 0) {
+                    currentUser.purchases.available -= 1;
+                    currentUser.purchases.completed += 1;
+                    
+                    if (currentUser.purchases.available === 0) {
+                        alert('You have used all purchases. Buy OPT tokens for more bids!');
+                    }
+                    return true;
+                }
+                
+                alert('No available purchases. Buy OPT tokens!');
+                return false;
+            };
+        }
+    });
+
+    // Make the apiService available globally for testing
+    window.apiService = apiService;
+    window.CONFIG = CONFIG;
+</script>
  </body>
 </html>
