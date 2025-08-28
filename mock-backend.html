@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnayPonay - Development Mode (Mock Backend)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>OnayPonay Backend Bidding System</title>
     <style>
         :root {
             --primary-blue: #0064D2;
@@ -13,11 +12,9 @@
             --primary-yellow: #F5AF02;
             --primary-purple: #8c52ff;
             --primary-dark: #0f172a;
-            --secondary-blue: #1e88e5;
             --light-gray: #f5f7fa;
             --border: #e0e0e0;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
         }
         
         * {
@@ -31,7 +28,6 @@
             background: linear-gradient(135deg, #f0f7ff 0%, #f9f9f9 100%);
             color: #333;
             line-height: 1.6;
-            min-height: 100vh;
             padding: 20px;
         }
         
@@ -55,609 +51,819 @@
             margin-bottom: 10px;
         }
         
-        .header p {
-            color: #666;
-            font-size: 18px;
-        }
-        
-        .dev-badge {
+        .patent-badge {
             display: inline-block;
             background: var(--primary-purple);
             color: white;
             padding: 5px 15px;
             border-radius: 20px;
             font-size: 14px;
-            margin-top: 10px;
+            margin: 10px 5px;
         }
         
-        .api-section {
+        .system-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .panel {
             background: white;
             border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 20px;
             box-shadow: var(--card-shadow);
         }
         
-        .api-section h2 {
+        .panel h2 {
             color: var(--primary-blue);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--light-gray);
         }
         
-        .endpoint {
-            background: var(--light-gray);
-            padding: 15px;
-            border-radius: 8px;
+        .form-group {
             margin-bottom: 15px;
         }
         
-        .method {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-right: 10px;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
         }
         
-        .get { background: #61affe; color: white; }
-        .post { background: #49cc90; color: white; }
-        .put { background: #fca130; color: white; }
-        .delete { background: #f93e3e; color: white; }
-        
-        .url {
-            font-family: monospace;
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
             font-size: 16px;
         }
         
-        .response {
-            margin-top: 10px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-left: 4px solid var(--primary-green);
-            border-radius: 4px;
-            overflow-x: auto;
-        }
-        
-        pre {
-            white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 14px;
-        }
-        
-        .test-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .test-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: var(--transition);
-        }
-        
-        .test-btn.call {
+        .btn {
             background: var(--primary-blue);
             color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
         
-        .test-btn.call:hover {
+        .btn:hover {
             background: #0050a8;
         }
         
-        .test-btn.clear {
-            background: #e0e0e0;
-            color: #333;
+        .btn-success {
+            background: var(--primary-green);
         }
         
-        .test-btn.clear:hover {
-            background: #d0d0d0;
+        .btn-success:hover {
+            background: #75a314;
         }
         
-        .status {
+        .btn-danger {
+            background: var(--primary-red);
+        }
+        
+        .btn-danger:hover {
+            background: #c41c1c;
+        }
+        
+        .results {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            margin-top: 20px;
+        }
+        
+        .results h2 {
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+        
+        .log-container {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .log-entry {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .log-timestamp {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .status-badge {
             display: inline-block;
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 12px;
-            margin-left: 10px;
+            margin-right: 8px;
         }
         
-        .success { background: #e6f7e6; color: #2e7d32; }
-        .error { background: #ffebee; color: #d32f2f; }
-        
-        .toggle-container {
-            text-align: center;
-            margin: 20px 0;
+        .status-success {
+            background: #e6f7e6;
+            color: #2e7d32;
         }
         
-        .toggle-btn {
-            padding: 12px 25px;
-            background: var(--primary-purple);
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: var(--transition);
+        .status-error {
+            background: #ffebee;
+            color: #d32f2f;
         }
         
-        .toggle-btn:hover {
-            background: #7b48e6;
-            transform: translateY(-2px);
+        .status-warning {
+            background: #fff8e1;
+            color: #f57c00;
         }
         
-        .mock-info {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
+        .system-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
             margin-top: 20px;
-            border-left: 4px solid var(--primary-blue);
         }
         
-        .mock-info h3 {
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
-        
-        .footer {
+        .info-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
+        }
+        
+        .info-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .info-label {
             color: #666;
+            font-size: 14px;
+        }
+        
+        .free-tier-warning {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>OnayPonay Mock Backend Environment</h1>
-            <p>Simulates the actual backend API for frontend development</p>
-            <div class="dev-badge">Development Mode</div>
+            <h1>OnayPonay Quantum Auction System</h1>
+            <div>
+                <span class="patent-badge">USPTO-63/789,465</span>
+                <span class="patent-badge">USPTO-63/789,511</span>
+                <span class="patent-badge">PCT/IB2024/000001</span>
+            </div>
+            <p>Backend Bidding System - HTML/JavaScript Implementation</p>
         </div>
         
-        <div class="toggle-container">
-            <button class="toggle-btn" id="toggle-mode">Switch to Real API</button>
-        </div>
-        
-        <div class="mock-info">
-            <h3>How This Works</h3>
-            <p>This mock environment simulates your backend API endpoints. All API calls from your frontend will be intercepted and handled by mock services that return realistic responses.</p>
-            <p>When you're ready to switch to the real backend, simply click the "Switch to Real API" button above.</p>
-        </div>
-        
-        <div class="api-section">
-            <h2>Authentication Endpoints</h2>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auth/register</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('register')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('register')">Clear</button>
+        <div class="system-panel">
+            <div class="panel">
+                <h2>Create Auction</h2>
+                <div class="form-group">
+                    <label for="item-type">Item Type</label>
+                    <select id="item-type">
+                        <option value="replenishable">Replenishable</option>
+                        <option value="unique">Unique</option>
+                        <option value="industrial">Industrial</option>
+                    </select>
                 </div>
-                <div class="response" id="register-response"></div>
+                <div class="form-group">
+                    <label for="market-price">Market Price ($)</label>
+                    <input type="number" id="market-price" value="1000">
+                </div>
+                <div class="form-group">
+                    <label for="inventory">Inventory</label>
+                    <input type="number" id="inventory" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="reserve-price">Reserve Price ($) - 50% of market by default</label>
+                    <input type="number" id="reserve-price">
+                </div>
+                <button class="btn" onclick="createAuction()">Create Auction</button>
             </div>
             
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auth/login</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('login')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('login')">Clear</button>
+            <div class="panel">
+                <h2>Add Bidder</h2>
+                <div class="form-group">
+                    <label for="bidder-id">Bidder ID</label>
+                    <input type="text" id="bidder-id" placeholder="e.g., Alice">
                 </div>
-                <div class="response" id="login-response"></div>
-            </div>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auth/token</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('token')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('token')">Clear</button>
+                <div class="form-group">
+                    <label for="max-bid">Maximum Bid ($)</label>
+                    <input type="number" id="max-bid" value="500">
                 </div>
-                <div class="response" id="token-response"></div>
-            </div>
-        </div>
-        
-        <div class="api-section">
-            <h2>Auction Endpoints</h2>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auctions</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('create-auction')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('create-auction')">Clear</button>
+                <div class="form-group">
+                    <label for="opt-balance">OPT Balance</label>
+                    <input type="number" id="opt-balance" value="0">
                 </div>
-                <div class="response" id="create-auction-response"></div>
-            </div>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auctions/:id/bidders</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('add-bidder')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('add-bidder')">Clear</button>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="business-verified"> Business Verified
+                    </label>
                 </div>
-                <div class="response" id="add-bidder-response"></div>
-            </div>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/auctions/:id/run</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('run-auction')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('run-auction')">Clear</button>
-                </div>
-                <div class="response" id="run-auction-response"></div>
-            </div>
-            
-            <div class="endpoint">
-                <span class="method get">GET</span>
-                <span class="url">/auctions/:id</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('get-auction')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('get-auction')">Clear</button>
-                </div>
-                <div class="response" id="get-auction-response"></div>
+                <button class="btn" onclick="addBidder()">Add Bidder</button>
             </div>
         </div>
         
-        <div class="api-section">
-            <h2>System Endpoints</h2>
-            
-            <div class="endpoint">
-                <span class="method post">POST</span>
-                <span class="url">/system/stress-test</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('stress-test')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('stress-test')">Clear</button>
-                </div>
-                <div class="response" id="stress-test-response"></div>
+        <div class="panel">
+            <h2>Auction Management</h2>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-success" onclick="runAuction()">Run Auction</button>
+                <button class="btn" onclick="placeBid()">Simulate Bid</button>
+                <button class="btn" onclick="addPurchases()">Add Purchases</button>
+                <button class="btn btn-danger" onclick="resetSystem()">Reset System</button>
             </div>
             
-            <div class="endpoint">
-                <span class="method get">GET</span>
-                <span class="url">/system/analytics</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('analytics')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('analytics')">Clear</button>
+            <div class="system-info">
+                <div class="info-card">
+                    <div class="info-label">Bidders Registered</div>
+                    <div class="info-value" id="bidders-count">0</div>
                 </div>
-                <div class="response" id="analytics-response"></div>
-            </div>
-            
-            <div class="endpoint">
-                <span class="method get">GET</span>
-                <span class="url">/system/patents</span>
-                <div class="test-buttons">
-                    <button class="test-btn call" onclick="testEndpoint('patents')">Test Endpoint</button>
-                    <button class="test-btn clear" onclick="clearResponse('patents')">Clear</button>
+                <div class="info-card">
+                    <div class="info-label">System Requests</div>
+                    <div class="info-value" id="requests-count">0</div>
                 </div>
-                <div class="response" id="patents-response"></div>
+                <div class="info-card">
+                    <div class="info-label">Storage Used</div>
+                    <div class="info-value" id="storage-used">0.01MB</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-label">Bandwidth</div>
+                    <div class="info-value" id="bandwidth-used">0GB</div>
+                </div>
             </div>
         </div>
         
-        <div class="footer">
-            <p>OnayPonay Marketplace &copy; 2023 | Mock Backend Environment v1.0</p>
+        <div class="results">
+            <h2>Auction Results</h2>
+            <div id="auction-results">No auction run yet</div>
+        </div>
+        
+        <div class="panel">
+            <h2>System Log</h2>
+            <div class="log-container" id="log-container"></div>
+        </div>
+        
+        <div class="free-tier-warning">
+            <h3>Free Tier Limits</h3>
+            <p>AWS Lambda: 1M requests/month | Compute: 400,000 GB-seconds | Redis: 30MB storage | Bandwidth: 100GB/month</p>
         </div>
     </div>
 
     <script>
-        // Configuration
-        const CONFIG = {
-            useMockBackend: true,
-            apiBaseUrl: 'http://localhost:8000',
-            mockDelay: 500 // Simulate network delay in ms
-        };
-        
-        // DOM Elements
-        const toggleBtn = document.getElementById('toggle-mode');
-        
-        // Update toggle button text
-        function updateToggleButton() {
-            toggleBtn.textContent = CONFIG.useMockBackend ? 
-                'Switch to Real API' : 'Switch to Mock API';
-        }
-        
-        // Toggle between mock and real API
-        toggleBtn.addEventListener('click', function() {
-            CONFIG.useMockBackend = !CONFIG.useMockBackend;
-            updateToggleButton();
-            
-            const mode = CONFIG.useMockBackend ? 'Mock' : 'Real';
-            alert(`Now using ${mode} API mode`);
-        });
-        
-        // Mock API Service
-        const mockAPI = {
-            // Authentication endpoints
-            register: async (data) => {
-                return {
-                    message: "User registered successfully",
-                    api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9),
-                    username: data.username
-                };
-            },
-            
-            login: async (data) => {
-                return {
-                    message: "Login successful",
-                    api_key: "mock_api_key_" + Math.random().toString(36).substr(2, 9)
-                };
-            },
-            
-            token: async (data) => {
-                return {
-                    access_token: "mock_jwt_token_" + Math.random().toString(36).substr(2, 12),
-                    token_type: "bearer"
-                };
-            },
-            
-            // Auction endpoints
-            createAuction: async (data) => {
-                return {
-                    auction_id: "auction_" + Date.now(),
-                    item_type: data.item_type,
-                    market_price: data.market_price,
-                    inventory: data.inventory,
-                    reserve: data.reserve || data.market_price * 0.7,
-                    status: "created",
-                    created_at: new Date().toISOString()
-                };
-            },
-            
-            addBidder: async (auctionId, data) => {
-                return {
-                    status: "Bidder added",
-                    bidder_id: data.bidder_id,
-                    max_bid: data.max_bid
-                };
-            },
-            
-            runAuction: async (auctionId) => {
-                const outcomes = ["success", "failed"];
-                const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
-                
-                if (outcome === "success") {
-                    return {
-                        status: "success",
-                        winner: "bidder_" + Math.floor(Math.random() * 100),
-                        winning_bid: Math.random() * 1000 + 500,
-                        net_cost: Math.random() * 800 + 400,
-                        distribution: {
-                            onayponay: Math.random() * 200 + 100,
-                            bid_credits: Math.random() * 150 + 75,
-                            winner_refund: Math.random() * 100 + 50,
-                            runner_up_voucher: Math.random() * 50 + 25
-                        },
-                        seller_payout: Math.random() * 900 + 450
-                    };
-                } else {
-                    return {
-                        status: "failed",
-                        reason: "Reserve price not met",
-                        action: "Item relisted with priority"
-                    };
-                }
-            },
-            
-            getAuction: async (auctionId) => {
-                return {
-                    auction_id: auctionId,
-                    item_type: ["replenishable", "unique"][Math.floor(Math.random() * 2)],
-                    market_price: Math.random() * 1000 + 500,
-                    inventory: Math.floor(Math.random() * 10) + 1,
-                    reserve: Math.random() * 800 + 300,
-                    status: ["created", "running", "completed", "failed"][Math.floor(Math.random() * 4)],
-                    created_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString(),
-                    bidders: Array(Math.floor(Math.random() * 5) + 1).fill(0).map((_, i) => ({
-                        bidder_id: "bidder_" + i,
-                        max_bid: Math.random() * 1000 + 300,
-                        reputation: Math.random() * 50 + 50,
-                        credits: Math.random() * 1000
-                    })),
-                    log: [
-                        "Auction created",
-                        "Bidder added: bidder_1",
-                        "Bidder added: bidder_2",
-                        "Auction started",
-                        "Bid placed: $650 by bidder_1",
-                        "Bid placed: $720 by bidder_2"
-                    ]
-                };
-            },
-            
-            // System endpoints
-            stressTest: async (data) => {
-                return {
-                    successful_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.8),
-                    failed_auctions: Math.floor(Math.random() * data.auctions_per_day * data.days * 0.2),
-                    free_tier_exceeded: Math.random() > 0.7,
-                    daily_load: Array(data.days).fill(0).map((_, i) => ({
-                        day: i + 1,
-                        auctions: data.auctions_per_day,
-                        storage: Math.random() * 10 + 5,
-                        requests: data.auctions_per_day * 5,
-                        bandwidth: Math.random() * 5 + 2
-                    }))
-                };
-            },
-            
-            analytics: async () => {
-                return {
-                    success_rate: Math.random() * 30 + 70,
-                    total_auctions: Math.floor(Math.random() * 100) + 50,
-                    recent_auctions: Array(5).fill(0).map(() => ({
-                        auction_id: "auction_" + Math.floor(Math.random() * 1000),
-                        winner: "bidder_" + Math.floor(Math.random() * 20),
-                        winning_bid: Math.random() * 1000 + 500,
-                        net_cost: Math.random() * 900 + 400,
-                        completed_at: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
-                    })),
-                    top_bidders: Array(5).fill(0).map((_, i) => [
-                        "bidder_" + (i + 1),
-                        Math.floor(Math.random() * 20) + 5
-                    ])
-                };
-            },
-            
-            patents: async () => {
-                return {
+        // OnayPonay System Implementation
+        class OnayPonaySystem {
+            constructor() {
+                this.PATENTS = {
                     "USPTO-63/789,465": "Bid-Back Pool Allocation System",
                     "USPTO-63/789,511": "Quantum Verification Mechanism",
                     "PCT/IB2024/000001": "Zero-Cost Compensation Protocol"
                 };
+                
+                this.FREE_TIER_LIMITS = {
+                    "aws_lambda": {"requests": 1000000, "compute": 400000},
+                    "redis": {"storage": 30, "connections": 30},
+                    "s3": {"storage": 5},
+                    "bandwidth": 100
+                };
+                
+                this.reset();
             }
-        };
-        
-        // API Service functions
-        const apiService = {
-            // Generic API call function
-            call: async (endpoint, method = 'GET', data = null) => {
-                if (CONFIG.useMockBackend) {
-                    // Simulate network delay
-                    await new Promise(resolve => setTimeout(resolve, CONFIG.mockDelay));
-                    
-                    // Route to appropriate mock function
-                    switch (endpoint) {
-                        case '/auth/register':
-                            return mockAPI.register(data);
-                        case '/auth/login':
-                            return mockAPI.login(data);
-                        case '/auth/token':
-                            return mockAPI.token(data);
-                        case '/auctions':
-                            return mockAPI.createAuction(data);
-                        case '/auctions/:id/bidders':
-                            return mockAPI.addBidder('mock_auction_id', data);
-                        case '/auctions/:id/run':
-                            return mockAPI.runAuction('mock_auction_id');
-                        case '/auctions/:id':
-                            return mockAPI.getAuction('mock_auction_id');
-                        case '/system/stress-test':
-                            return mockAPI.stressTest(data);
-                        case '/system/analytics':
-                            return mockAPI.analytics();
-                        case '/system/patents':
-                            return mockAPI.patents();
-                        default:
-                            throw new Error(`Mock endpoint not implemented: ${endpoint}`);
+            
+            reset() {
+                this.item_type = "unique";
+                this.market_price = 1000;
+                this.inventory = 1;
+                this.reserve = 500;
+                
+                this.bidders = {};
+                this.transparency_log = [];
+                this.system_load = {
+                    "requests": 0,
+                    "compute_time": 0,
+                    "storage": 0.01,
+                    "bandwidth": 0
+                };
+                
+                this.quantum_security = true;
+                this.zero_cost_compensation = true;
+                
+                this.current_highest_bid = this.reserve;
+                this.current_leader = null;
+                this.bidding_open = true;
+                this.bid_history = [];
+            }
+            
+            _check_free_tier() {
+                let exceeded = [];
+                if (this.system_load.requests > this.FREE_TIER_LIMITS.aws_lambda.requests) {
+                    exceeded.push("AWS Lambda requests");
+                }
+                if (this.system_load.compute_time > this.FREE_TIER_LIMITS.aws_lambda.compute) {
+                    exceeded.push("Compute time");
+                }
+                if (this.system_load.storage > this.FREE_TIER_LIMITS.redis.storage) {
+                    exceeded.push("Redis storage");
+                }
+                return exceeded;
+            }
+            
+            _log_event(event) {
+                const timestamp = new Date().toISOString();
+                const entry = `[${timestamp}] ${event}`;
+                this.transparency_log.push(entry);
+                
+                // Update system load
+                this.system_load.requests += 1;
+                this.system_load.compute_time += 0.5;
+                this.system_load.bandwidth += 0.0001;
+                
+                // Update UI
+                updateLogDisplay(entry);
+                updateSystemMetrics();
+                
+                return entry;
+            }
+            
+            createAuction(item_type, market_price, inventory, reserve) {
+                this.item_type = item_type || "unique";
+                this.market_price = market_price || 1000;
+                this.inventory = inventory || 1;
+                this.reserve = reserve || (this.market_price * 0.5);
+                
+                this.bidders = {};
+                this.current_highest_bid = this.reserve;
+                this.current_leader = null;
+                this.bidding_open = true;
+                this.bid_history = [];
+                
+                return this._log_event(`Auction created | Type: ${this.item_type} | Market: $${this.market_price} | Reserve: $${this.reserve}`);
+            }
+            
+            addBidder(bidder_id, max_bid, opt_balance = 0, business_verified = false) {
+                // Check storage limit
+                this.system_load.storage += 0.001;
+                if (this.system_load.storage > this.FREE_TIER_LIMITS.redis.storage) {
+                    return {"status": "error", "message": "Storage limit exceeded"};
+                }
+                
+                this.bidders[bidder_id] = {
+                    "max_bid": max_bid || 0,
+                    "credits": 0,
+                    "opt_balance": opt_balance,
+                    "reputation": 80,
+                    "participation": 0,
+                    "business_verified": business_verified,
+                    "purchases_remaining": 3
+                };
+                
+                this._log_event(`Bidder ${bidder_id} registered | Max bid: $${max_bid}`);
+                return {"status": "success", "message": "Bidder added"};
+            }
+            
+            placeBid(bidder_id, bid_amount, bid_type = "standard") {
+                if (!this.bidding_open) {
+                    return {"status": "error", "message": "Bidding is closed"};
+                }
+                
+                if (!this.bidders[bidder_id]) {
+                    return {"status": "error", "message": "Bidder not registered"};
+                }
+                
+                // Check if bidder has available purchases
+                if (this.bidders[bidder_id].purchases_remaining <= 0) {
+                    return {"status": "error", "message": "No purchases remaining. Buy OPT tokens."};
+                }
+                
+                // Handle OPT token bids (1 bid = 50 OPT = $1.00)
+                let bid_amount_usd = bid_amount;
+                if (bid_type === "opt") {
+                    const opt_required = bid_amount * 50;
+                    if (this.bidders[bidder_id].opt_balance < opt_required) {
+                        return {"status": "error", "message": "Insufficient OPT balance"};
                     }
-                } else {
-                    // Real API call
-                    const options = {
-                        method,
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
+                    this.bidders[bidder_id].opt_balance -= opt_required;
+                    bid_amount_usd = bid_amount; // $1 per bid
+                }
+                
+                // Validate bid meets minimum requirements
+                const min_bid = this.current_leader ? this.current_highest_bid * 1.05 : this.reserve;
+                
+                if (bid_amount_usd < min_bid) {
+                    return {
+                        "status": "error", 
+                        "message": `Bid must be at least $${min_bid.toFixed(2)}`,
+                        "minimum_bid": min_bid
                     };
-                    
-                    if (data) {
-                        options.body = JSON.stringify(data);
+                }
+                
+                // For industrial equipment, check business verification
+                if (this.item_type === "industrial" && !this.bidders[bidder_id].business_verified) {
+                    return {"status": "error", "message": "Business verification required for industrial equipment"};
+                }
+                
+                // Update bidder's max bid
+                this.bidders[bidder_id].max_bid = Math.max(this.bidders[bidder_id].max_bid, bid_amount_usd);
+                this.bidders[bidder_id].participation += 1;
+                
+                // Update auction state
+                this.current_highest_bid = bid_amount_usd;
+                this.current_leader = bidder_id;
+                
+                // Record bid history
+                this.bid_history.push({
+                    "bidder_id": bidder_id,
+                    "amount": bid_amount_usd,
+                    "timestamp": new Date().toISOString(),
+                    "type": bid_type
+                });
+                
+                // Log the bid
+                this._log_event(`Bid placed by ${bidder_id}: $${bid_amount_usd.toFixed(2)} (${bid_type})`);
+                
+                return {
+                    "status": "success",
+                    "message": "Bid accepted",
+                    "current_leading": bidder_id,
+                    "current_bid": bid_amount_usd,
+                    "bid_type": bid_type
+                };
+            }
+            
+            runAuction() {
+                // Check free tier limits
+                const exceeded = this._check_free_tier();
+                if (exceeded.length > 0) {
+                    return {"status": "system_error", "reason": `Free tier exceeded: ${exceeded.join(', ')}`};
+                }
+                
+                // Close bidding if still open
+                if (this.bidding_open) {
+                    this.bidding_open = false;
+                    this._log_event("Bidding closed");
+                }
+                
+                // Validate auction
+                const valid_bids = {};
+                for (const [bidder, data] of Object.entries(this.bidders)) {
+                    if (data.max_bid >= this.reserve) {
+                        valid_bids[bidder] = data.max_bid;
                     }
-                    
-                    const response = await fetch(`${CONFIG.apiBaseUrl}${endpoint}`, options);
-                    return response.json();
-                }
-            },
-            
-            // Specific API methods
-            register: (userData) => apiService.call('/auth/register', 'POST', userData),
-            login: (userData) => apiService.call('/auth/login', 'POST', userData),
-            getToken: (userData) => apiService.call('/auth/token', 'POST', userData),
-            createAuction: (auctionData) => apiService.call('/auctions', 'POST', auctionData),
-            addBidder: (auctionId, bidderData) => apiService.call(`/auctions/${auctionId}/bidders`, 'POST', bidderData),
-            runAuction: (auctionId) => apiService.call(`/auctions/${auctionId}/run`, 'POST'),
-            getAuction: (auctionId) => apiService.call(`/auctions/${auctionId}`, 'GET'),
-            stressTest: (params) => apiService.call('/system/stress-test', 'POST', params),
-            getAnalytics: () => apiService.call('/system/analytics', 'GET'),
-            getPatents: () => apiService.call('/system/patents', 'GET')
-        };
-        
-        // Test functions for the demo page
-        async function testEndpoint(endpoint) {
-            const responseElement = document.getElementById(`${endpoint}-response`);
-            responseElement.innerHTML = '<span class="status success">Testing...</span>';
-            
-            try {
-                let response;
-                
-                switch (endpoint) {
-                    case 'register':
-                        response = await apiService.register({
-                            username: 'testuser',
-                            password: 'testpassword'
-                        });
-                        break;
-                    case 'login':
-                        response = await apiService.login({
-                            username: 'testuser',
-                            password: 'testpassword'
-                        });
-                        break;
-                    case 'token':
-                        response = await apiService.getToken({
-                            username: 'testuser',
-                            password: 'testpassword'
-                        });
-                        break;
-                    case 'create-auction':
-                        response = await apiService.createAuction({
-                            item_type: 'unique',
-                            market_price: 1000,
-                            inventory: 1,
-                            reserve: 700
-                        });
-                        break;
-                    case 'add-bidder':
-                        response = await apiService.addBidder('test_auction', {
-                            bidder_id: 'test_bidder',
-                            max_bid: 850
-                        });
-                        break;
-                    case 'run-auction':
-                        response = await apiService.runAuction('test_auction');
-                        break;
-                    case 'get-auction':
-                        response = await apiService.getAuction('test_auction');
-                        break;
-                    case 'stress-test':
-                        response = await apiService.stressTest({
-                            days: 3,
-                            auctions_per_day: 10
-                        });
-                        break;
-                    case 'analytics':
-                        response = await apiService.getAnalytics();
-                        break;
-                    case 'patents':
-                        response = await apiService.getPatents();
-                        break;
                 }
                 
-                responseElement.innerHTML = `
-                    <span class="status success">Success</span>
-                    <pre>${JSON.stringify(response, null, 2)}</pre>
-                `;
-            } catch (error) {
-                responseElement.innerHTML = `
-                    <span class="status error">Error</span>
-                    <pre>${error.message}</pre>
-                `;
+                // Low participation protocol
+                if (Object.keys(valid_bids).length < 3) {
+                    this._log_event("LOW PARTICIPATION: Activating zero-cost compensation");
+                    for (const bidder of Object.keys(this.bidders)) {
+                        this.bidders[bidder].credits += 500;
+                        this.bidders[bidder].reputation += 10;
+                        this.bidders[bidder].opt_balance += 25000; // 500 credits = 25,000 OPT
+                    }
+                    return this._handle_failed_auction();
+                }
+                
+                // Run auction
+                const bidders_sorted = Object.entries(valid_bids)
+                    .sort((a, b) => b[1] - a[1]);
+                
+                const winner_id = bidders_sorted[0][0];
+                const winning_bid = bidders_sorted[0][1];
+                
+                // Reserve verification
+                if (winning_bid < this.reserve) {
+                    this._log_event(`RESERVE NOT MET: $${winning_bid} < $${this.reserve}`);
+                    return this._handle_failed_auction();
+                }
+                
+                // Calculate pool (losing bids + 10% commission)
+                const losing_bids = bidders_sorted.slice(1)
+                    .filter(([_, bid]) => bid >= this.reserve)
+                    .map(([_, bid]) => bid);
+                
+                const pool = losing_bids.reduce((sum, bid) => sum + bid, 0) + (winning_bid * 0.10);
+                
+                // Patent-pended allocation
+                let distribution;
+                if (this.item_type === "replenishable" && this.inventory > 1) {
+                    const runner_up = bidders_sorted[1] ? bidders_sorted[1][0] : null;
+                    distribution = {
+                        "onayponay": pool * 0.40,
+                        "bid_credits": pool * 0.30,
+                        "winner_refund": pool * 0.20,
+                        "runner_up_voucher": runner_up ? pool * 0.10 : 0
+                    };
+                } else {
+                    distribution = {
+                        "onayponay": pool * 0.50,
+                        "bid_credits": pool * 0.30,
+                        "winner_refund": pool * 0.20,
+                        "runner_up_voucher": 0
+                    };
+                }
+                
+                // Distribute benefits
+                const net_cost = winning_bid - distribution.winner_refund;
+                this.bidders[winner_id].reputation += 25;
+                this.bidders[winner_id].purchases_remaining -= 1;
+                
+                // Distribute credits
+                const total_losing = losing_bids.reduce((sum, bid) => sum + bid, 0);
+                for (const [bidder, bid_amt] of bidders_sorted.slice(1)) {
+                    if (bid_amt >= this.reserve) {
+                        const share = total_losing > 0 ? bid_amt / total_losing : 0;
+                        this.bidders[bidder].credits += distribution.bid_credits * share;
+                        this.bidders[bidder].reputation += 5;
+                        // Award OPT tokens as credits
+                        const opt_credits = (distribution.bid_credits * share) * 50;
+                        this.bidders[bidder].opt_balance += opt_credits;
+                    }
+                }
+                
+                // Runner-up voucher
+                if (distribution.runner_up_voucher > 0 && bidders_sorted[1]) {
+                    const runner_up = bidders_sorted[1][0];
+                    this.bidders[runner_up].credits += distribution.runner_up_voucher;
+                    // Award OPT tokens as voucher
+                    const opt_voucher = distribution.runner_up_voucher * 50;
+                    this.bidders[runner_up].opt_balance += opt_voucher;
+                }
+                
+                // Finalize
+                this._log_event(`Auction succeeded | Winner: ${winner_id} | Net cost: $${net_cost.toFixed(2)}`);
+                return {
+                    "status": "success",
+                    "winner": winner_id,
+                    "winning_bid": winning_bid,
+                    "net_cost": net_cost,
+                    "distribution": distribution,
+                    "seller_payout": winning_bid * 0.90,
+                    "purchases_remaining": this.bidders[winner_id].purchases_remaining
+                };
+            }
+            
+            _handle_failed_auction() {
+                // Seller compensation
+                const seller_benefits = {
+                    "priority_relisting": true,
+                    "trust_badge": "Reserve Protected",
+                    "promo_slots": 3
+                };
+                
+                // Bidder compensation
+                for (const bidder of Object.keys(this.bidders)) {
+                    this.bidders[bidder].reputation += 15;
+                    this.bidders[bidder].credits += 500;
+                    this.bidders[bidder].opt_balance += 25000;
+                }
+                
+                this._log_event("Compensation issued: 0$ cost");
+                return {
+                    "status": "failed",
+                    "seller_benefits": seller_benefits,
+                    "bidder_benefits": {
+                        "credits_issued": 500,
+                        "opt_issued": 25000,
+                        "reputation_boost": 15
+                    },
+                    "action": "Item relisted with priority"
+                };
+            }
+            
+            addPurchases(bidder_id, count) {
+                if (!this.bidders[bidder_id]) {
+                    return {"status": "error", "message": "Bidder not found"};
+                }
+                
+                this.bidders[bidder_id].purchases_remaining += count;
+                this._log_event(`Added ${count} purchases to ${bidder_id}`);
+                return {"status": "success", "purchases_remaining": this.bidders[bidder_id].purchases_remaining};
+            }
+            
+            addOptTokens(bidder_id, opt_amount) {
+                if (!this.bidders[bidder_id]) {
+                    return {"status": "error", "message": "Bidder not found"};
+                }
+                
+                this.bidders[bidder_id].opt_balance += opt_amount;
+                this._log_event(`Added ${opt_amount} OPT tokens to ${bidder_id}`);
+                return {"status": "success", "opt_balance": this.bidders[bidder_id].opt_balance};
+            }
+            
+            verifyBusiness(bidder_id, company_name, business_type, tax_id) {
+                if (!this.bidders[bidder_id]) {
+                    return {"status": "error", "message": "Bidder not found"};
+                }
+                
+                // Simulate quantum verification process (95% success rate)
+                const verification_success = Math.random() > 0.05;
+                
+                if (verification_success) {
+                    this.bidders[bidder_id].business_verified = true;
+                    // Award business verification bonus (5,000 OPT tokens)
+                    this.bidders[bidder_id].opt_balance += 5000;
+                    this._log_event(`Business verification successful for ${bidder_id}: ${company_name}`);
+                    return {
+                        "status": "success", 
+                        "message": "Business verified",
+                        "opt_bonus": 5000,
+                        "opt_balance": this.bidders[bidder_id].opt_balance
+                    };
+                } else {
+                    this._log_event(`Business verification failed for ${bidder_id}: ${company_name}`);
+                    return {"status": "error", "message": "Business verification failed"};
+                }
             }
         }
-        
-        function clearResponse(endpoint) {
-            document.getElementById(`${endpoint}-response`).innerHTML = '';
+
+        // Initialize the system
+        const onayPonaySystem = new OnayPonaySystem();
+
+        // UI Update Functions
+        function updateLogDisplay(entry) {
+            const logContainer = document.getElementById('log-container');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `<span class="log-timestamp">${new Date().toLocaleTimeString()}</span> ${entry}`;
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
         }
-        
-        // Initialize
-        updateToggleButton();
+
+        function updateSystemMetrics() {
+            document.getElementById('bidders-count').textContent = Object.keys(onayPonaySystem.bidders).length;
+            document.getElementById('requests-count').textContent = onayPonaySystem.system_load.requests;
+            document.getElementById('storage-used').textContent = `${onayPonaySystem.system_load.storage.toFixed(2)}MB`;
+            document.getElementById('bandwidth-used').textContent = `${onayPonaySystem.system_load.bandwidth.toFixed(2)}GB`;
+        }
+
+        function updateResults(result) {
+            const resultsDiv = document.getElementById('auction-results');
+            resultsDiv.innerHTML = '';
+            
+            if (result.status === 'success') {
+                resultsDiv.innerHTML = `
+                    <div class="status-badge status-success">SUCCESS</div>
+                    <p><strong>Winner:</strong> ${result.winner}</p>
+                    <p><strong>Winning Bid:</strong> $${result.winning_bid.toFixed(2)}</p>
+                    <p><strong>Net Cost:</strong> $${result.net_cost.toFixed(2)}</p>
+                    <p><strong>Seller Payout:</strong> $${result.seller_payout.toFixed(2)}</p>
+                    <p><strong>Purchases Remaining:</strong> ${result.purchases_remaining}</p>
+                    <h3>Distribution:</h3>
+                    <p>OnayPonay: $${result.distribution.onayponay.toFixed(2)}</p>
+                    <p>Bid Credits: $${result.distribution.bid_credits.toFixed(2)}</p>
+                    <p>Winner Refund: $${result.distribution.winner_refund.toFixed(2)}</p>
+                    <p>Runner-up Voucher: $${result.distribution.runner_up_voucher.toFixed(2)}</p>
+                `;
+            } else if (result.status === 'failed') {
+                resultsDiv.innerHTML = `
+                    <div class="status-badge status-warning">FAILED</div>
+                    <p>${result.action}</p>
+                    <h3>Seller Benefits:</h3>
+                    <p>Priority Relisting: ${result.seller_benefits.priority_relisting ? 'Yes' : 'No'}</p>
+                    <p>Trust Badge: ${result.seller_benefits.trust_badge}</p>
+                    <p>Promo Slots: ${result.seller_benefits.promo_slots}</p>
+                    <h3>Bidder Benefits:</h3>
+                    <p>Credits Issued: ${result.bidder_benefits.credits_issued}</p>
+                    <p>OPT Issued: ${result.bidder_benefits.opt_issued}</p>
+                    <p>Reputation Boost: +${result.bidder_benefits.reputation_boost}</p>
+                `;
+            } else if (result.status === 'system_error') {
+                resultsDiv.innerHTML = `
+                    <div class="status-badge status-error">SYSTEM ERROR</div>
+                    <p>${result.reason}</p>
+                `;
+            } else {
+                resultsDiv.innerHTML = JSON.stringify(result, null, 2);
+            }
+        }
+
+        // UI Action Functions
+        function createAuction() {
+            const itemType = document.getElementById('item-type').value;
+            const marketPrice = parseFloat(document.getElementById('market-price').value);
+            const inventory = parseInt(document.getElementById('inventory').value);
+            let reservePrice = parseFloat(document.getElementById('reserve-price').value);
+            
+            // If no reserve price specified, use 50% of market price
+            if (isNaN(reservePrice)) {
+                reservePrice = marketPrice * 0.5;
+                document.getElementById('reserve-price').value = reservePrice;
+            }
+            
+            onayPonaySystem.createAuction(itemType, marketPrice, inventory, reservePrice);
+        }
+
+        function addBidder() {
+            const bidderId = document.getElementById('bidder-id').value;
+            const maxBid = parseFloat(document.getElementById('max-bid').value);
+            const optBalance = parseFloat(document.getElementById('opt-balance').value);
+            const businessVerified = document.getElementById('business-verified').checked;
+            
+            if (!bidderId) {
+                alert('Please enter a bidder ID');
+                return;
+            }
+            
+            const result = onayPonaySystem.addBidder(bidderId, maxBid, optBalance, businessVerified);
+            if (result.status === 'error') {
+                alert(result.message);
+            }
+        }
+
+        function runAuction() {
+            const result = onayPonaySystem.runAuction();
+            updateResults(result);
+        }
+
+        function placeBid() {
+            const bidders = Object.keys(onayPonaySystem.bidders);
+            if (bidders.length === 0) {
+                alert('No bidders registered. Please add bidders first.');
+                return;
+            }
+            
+            // Select a random bidder
+            const randomBidder = bidders[Math.floor(Math.random() * bidders.length)];
+            
+            // Generate a random bid (between current highest and bidder's max)
+            const currentHighest = onayPonaySystem.current_highest_bid;
+            const bidderMax = onayPonaySystem.bidders[randomBidder].max_bid;
+            
+            // Ensure the bid is at least 5% higher than current
+            const minBid = currentHighest * 1.05;
+            const maxBid = Math.max(minBid, bidderMax);
+            
+            if (minBid > maxBid) {
+                alert(`${randomBidder} cannot bid higher than their maximum ($${bidderMax.toFixed(2)})`);
+                return;
+            }
+            
+            // Random bid between min and max
+            const randomBid = minBid + (Math.random() * (maxBid - minBid));
+            
+            // Place the bid
+            const result = onayPonaySystem.placeBid(randomBidder, randomBid);
+            if (result.status === 'error') {
+                alert(result.message);
+            }
+        }
+
+        function addPurchases() {
+            const bidders = Object.keys(onayPonaySystem.bidders);
+            if (bidders.length === 0) {
+                alert('No bidders registered. Please add bidders first.');
+                return;
+            }
+            
+            // Select a random bidder
+            const randomBidder = bidders[Math.floor(Math.random() * bidders.length)];
+            
+            // Add a purchase
+            const result = onayPonaySystem.addPurchases(randomBidder, 1);
+            if (result.status === 'error') {
+                alert(result.message);
+            } else {
+                alert(`Added 1 purchase to ${randomBidder}. Total: ${result.purchases_remaining}`);
+            }
+        }
+
+        function resetSystem() {
+            onayPonaySystem.reset();
+            document.getElementById('log-container').innerHTML = '';
+            document.getElementById('auction-results').textContent = 'No auction run yet';
+            updateSystemMetrics();
+            alert('System has been reset');
+        }
+
+        // Initialize the reserve price based on market price
+        document.getElementById('market-price').addEventListener('input', function() {
+            const marketPrice = parseFloat(this.value);
+            if (!isNaN(marketPrice)) {
+                document.getElementById('reserve-price').value = marketPrice * 0.5;
+            }
+        });
+
+        // Initialize system metrics
+        updateSystemMetrics();
     </script>
 </body>
 </html>
