@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnayPonay Bidding System with Free Tokens</title>
+    <title>OnayPonay Bidding System - Secured</title>
     <style>
         :root {
             --primary-blue: #0064D2;
@@ -15,6 +15,9 @@
             --light-gray: #f5f7fa;
             --border: #e0e0e0;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --security-orange: #ff9800;
+            --security-red: #f44336;
+            --security-green: #4caf50;
         }
         
         * {
@@ -32,7 +35,7 @@
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -44,6 +47,19 @@
             background: white;
             border-radius: 10px;
             box-shadow: var(--card-shadow);
+            position: relative;
+        }
+        
+        .security-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--security-green);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
         }
         
         .header h1 {
@@ -61,11 +77,50 @@
             margin: 10px 5px;
         }
         
-        .system-panel {
+        .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             gap: 20px;
             margin-bottom: 30px;
+        }
+        
+        .security-panel {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            border-left: 4px solid var(--security-orange);
+        }
+        
+        .security-panel h2 {
+            color: var(--security-orange);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .security-status {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .status-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        
+        .status-active {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .status-inactive {
+            background: #ffebee;
+            color: #d32f2f;
         }
         
         .panel {
@@ -132,6 +187,14 @@
             background: #c41c1c;
         }
         
+        .btn-security {
+            background: var(--security-orange);
+        }
+        
+        .btn-security:hover {
+            background: #f57c00;
+        }
+        
         .results {
             background: white;
             border-radius: 10px;
@@ -188,6 +251,11 @@
         .status-warning {
             background: #fff8e1;
             color: #f57c00;
+        }
+        
+        .status-security {
+            background: #e3f2fd;
+            color: #1565c0;
         }
         
         .system-info {
@@ -249,140 +317,641 @@
             padding: 15px;
             margin: 15px 0;
         }
+        
+        .security-alert {
+            background: #ffebee;
+            border-left: 4px solid var(--security-red);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .tab-container {
+            margin-top: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 3px solid var(--primary-blue);
+            font-weight: bold;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .security-log {
+            font-family: monospace;
+            font-size: 13px;
+            background: #263238;
+            color: #eee;
+            padding: 15px;
+            border-radius: 4px;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
+            <div class="security-badge">SECURED SYSTEM</div>
             <h1>OnayPonay Quantum Auction System</h1>
             <div>
                 <span class="patent-badge">USPTO-63/789,465</span>
                 <span class="patent-badge">USPTO-63/789,511</span>
                 <span class="patent-badge">PCT/IB2024/000001</span>
             </div>
-            <p>Backend Bidding System with Free Purchase Tokens</p>
+            <p>Backend Bidding System with Enhanced Security Controls</p>
         </div>
         
-        <div class="token-info">
-            <h3>Free Purchase Token System</h3>
-            <p>Each account receives 3 Free Purchase Tokens that provide:</p>
-            <ul>
-                <li>Infinite bidding capability in any auction</li>
-                <li>Bids don't contribute to the distribution pool</li>
-                <li>If you win, you pay your winning bid amount</li>
-                <li>After using all tokens, you need OPT tokens to bid</li>
-            </ul>
-        </div>
-        
-        <div class="system-panel">
-            <div class="panel">
-                <h2>Create Auction</h2>
-                <div class="form-group">
-                    <label for="item-type">Item Type</label>
-                    <select id="item-type">
-                        <option value="replenishable">Replenishable</option>
-                        <option value="unique">Unique</option>
-                        <option value="industrial">Industrial</option>
-                    </select>
+        <div class="dashboard">
+            <div>
+                <div class="security-panel">
+                    <h2>Security Control Center</h2>
+                    <div class="security-status">
+                        <div class="status-item status-active">
+                            <div>Economic Security</div>
+                            <div class="info-value">ACTIVE</div>
+                        </div>
+                        <div class="status-item status-active">
+                            <div>Anti-Collusion</div>
+                            <div class="info-value">ACTIVE</div>
+                        </div>
+                        <div class="status-item status-inactive">
+                            <div>Quantum Verification</div>
+                            <div class="info-value">INACTIVE</div>
+                        </div>
+                    </div>
+                    <div id="security-alert" class="security-alert">
+                        Security alert: Suspicious activity detected!
+                    </div>
+                    <button class="btn btn-security" onclick="runSecurityScan()">Run Security Scan</button>
+                    <button class="btn" onclick="toggleSecurityLog()">View Security Log</button>
+                    
+                    <div id="security-log" class="security-log" style="display: none;">
+[SECURITY] System initialized with enhanced controls
+[SECURITY] Economic security module loaded
+[SECURITY] Anti-collusion system activated
+[SECURITY] Quantum verification pending implementation
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="market-price">Market Price ($)</label>
-                    <input type="number" id="market-price" value="1000">
+                
+                <div class="token-info">
+                    <h3>Free Purchase Token System</h3>
+                    <p>Each account receives 3 Free Purchase Tokens that provide:</p>
+                    <ul>
+                        <li>Infinite bidding capability in any auction</li>
+                        <li>Bids don't contribute to the distribution pool</li>
+                        <li>If you win, you pay your winning bid amount</li>
+                        <li>After using all tokens, you need OPT tokens to bid</li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label for="inventory">Inventory</label>
-                    <input type="number" id="inventory" value="1">
+                
+                <div class="system-panel" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="panel">
+                        <h2>Create Auction</h2>
+                        <div class="form-group">
+                            <label for="item-type">Item Type</label>
+                            <select id="item-type">
+                                <option value="replenishable">Replenishable</option>
+                                <option value="unique">Unique</option>
+                                <option value="industrial">Industrial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="market-price">Market Price ($)</label>
+                            <input type="number" id="market-price" value="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="inventory">Inventory</label>
+                            <input type="number" id="inventory" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="reserve-price">Reserve Price ($) - 50% of market by default</label>
+                            <input type="number" id="reserve-price">
+                        </div>
+                        <button class="btn" onclick="createAuction()">Create Auction</button>
+                    </div>
+                    
+                    <div class="panel">
+                        <h2>Add Bidder</h2>
+                        <div class="form-group">
+                            <label for="bidder-id">Bidder ID</label>
+                            <input type="text" id="bidder-id" placeholder="e.g., Alice">
+                        </div>
+                        <div class="form-group">
+                            <label for="max-bid">Maximum Bid ($)</label>
+                            <input type="number" id="max-bid" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label for="opt-balance">OPT Balance</label>
+                            <input type="number" id="opt-balance" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="free-tokens">Free Tokens Available</label>
+                            <input type="number" id="free-tokens" value="3" min="0" max="3">
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="business-verified"> Business Verified
+                            </label>
+                        </div>
+                        <button class="btn" onclick="addBidder()">Add Bidder</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="reserve-price">Reserve Price ($) - 50% of market by default</label>
-                    <input type="number" id="reserve-price">
+                
+                <div class="panel">
+                    <h2>Auction Management</h2>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="runAuction()">Run Auction</button>
+                        <button class="btn" onclick="placeBid()">Simulate Bid</button>
+                        <button class="btn" onclick="useFreeToken()">Use Free Token</button>
+                        <button class="btn btn-security" onclick="simulateAttack()">Simulate Attack</button>
+                        <button class="btn btn-danger" onclick="resetSystem()">Reset System</button>
+                    </div>
+                    
+                    <div class="system-info">
+                        <div class="info-card">
+                            <div class="info-label">Bidders Registered</div>
+                            <div class="info-value" id="bidders-count">0</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">System Requests</div>
+                            <div class="info-value" id="requests-count">0</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Security Events</div>
+                            <div class="info-value" id="security-events">0</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-label">Blocked Actions</div>
+                            <div class="info-value" id="blocked-actions">0</div>
+                        </div>
+                    </div>
                 </div>
-                <button class="btn" onclick="createAuction()">Create Auction</button>
+                
+                <div class="results">
+                    <h2>Auction Results</h2>
+                    <div id="auction-results">No auction run yet</div>
+                </div>
             </div>
             
-            <div class="panel">
-                <h2>Add Bidder</h2>
-                <div class="form-group">
-                    <label for="bidder-id">Bidder ID</label>
-                    <input type="text" id="bidder-id" placeholder="e.g., Alice">
+            <div>
+                <div class="panel">
+                    <h2>Security Monitoring</h2>
+                    <div class="tab-container">
+                        <div class="tabs">
+                            <div class="tab active" onclick="switchTab('tab-threats')">Threat Detection</div>
+                            <div class="tab" onclick="switchTab('tab-economics')">Economic Analysis</div>
+                            <div class="tab" onclick="switchTab('tab-system')">System Health</div>
+                        </div>
+                        
+                        <div id="tab-threats" class="tab-content active">
+                            <h3>Recent Security Events</h3>
+                            <div class="log-container" id="threat-log">
+                                <div class="log-entry">
+                                    <span class="log-timestamp">[12:45:30]</span>
+                                    <span class="status-badge status-security">INFO</span>
+                                    Security system initialized
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-economics" class="tab-content">
+                            <h3>Economic Balance</h3>
+                            <div class="info-card">
+                                <div class="info-label">Distribution Pool</div>
+                                <div class="info-value">$0.00</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label">OPT Token Value</div>
+                                <div class="info-value">$0.02</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label">Free Tokens in Use</div>
+                                <div class="info-value">0</div>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-system" class="tab-content">
+                            <h3>System Load</h3>
+                            <div class="info-card">
+                                <div class="info-label">CPU Usage</div>
+                                <div class="info-value">12%</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label">Memory Usage</div>
+                                <div class="info-value">42MB</div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-label">Network I/O</div>
+                                <div class="info-value">0.8MB/s</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="max-bid">Maximum Bid ($)</label>
-                    <input type="number" id="max-bid" value="500">
+                
+                <div class="panel">
+                    <h2>Security Configuration</h2>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enable-price-validation" checked> Price Validation
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enable-collusion-detection" checked> Collusion Detection
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enable-behavior-analysis" checked> Behavior Analysis
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="enable-bid-encryption"> Bid Encryption
+                        </label>
+                    </div>
+                    <button class="btn btn-security" onclick="applySecuritySettings()">Apply Settings</button>
                 </div>
-                <div class="form-group">
-                    <label for="opt-balance">OPT Balance</label>
-                    <input type="number" id="opt-balance" value="0">
-                </div>
-                <div class="form-group">
-                    <label for="free-tokens">Free Tokens Available</label>
-                    <input type="number" id="free-tokens" value="3" min="0" max="3">
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="business-verified"> Business Verified
-                    </label>
-                </div>
-                <button class="btn" onclick="addBidder()">Add Bidder</button>
             </div>
-        </div>
-        
-        <div class="panel">
-            <h2>Auction Management</h2>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn btn-success" onclick="runAuction()">Run Auction</button>
-                <button class="btn" onclick="placeBid()">Simulate Bid</button>
-                <button class="btn" onclick="useFreeToken()">Use Free Token</button>
-                <button class="btn btn-danger" onclick="resetSystem()">Reset System</button>
-            </div>
-            
-            <div class="system-info">
-                <div class="info-card">
-                    <div class="info-label">Bidders Registered</div>
-                    <div class="info-value" id="bidders-count">0</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">System Requests</div>
-                    <div class="info-value" id="requests-count">0</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Storage Used</div>
-                    <div class="info-value" id="storage-used">0.01MB</div>
-                </div>
-                <div class="info-card">
-                    <div class="info-label">Bandwidth</div>
-                    <div class="info-value" id="bandwidth-used">0GB</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="results">
-            <h2>Auction Results</h2>
-            <div id="auction-results">No auction run yet</div>
         </div>
         
         <div class="panel">
             <h2>System Log</h2>
             <div class="log-container" id="log-container"></div>
         </div>
-        
-        <div class="safeguards">
-            <h3>Economic Safeguards</h3>
-            <div class="mechanism">
-                <h4>Free Token Bidding Economics</h4>
-                <p>When using free tokens, bids don't contribute to the distribution pool, but winners still pay their bid amount.</p>
-                <p>The system ensures economic sustainability through:</p>
-                <ul>
-                    <li>Winner payments funding the distribution pool</li>
-                    <li>Platform contribution for free token auctions</li>
-                    <li>OPT token requirements after free tokens are exhausted</li>
-                </ul>
-            </div>
-        </div>
     </div>
 
     <script>
-        // OnayPonay System Implementation with Free Tokens
+        // Security Control Classes
+        class EconomicSecurity {
+            constructor() {
+                this.priceOracleEnabled = true;
+                this.dynamicPricingEnabled = true;
+            }
+            
+            async validateMarketPrice(itemType, category, proposedPrice) {
+                if (!this.priceOracleEnabled) return { valid: true };
+                
+                // Simulate fetching market data
+                const marketData = await this.fetchMarketData(category);
+                const avgPrice = marketData.averagePrice;
+                const allowedRange = [avgPrice * 0.7, avgPrice * 1.3];
+                
+                if (proposedPrice < allowedRange[0] || proposedPrice > allowedRange[1]) {
+                    securitySystem.logEvent(`Price validation failed: $${proposedPrice} outside acceptable range ($${allowedRange[0]} - $${allowedRange[1]})`, "WARNING");
+                    return {
+                        valid: false,
+                        reason: `Price outside acceptable range ($${allowedRange[0]} - $${allowedRange[1]})`,
+                        suggested: avgPrice
+                    };
+                }
+                return { valid: true };
+            }
+            
+            async fetchMarketData(category) {
+                // Simulate API call to price oracle
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        // Return mock data based on category
+                        const mockData = {
+                            electronics: { averagePrice: 950, range: [600, 1400] },
+                            furniture: { averagePrice: 750, range: [500, 1200] },
+                            industrial: { averagePrice: 5000, range: [3500, 8000] }
+                        };
+                        
+                        resolve(mockData[category] || { averagePrice: 1000, range: [700, 1300] });
+                    }, 100);
+                });
+            }
+            
+            calculateOptValue(marketConditions) {
+                if (!this.dynamicPricingEnabled) return 0.02;
+                
+                const baseValue = 0.02;
+                const demandFactor = marketConditions.demand / Math.max(marketConditions.supply, 1);
+                return baseValue * (1 + (demandFactor - 1) * 0.5);
+            }
+        }
+
+        class AntiCollusionSystem {
+            constructor() {
+                this.bidderGraph = new Map();
+                this.collusionThreshold = 0.8;
+                this.suspiciousBidders = new Set();
+            }
+            
+            analyzeBiddingPatterns(auctionId, bids) {
+                const patterns = this.detectSynchronizedBidding(bids);
+                
+                if (patterns.correlationScore > this.collusionThreshold) {
+                    this.flagSuspiciousBidders(patterns.participants);
+                    securitySystem.logEvent(`Collusion detected in auction ${auctionId} with score ${patterns.correlationScore.toFixed(2)}`, "ALERT");
+                    return { collusionDetected: true, participants: patterns.participants };
+                }
+                return { collusionDetected: false };
+            }
+            
+            detectSynchronizedBidding(bids) {
+                // Simplified pattern recognition
+                if (bids.length < 4) return { correlationScore: 0, participants: [] };
+                
+                // Analyze timing patterns
+                const timingAnalysis = this.analyzeBidTiming(bids);
+                
+                // Analyze amount patterns
+                const amountAnalysis = this.analyzeBidAmounts(bids);
+                
+                return {
+                    correlationScore: (timingAnalysis.score + amountAnalysis.score) / 2,
+                    participants: [...new Set([...timingAnalysis.suspicious, ...amountAnalysis.suspicious])]
+                };
+            }
+            
+            analyzeBidTiming(bids) {
+                // Check for unusually consistent bidding intervals
+                const intervals = [];
+                for (let i = 1; i < bids.length; i++) {
+                    const timeDiff = new Date(bids[i].timestamp) - new Date(bids[i-1].timestamp);
+                    intervals.push(timeDiff);
+                }
+                
+                // Calculate standard deviation
+                const avg = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+                const squareDiffs = intervals.map(value => Math.pow(value - avg, 2));
+                const avgSquareDiff = squareDiffs.reduce((a, b) => a + b, 0) / squareDiffs.length;
+                const stdDev = Math.sqrt(avgSquareDiff);
+                
+                // Low standard deviation suggests automated bidding
+                const score = Math.max(0, 1 - (stdDev / 10000));
+                const suspicious = score > 0.7 ? bids.map(b => b.bidder_id) : [];
+                
+                return { score, suspicious };
+            }
+            
+            analyzeBidAmounts(bids) {
+                // Check for unusual bid amount patterns
+                const amounts = bids.map(b => b.amount);
+                const avg = amounts.reduce((a, b) => a + b, 0) / amounts.length;
+                
+                // Check if bids are just above previous bids (suggesting shill bidding)
+                let incrementalCount = 0;
+                for (let i = 1; i < bids.length; i++) {
+                    if (bids[i].amount <= bids[i-1].amount * 1.06) {
+                        incrementalCount++;
+                    }
+                }
+                
+                const incrementalRatio = incrementalCount / (bids.length - 1);
+                const score = Math.min(1, incrementalRatio * 1.2);
+                const suspicious = score > 0.7 ? bids.map(b => b.bidder_id) : [];
+                
+                return { score, suspicious };
+            }
+            
+            flagSuspiciousBidders(bidders) {
+                bidders.forEach(bidder => this.suspiciousBidders.add(bidder));
+            }
+            
+            isSuspicious(bidderId) {
+                return this.suspiciousBidders.has(bidderId);
+            }
+        }
+
+        class TokenManagement {
+            constructor() {
+                this.deviceFingerprints = new Map();
+                this.behaviorProfiles = new Map();
+            }
+            
+            preventTokenAbuse(bidderId, action) {
+                const deviceHash = this.getDeviceFingerprint();
+                const behaviorProfile = this.getBehaviorProfile(bidderId);
+                
+                // Check for multiple accounts from same device
+                const accountsFromDevice = this.getAccountsFromDevice(deviceHash);
+                if (accountsFromDevice.length > 2) { // Allow 2 accounts per device
+                    securitySystem.logEvent(`Multiple accounts detected from device ${deviceHash}`, "WARNING");
+                    this.flagForReview(bidderId, 'multiple_accounts_same_device');
+                    return false;
+                }
+                
+                // Analyze behavior patterns
+                if (this.detectArtificialPatterns(behaviorProfile)) {
+                    securitySystem.logEvent(`Suspicious behavior detected for ${bidderId}`, "ALERT");
+                    this.limitAccount(bidderId, 'suspicious_behavior');
+                    return false;
+                }
+                
+                return true;
+            }
+            
+            getDeviceFingerprint() {
+                // Simplified device fingerprinting
+                return "device_" + Math.floor(Math.random() * 1000000);
+            }
+            
+            getBehaviorProfile(bidderId) {
+                if (!this.behaviorProfiles.has(bidderId)) {
+                    this.behaviorProfiles.set(bidderId, {
+                        bidFrequency: 0,
+                        bidTiming: [],
+                        typicalBidAmounts: []
+                    });
+                }
+                return this.behaviorProfiles.get(bidderId);
+            }
+            
+            getAccountsFromDevice(deviceHash) {
+                // Simulate device-account mapping
+                return Array.from(this.deviceFingerprints.entries())
+                    .filter(([hash, accounts]) => hash === deviceHash)
+                    .flatMap(([hash, accounts]) => accounts);
+            }
+            
+            detectArtificialPatterns(profile) {
+                // Check for bot-like behavior patterns
+                if (profile.bidFrequency > 10) { // More than 10 bids per minute
+                    return true;
+                }
+                
+                // Check for perfectly timed bids
+                if (profile.bidTiming.length > 5) {
+                    const intervals = [];
+                    for (let i = 1; i < profile.bidTiming.length; i++) {
+                        intervals.push(profile.bidTiming[i] - profile.bidTiming[i-1]);
+                    }
+                    
+                    const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
+                    const variance = intervals.map(i => Math.abs(i - avgInterval)).reduce((a, b) => a + b, 0) / intervals.length;
+                    
+                    if (variance < 100) { // Very consistent timing
+                        return true;
+                    }
+                }
+                
+                return false;
+            }
+            
+            flagForReview(bidderId, reason) {
+                securitySystem.logEvent(`Account ${bidderId} flagged for review: ${reason}`, "WARNING");
+            }
+            
+            limitAccount(bidderId, reason) {
+                securitySystem.logEvent(`Account ${bidderId} limited: ${reason}`, "ALERT");
+            }
+        }
+
+        class AuctionSecurity {
+            constructor() {
+                this.randomClosingEnabled = true;
+                this.bidEncryptionEnabled = false;
+            }
+            
+            ensureAuctionIntegrity(auctionId) {
+                // Implement encrypted bidding if enabled
+                const encryptedBids = this.bidEncryptionEnabled ? 
+                    this.encryptBids(auctionId) : [];
+                
+                // Random closing time within last 5 minutes if enabled
+                const closingTime = this.randomClosingEnabled ? 
+                    this.determineClosingTime(auctionId) : null;
+                
+                return {
+                    encrypted: this.bidEncryptionEnabled,
+                    closingTime: closingTime,
+                    integrityCheck: this.generateIntegrityHash(encryptedBids)
+                };
+            }
+            
+            preventBidSniping(auctionId, bids) {
+                if (!this.randomClosingEnabled) return;
+                
+                // Auto-extend auction if last-minute bids
+                const recentBids = bids.filter(bid => {
+                    const bidTime = new Date(bid.timestamp);
+                    const now = new Date();
+                    return (now - bidTime) < 120000; // Last 2 minutes
+                });
+                
+                if (recentBids.length > 0) {
+                    securitySystem.logEvent(`Auction ${auctionId} extended due to recent bidding activity`, "INFO");
+                    return true; // Indicate extension
+                }
+                
+                return false;
+            }
+            
+            encryptBids(auctionId) {
+                // Simulate bid encryption
+                securitySystem.logEvent(`Bids encrypted for auction ${auctionId}`, "INFO");
+                return [];
+            }
+            
+            determineClosingTime(auctionId) {
+                // Add random extension between 0-5 minutes
+                const extension = Math.floor(Math.random() * 5 * 60 * 1000);
+                return new Date(Date.now() + extension).toISOString();
+            }
+            
+            generateIntegrityHash(bids) {
+                // Simulate integrity hash generation
+                return "hash_" + Math.random().toString(36).substring(2, 15);
+            }
+        }
+
+        class SecuritySystem {
+            constructor() {
+                this.economicSecurity = new EconomicSecurity();
+                this.antiCollusion = new AntiCollusionSystem();
+                this.tokenManagement = new TokenManagement();
+                this.auctionSecurity = new AuctionSecurity();
+                this.securityEvents = [];
+                this.blockedActions = 0;
+            }
+            
+            logEvent(message, level = "INFO") {
+                const timestamp = new Date().toISOString();
+                const entry = `[${timestamp}] [${level}] ${message}`;
+                this.securityEvents.push(entry);
+                
+                // Update UI
+                this.updateSecurityLog(entry, level);
+                
+                // Update counters
+                if (level === "ALERT") {
+                    this.blockedActions++;
+                    document.getElementById('blocked-actions').textContent = this.blockedActions;
+                }
+                
+                document.getElementById('security-events').textContent = this.securityEvents.length;
+            }
+            
+            updateSecurityLog(entry, level) {
+                const threatLog = document.getElementById('threat-log');
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                
+                let badgeClass = 'status-security';
+                if (level === "ALERT") badgeClass = 'status-error';
+                if (level === "WARNING") badgeClass = 'status-warning';
+                
+                logEntry.innerHTML = `
+                    <span class="log-timestamp">[${new Date().toLocaleTimeString()}]</span>
+                    <span class="status-badge ${badgeClass}">${level}</span>
+                    ${entry.split(']').pop()}
+                `;
+                
+                threatLog.appendChild(logEntry);
+                threatLog.scrollTop = threatLog.scrollHeight;
+            }
+            
+            async validateMarketPrice(itemType, category, proposedPrice) {
+                return await this.economicSecurity.validateMarketPrice(itemType, category, proposedPrice);
+            }
+            
+            checkForCollusion(auctionId, bids) {
+                return this.antiCollusion.analyzeBiddingPatterns(auctionId, bids);
+            }
+            
+            preventTokenAbuse(bidderId, action) {
+                return this.tokenManagement.preventTokenAbuse(bidderId, action);
+            }
+            
+            ensureAuctionIntegrity(auctionId) {
+                return this.auctionSecurity.ensureAuctionIntegrity(auctionId);
+            }
+            
+            preventBidSniping(auctionId, bids) {
+                return this.auctionSecurity.preventBidSniping(auctionId, bids);
+            }
+            
+            isSuspiciousBidder(bidderId) {
+                return this.antiCollusion.isSuspicious(bidderId);
+            }
+        }
+
+        // OnayPonay System Implementation with Security Integration
         class OnayPonaySystem {
             constructor() {
                 this.PATENTS = {
@@ -398,6 +967,7 @@
                     "bandwidth": 100
                 };
                 
+                this.securitySystem = new SecuritySystem();
                 this.reset();
             }
             
@@ -423,7 +993,9 @@
                 this.current_leader = null;
                 this.bidding_open = true;
                 this.bid_history = [];
-                this.free_bid_tracking = {}; // Track free token usage per bidder
+                this.free_bid_tracking = {};
+                
+                this.securitySystem.logEvent("System reset", "INFO");
             }
             
             _check_free_tier() {
@@ -457,7 +1029,18 @@
                 return entry;
             }
             
-            createAuction(item_type, market_price, inventory, reserve) {
+            async createAuction(item_type, market_price, inventory, reserve) {
+                // Validate market price with security system
+                const priceValidation = await this.securitySystem.validateMarketPrice(
+                    item_type, item_type, market_price
+                );
+                
+                if (!priceValidation.valid) {
+                    this._log_event(`Price validation failed: ${priceValidation.reason}`);
+                    this.securitySystem.logEvent(`Auction creation blocked: ${priceValidation.reason}`, "WARNING");
+                    return {"status": "error", "message": priceValidation.reason, "suggested": priceValidation.suggested};
+                }
+                
                 this.item_type = item_type || "unique";
                 this.market_price = market_price || 1000;
                 this.inventory = inventory || 1;
@@ -470,10 +1053,26 @@
                 this.bid_history = [];
                 this.free_bid_tracking = {};
                 
+                // Ensure auction integrity
+                this.securitySystem.ensureAuctionIntegrity(`auction_${Date.now()}`);
+                
                 return this._log_event(`Auction created | Type: ${this.item_type} | Market: $${this.market_price} | Reserve: $${this.reserve}`);
             }
             
             addBidder(bidder_id, max_bid, opt_balance = 0, free_tokens = 3, business_verified = false) {
+                // Check for suspicious bidders
+                if (this.securitySystem.isSuspiciousBidder(bidder_id)) {
+                    this._log_event(`Suspicious bidder ${bidder_id} blocked from registration`);
+                    this.securitySystem.logEvent(`Bidder registration blocked for ${bidder_id} (suspicious)`, "ALERT");
+                    return {"status": "error", "message": "Registration blocked for security reasons"};
+                }
+                
+                // Check token abuse prevention
+                if (!this.securitySystem.preventTokenAbuse(bidder_id, 'registration')) {
+                    this._log_event(`Token abuse prevention blocked registration for ${bidder_id}`);
+                    return {"status": "error", "message": "Registration blocked for security reasons"};
+                }
+                
                 // Check storage limit
                 this.system_load.storage += 0.001;
                 if (this.system_load.storage > this.FREE_TIER_LIMITS.redis.storage) {
@@ -510,6 +1109,12 @@
                     return {"status": "error", "message": "No free tokens available"};
                 }
                 
+                // Check for suspicious activity
+                if (this.securitySystem.isSuspiciousBidder(bidder_id)) {
+                    this.securitySystem.logEvent(`Free token use blocked for suspicious bidder ${bidder_id}`, "ALERT");
+                    return {"status": "error", "message": "Action blocked for security reasons"};
+                }
+                
                 // Use a free token
                 this.bidders[bidder_id].free_tokens -= 1;
                 this.free_bid_tracking[bidder_id].free_bids_used += 1;
@@ -526,6 +1131,12 @@
                 
                 if (!this.bidders[bidder_id]) {
                     return {"status": "error", "message": "Bidder not registered"};
+                }
+                
+                // Check for suspicious bidders
+                if (this.securitySystem.isSuspiciousBidder(bidder_id)) {
+                    this.securitySystem.logEvent(`Bid blocked from suspicious bidder ${bidder_id}`, "ALERT");
+                    return {"status": "error", "message": "Bid blocked for security reasons"};
                 }
                 
                 // Check if bidder has available purchases or free tokens
@@ -578,12 +1189,19 @@
                 this.current_leader = bidder_id;
                 
                 // Record bid history
-                this.bid_history.push({
+                const bidRecord = {
                     "bidder_id": bidder_id,
                     "amount": bid_amount,
                     "timestamp": new Date().toISOString(),
                     "free_token_used": use_free_token
-                });
+                };
+                
+                this.bid_history.push(bidRecord);
+                
+                // Check for bid sniping
+                if (this.securitySystem.preventBidSniping(`auction_${Date.now()}`, this.bid_history)) {
+                    this._log_event("Auction extended due to bid sniping protection");
+                }
                 
                 // Log the bid
                 const bid_type = use_free_token ? "free" : "opt";
@@ -603,6 +1221,30 @@
                 const exceeded = this._check_free_tier();
                 if (exceeded.length > 0) {
                     return {"status": "system_error", "reason": `Free tier exceeded: ${exceeded.join(', ')}`};
+                }
+                
+                // Check for collusion before closing
+                const collusionCheck = this.securitySystem.checkForCollusion(
+                    `auction_${Date.now()}`, this.bid_history
+                );
+                
+                if (collusionCheck.collusionDetected) {
+                    this._log_event(`Collusion detected among bidders: ${collusionCheck.participants.join(', ')}`);
+                    this.securitySystem.logEvent(`Auction cancelled due to collusion detection`, "ALERT");
+                    
+                    // Penalize colluding bidders
+                    collusionCheck.participants.forEach(bidder => {
+                        if (this.bidders[bidder]) {
+                            this.bidders[bidder].reputation -= 30;
+                            this._log_event(`Bidder ${bidder} penalized for collusion`);
+                        }
+                    });
+                    
+                    return {
+                        "status": "cancelled",
+                        "reason": "Collusion detected",
+                        "participants": collusionCheck.participants
+                    };
                 }
                 
                 // Close bidding if still open
@@ -761,10 +1403,46 @@
                     "action": "Item relisted with priority"
                 };
             }
+            
+            simulateAttack(attackType) {
+                this.securitySystem.logEvent(`Simulating ${attackType} attack`, "WARNING");
+                
+                switch(attackType) {
+                    case "sybil":
+                        // Simulate Sybil attack with multiple accounts
+                        for (let i = 0; i < 5; i++) {
+                            const bidderId = `sybil_${i}`;
+                            this.addBidder(bidderId, 1000, 0, 3, false);
+                            this.placeBid(bidderId, 600 + (i * 50), true);
+                        }
+                        break;
+                        
+                    case "collusion":
+                        // Simulate collusion between bidders
+                        this.addBidder("colluder1", 1000, 50000, 3, false);
+                        this.addBidder("colluder2", 900, 50000, 3, false);
+                        this.addBidder("colluder3", 800, 50000, 3, false);
+                        
+                        this.placeBid("colluder1", 600, true);
+                        this.placeBid("colluder2", 610, true);
+                        this.placeBid("colluder3", 620, true);
+                        this.placeBid("colluder1", 630, true);
+                        break;
+                        
+                    case "price-manipulation":
+                        // Simulate price manipulation
+                        this.addBidder("lowballer", 100, 0, 3, false);
+                        this.placeBid("lowballer", 100, true);
+                        break;
+                }
+                
+                this._log_event(`Simulated ${attackType} attack completed`);
+            }
         }
 
         // Initialize the system
         const onayPonaySystem = new OnayPonaySystem();
+        const securitySystem = onayPonaySystem.securitySystem;
 
         // UI Update Functions
         function updateLogDisplay(entry) {
@@ -779,8 +1457,8 @@
         function updateSystemMetrics() {
             document.getElementById('bidders-count').textContent = Object.keys(onayPonaySystem.bidders).length;
             document.getElementById('requests-count').textContent = onayPonaySystem.system_load.requests;
-            document.getElementById('storage-used').textContent = `${onayPonaySystem.system_load.storage.toFixed(2)}MB`;
-            document.getElementById('bandwidth-used').textContent = `${onayPonaySystem.system_load.bandwidth.toFixed(2)}GB`;
+            document.getElementById('security-events').textContent = securitySystem.securityEvents.length;
+            document.getElementById('blocked-actions').textContent = securitySystem.blockedActions;
         }
 
         function updateResults(result) {
@@ -820,13 +1498,19 @@
                     <div class="status-badge status-error">SYSTEM ERROR</div>
                     <p>${result.reason}</p>
                 `;
+            } else if (result.status === 'cancelled') {
+                resultsDiv.innerHTML = `
+                    <div class="status-badge status-error">CANCELLED</div>
+                    <p>${result.reason}</p>
+                    <p>Participants: ${result.participants.join(', ')}</p>
+                `;
             } else {
                 resultsDiv.innerHTML = JSON.stringify(result, null, 2);
             }
         }
 
         // UI Action Functions
-        function createAuction() {
+        async function createAuction() {
             const itemType = document.getElementById('item-type').value;
             const marketPrice = parseFloat(document.getElementById('market-price').value);
             const inventory = parseInt(document.getElementById('inventory').value);
@@ -838,7 +1522,11 @@
                 document.getElementById('reserve-price').value = reservePrice;
             }
             
-            onayPonaySystem.createAuction(itemType, marketPrice, inventory, reservePrice);
+            const result = await onayPonaySystem.createAuction(itemType, marketPrice, inventory, reservePrice);
+            
+            if (result.status === 'error') {
+                alert(`Error: ${result.message}. Suggested price: $${result.suggested}`);
+            }
         }
 
         function addBidder() {
@@ -936,6 +1624,58 @@
             alert('System has been reset');
         }
 
+        function runSecurityScan() {
+            securitySystem.logEvent("Manual security scan initiated", "INFO");
+            
+            // Simulate security scan
+            setTimeout(() => {
+                securitySystem.logEvent("Security scan completed - No critical issues found", "INFO");
+                alert("Security scan completed. No critical issues found.");
+            }, 2000);
+        }
+
+        function toggleSecurityLog() {
+            const log = document.getElementById('security-log');
+            log.style.display = log.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function simulateAttack() {
+            const attackType = ["sybil", "collusion", "price-manipulation"][Math.floor(Math.random() * 3)];
+            onayPonaySystem.simulateAttack(attackType);
+            alert(`Simulating ${attackType} attack. Check security logs.`);
+        }
+
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Update tab buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        function applySecuritySettings() {
+            const priceValidation = document.getElementById('enable-price-validation').checked;
+            const collusionDetection = document.getElementById('enable-collusion-detection').checked;
+            const behaviorAnalysis = document.getElementById('enable-behavior-analysis').checked;
+            const bidEncryption = document.getElementById('enable-bid-encryption').checked;
+            
+            securitySystem.economicSecurity.priceOracleEnabled = priceValidation;
+            securitySystem.antiCollusionSystem.enabled = collusionDetection;
+            securitySystem.tokenManagement.enabled = behaviorAnalysis;
+            securitySystem.auctionSecurity.bidEncryptionEnabled = bidEncryption;
+            
+            securitySystem.logEvent("Security settings updated", "INFO");
+            alert("Security settings applied successfully.");
+        }
+
         // Initialize the reserve price based on market price
         document.getElementById('market-price').addEventListener('input', function() {
             const marketPrice = parseFloat(this.value);
@@ -946,6 +1686,9 @@
 
         // Initialize system metrics
         updateSystemMetrics();
+        
+        // Add sample security log entry
+        securitySystem.logEvent("Security system initialized successfully", "INFO");
     </script>
 </body>
 </html>
