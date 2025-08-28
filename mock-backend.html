@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OnayPonay Backend Bidding System</title>
+    <title>OnayPonay Bidding System with Free Tokens</title>
     <style>
         :root {
             --primary-blue: #0064D2;
@@ -222,6 +222,33 @@
             border-radius: 4px;
             margin-top: 20px;
         }
+        
+        .safeguards {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .safeguards h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+        
+        .mechanism {
+            background: #e8f5e9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .token-info {
+            background: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
     </style>
 </head>
 <body>
@@ -233,7 +260,18 @@
                 <span class="patent-badge">USPTO-63/789,511</span>
                 <span class="patent-badge">PCT/IB2024/000001</span>
             </div>
-            <p>Backend Bidding System - HTML/JavaScript Implementation</p>
+            <p>Backend Bidding System with Free Purchase Tokens</p>
+        </div>
+        
+        <div class="token-info">
+            <h3>Free Purchase Token System</h3>
+            <p>Each account receives 3 Free Purchase Tokens that provide:</p>
+            <ul>
+                <li>Infinite bidding capability in any auction</li>
+                <li>Bids don't contribute to the distribution pool</li>
+                <li>If you win, you pay your winning bid amount</li>
+                <li>After using all tokens, you need OPT tokens to bid</li>
+            </ul>
         </div>
         
         <div class="system-panel">
@@ -277,6 +315,10 @@
                     <input type="number" id="opt-balance" value="0">
                 </div>
                 <div class="form-group">
+                    <label for="free-tokens">Free Tokens Available</label>
+                    <input type="number" id="free-tokens" value="3" min="0" max="3">
+                </div>
+                <div class="form-group">
                     <label>
                         <input type="checkbox" id="business-verified"> Business Verified
                     </label>
@@ -290,7 +332,7 @@
             <div style="display: flex; gap: 10px;">
                 <button class="btn btn-success" onclick="runAuction()">Run Auction</button>
                 <button class="btn" onclick="placeBid()">Simulate Bid</button>
-                <button class="btn" onclick="addPurchases()">Add Purchases</button>
+                <button class="btn" onclick="useFreeToken()">Use Free Token</button>
                 <button class="btn btn-danger" onclick="resetSystem()">Reset System</button>
             </div>
             
@@ -324,14 +366,23 @@
             <div class="log-container" id="log-container"></div>
         </div>
         
-        <div class="free-tier-warning">
-            <h3>Free Tier Limits</h3>
-            <p>AWS Lambda: 1M requests/month | Compute: 400,000 GB-seconds | Redis: 30MB storage | Bandwidth: 100GB/month</p>
+        <div class="safeguards">
+            <h3>Economic Safeguards</h3>
+            <div class="mechanism">
+                <h4>Free Token Bidding Economics</h4>
+                <p>When using free tokens, bids don't contribute to the distribution pool, but winners still pay their bid amount.</p>
+                <p>The system ensures economic sustainability through:</p>
+                <ul>
+                    <li>Winner payments funding the distribution pool</li>
+                    <li>Platform contribution for free token auctions</li>
+                    <li>OPT token requirements after free tokens are exhausted</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
-        // OnayPonay System Implementation
+        // OnayPonay System Implementation with Free Tokens
         class OnayPonaySystem {
             constructor() {
                 this.PATENTS = {
@@ -372,6 +423,7 @@
                 this.current_leader = null;
                 this.bidding_open = true;
                 this.bid_history = [];
+                this.free_bid_tracking = {}; // Track free token usage per bidder
             }
             
             _check_free_tier() {
@@ -416,11 +468,12 @@
                 this.current_leader = null;
                 this.bidding_open = true;
                 this.bid_history = [];
+                this.free_bid_tracking = {};
                 
                 return this._log_event(`Auction created | Type: ${this.item_type} | Market: $${this.market_price} | Reserve: $${this.reserve}`);
             }
             
-            addBidder(bidder_id, max_bid, opt_balance = 0, business_verified = false) {
+            addBidder(bidder_id, max_bid, opt_balance = 0, free_tokens = 3, business_verified = false) {
                 // Check storage limit
                 this.system_load.storage += 0.001;
                 if (this.system_load.storage > this.FREE_TIER_LIMITS.redis.storage) {
@@ -431,17 +484,42 @@
                     "max_bid": max_bid || 0,
                     "credits": 0,
                     "opt_balance": opt_balance,
+                    "free_tokens": free_tokens,
                     "reputation": 80,
                     "participation": 0,
                     "business_verified": business_verified,
                     "purchases_remaining": 3
                 };
                 
-                this._log_event(`Bidder ${bidder_id} registered | Max bid: $${max_bid}`);
+                // Initialize free bid tracking
+                this.free_bid_tracking[bidder_id] = {
+                    "free_bids_used": 0,
+                    "last_free_bid": null
+                };
+                
+                this._log_event(`Bidder ${bidder_id} registered | Max bid: $${max_bid} | Free tokens: ${free_tokens}`);
                 return {"status": "success", "message": "Bidder added"};
             }
             
-            placeBid(bidder_id, bid_amount, bid_type = "standard") {
+            useFreeToken(bidder_id) {
+                if (!this.bidders[bidder_id]) {
+                    return {"status": "error", "message": "Bidder not registered"};
+                }
+                
+                if (this.bidders[bidder_id].free_tokens <= 0) {
+                    return {"status": "error", "message": "No free tokens available"};
+                }
+                
+                // Use a free token
+                this.bidders[bidder_id].free_tokens -= 1;
+                this.free_bid_tracking[bidder_id].free_bids_used += 1;
+                this.free_bid_tracking[bidder_id].last_free_bid = new Date().toISOString();
+                
+                this._log_event(`Free token used by ${bidder_id}. ${this.bidders[bidder_id].free_tokens} tokens remaining`);
+                return {"status": "success", "free_tokens_remaining": this.bidders[bidder_id].free_tokens};
+            }
+            
+            placeBid(bidder_id, bid_amount, use_free_token = false) {
                 if (!this.bidding_open) {
                     return {"status": "error", "message": "Bidding is closed"};
                 }
@@ -450,26 +528,35 @@
                     return {"status": "error", "message": "Bidder not registered"};
                 }
                 
-                // Check if bidder has available purchases
-                if (this.bidders[bidder_id].purchases_remaining <= 0) {
+                // Check if bidder has available purchases or free tokens
+                const has_free_tokens = this.bidders[bidder_id].free_tokens > 0;
+                const has_purchases = this.bidders[bidder_id].purchases_remaining > 0;
+                
+                if (!has_free_tokens && !has_purchases) {
                     return {"status": "error", "message": "No purchases remaining. Buy OPT tokens."};
                 }
                 
-                // Handle OPT token bids (1 bid = 50 OPT = $1.00)
-                let bid_amount_usd = bid_amount;
-                if (bid_type === "opt") {
+                // Handle free token bidding
+                if (use_free_token && has_free_tokens) {
+                    const tokenResult = this.useFreeToken(bidder_id);
+                    if (tokenResult.status === "error") {
+                        return tokenResult;
+                    }
+                    // Free token bids don't contribute to the pool but can win
+                    this._log_event(`FREE BID: ${bidder_id} bid $${bid_amount} using free token`);
+                } else if (!has_free_tokens) {
+                    // Regular bid with OPT tokens
                     const opt_required = bid_amount * 50;
                     if (this.bidders[bidder_id].opt_balance < opt_required) {
                         return {"status": "error", "message": "Insufficient OPT balance"};
                     }
                     this.bidders[bidder_id].opt_balance -= opt_required;
-                    bid_amount_usd = bid_amount; // $1 per bid
                 }
                 
                 // Validate bid meets minimum requirements
                 const min_bid = this.current_leader ? this.current_highest_bid * 1.05 : this.reserve;
                 
-                if (bid_amount_usd < min_bid) {
+                if (bid_amount < min_bid) {
                     return {
                         "status": "error", 
                         "message": `Bid must be at least $${min_bid.toFixed(2)}`,
@@ -483,29 +570,30 @@
                 }
                 
                 // Update bidder's max bid
-                this.bidders[bidder_id].max_bid = Math.max(this.bidders[bidder_id].max_bid, bid_amount_usd);
+                this.bidders[bidder_id].max_bid = Math.max(this.bidders[bidder_id].max_bid, bid_amount);
                 this.bidders[bidder_id].participation += 1;
                 
                 // Update auction state
-                this.current_highest_bid = bid_amount_usd;
+                this.current_highest_bid = bid_amount;
                 this.current_leader = bidder_id;
                 
                 // Record bid history
                 this.bid_history.push({
                     "bidder_id": bidder_id,
-                    "amount": bid_amount_usd,
+                    "amount": bid_amount,
                     "timestamp": new Date().toISOString(),
-                    "type": bid_type
+                    "free_token_used": use_free_token
                 });
                 
                 // Log the bid
-                this._log_event(`Bid placed by ${bidder_id}: $${bid_amount_usd.toFixed(2)} (${bid_type})`);
+                const bid_type = use_free_token ? "free" : "opt";
+                this._log_event(`Bid placed by ${bidder_id}: $${bid_amount.toFixed(2)} (${bid_type})`);
                 
                 return {
                     "status": "success",
                     "message": "Bid accepted",
                     "current_leading": bidder_id,
-                    "current_bid": bid_amount_usd,
+                    "current_bid": bid_amount,
                     "bid_type": bid_type
                 };
             }
@@ -534,7 +622,7 @@
                 // Low participation protocol
                 if (Object.keys(valid_bids).length < 3) {
                     this._log_event("LOW PARTICIPATION: Activating zero-cost compensation");
-                    for (const bidder of Object.keys(this.bidders)) {
+                    for (const bidder in this.bidders) {
                         this.bidders[bidder].credits += 500;
                         this.bidders[bidder].reputation += 10;
                         this.bidders[bidder].opt_balance += 25000; // 500 credits = 25,000 OPT
@@ -555,12 +643,23 @@
                     return this._handle_failed_auction();
                 }
                 
-                // Calculate pool (losing bids + 10% commission)
-                const losing_bids = bidders_sorted.slice(1)
-                    .filter(([_, bid]) => bid >= this.reserve)
-                    .map(([_, bid]) => bid);
+                // Calculate pool (only from non-free bids + 10% commission from winner)
+                let paid_losing_bids = 0;
+                const losing_bidders = [];
                 
-                const pool = losing_bids.reduce((sum, bid) => sum + bid, 0) + (winning_bid * 0.10);
+                for (const [bidder, bid_amt] of bidders_sorted.slice(1)) {
+                    // Only count bids that weren't made with free tokens
+                    const free_bids = this.bid_history.filter(b => 
+                        b.bidder_id === bidder && b.free_token_used);
+                    
+                    if (free_bids.length === 0) {
+                        paid_losing_bids += bid_amt;
+                        losing_bidders.push([bidder, bid_amt]);
+                    }
+                }
+                
+                // Winner always contributes 10% regardless of free token usage
+                const pool = paid_losing_bids + (winning_bid * 0.10);
                 
                 // Patent-pended allocation
                 let distribution;
@@ -584,13 +683,21 @@
                 // Distribute benefits
                 const net_cost = winning_bid - distribution.winner_refund;
                 this.bidders[winner_id].reputation += 25;
-                this.bidders[winner_id].purchases_remaining -= 1;
                 
-                // Distribute credits
-                const total_losing = losing_bids.reduce((sum, bid) => sum + bid, 0);
-                for (const [bidder, bid_amt] of bidders_sorted.slice(1)) {
+                // Deduct purchase if not using free token
+                const winner_free_bids = this.bid_history.filter(b => 
+                    b.bidder_id === winner_id && b.free_token_used);
+                
+                if (winner_free_bids.length === 0) {
+                    this.bidders[winner_id].purchases_remaining -= 1;
+                }
+                
+                // Distribute credits only to non-free bidders
+                const total_paid_losing = losing_bidders.reduce((sum, [_, bid_amt]) => sum + bid_amt, 0);
+                
+                for (const [bidder, bid_amt] of losing_bidders) {
                     if (bid_amt >= this.reserve) {
-                        const share = total_losing > 0 ? bid_amt / total_losing : 0;
+                        const share = total_paid_losing > 0 ? bid_amt / total_paid_losing : 0;
                         this.bidders[bidder].credits += distribution.bid_credits * share;
                         this.bidders[bidder].reputation += 5;
                         // Award OPT tokens as credits
@@ -599,13 +706,18 @@
                     }
                 }
                 
-                // Runner-up voucher
+                // Runner-up voucher (only if not using free tokens)
                 if (distribution.runner_up_voucher > 0 && bidders_sorted[1]) {
                     const runner_up = bidders_sorted[1][0];
-                    this.bidders[runner_up].credits += distribution.runner_up_voucher;
-                    // Award OPT tokens as voucher
-                    const opt_voucher = distribution.runner_up_voucher * 50;
-                    this.bidders[runner_up].opt_balance += opt_voucher;
+                    const runner_up_free_bids = this.bid_history.filter(b => 
+                        b.bidder_id === runner_up && b.free_token_used);
+                    
+                    if (runner_up_free_bids.length === 0) {
+                        this.bidders[runner_up].credits += distribution.runner_up_voucher;
+                        // Award OPT tokens as voucher
+                        const opt_voucher = distribution.runner_up_voucher * 50;
+                        this.bidders[runner_up].opt_balance += opt_voucher;
+                    }
                 }
                 
                 // Finalize
@@ -617,7 +729,8 @@
                     "net_cost": net_cost,
                     "distribution": distribution,
                     "seller_payout": winning_bid * 0.90,
-                    "purchases_remaining": this.bidders[winner_id].purchases_remaining
+                    "purchases_remaining": this.bidders[winner_id].purchases_remaining,
+                    "free_token_used": winner_free_bids.length > 0
                 };
             }
             
@@ -630,7 +743,7 @@
                 };
                 
                 // Bidder compensation
-                for (const bidder of Object.keys(this.bidders)) {
+                for (const bidder in this.bidders) {
                     this.bidders[bidder].reputation += 15;
                     this.bidders[bidder].credits += 500;
                     this.bidders[bidder].opt_balance += 25000;
@@ -647,51 +760,6 @@
                     },
                     "action": "Item relisted with priority"
                 };
-            }
-            
-            addPurchases(bidder_id, count) {
-                if (!this.bidders[bidder_id]) {
-                    return {"status": "error", "message": "Bidder not found"};
-                }
-                
-                this.bidders[bidder_id].purchases_remaining += count;
-                this._log_event(`Added ${count} purchases to ${bidder_id}`);
-                return {"status": "success", "purchases_remaining": this.bidders[bidder_id].purchases_remaining};
-            }
-            
-            addOptTokens(bidder_id, opt_amount) {
-                if (!this.bidders[bidder_id]) {
-                    return {"status": "error", "message": "Bidder not found"};
-                }
-                
-                this.bidders[bidder_id].opt_balance += opt_amount;
-                this._log_event(`Added ${opt_amount} OPT tokens to ${bidder_id}`);
-                return {"status": "success", "opt_balance": this.bidders[bidder_id].opt_balance};
-            }
-            
-            verifyBusiness(bidder_id, company_name, business_type, tax_id) {
-                if (!this.bidders[bidder_id]) {
-                    return {"status": "error", "message": "Bidder not found"};
-                }
-                
-                // Simulate quantum verification process (95% success rate)
-                const verification_success = Math.random() > 0.05;
-                
-                if (verification_success) {
-                    this.bidders[bidder_id].business_verified = true;
-                    // Award business verification bonus (5,000 OPT tokens)
-                    this.bidders[bidder_id].opt_balance += 5000;
-                    this._log_event(`Business verification successful for ${bidder_id}: ${company_name}`);
-                    return {
-                        "status": "success", 
-                        "message": "Business verified",
-                        "opt_bonus": 5000,
-                        "opt_balance": this.bidders[bidder_id].opt_balance
-                    };
-                } else {
-                    this._log_event(`Business verification failed for ${bidder_id}: ${company_name}`);
-                    return {"status": "error", "message": "Business verification failed"};
-                }
             }
         }
 
@@ -727,6 +795,7 @@
                     <p><strong>Net Cost:</strong> $${result.net_cost.toFixed(2)}</p>
                     <p><strong>Seller Payout:</strong> $${result.seller_payout.toFixed(2)}</p>
                     <p><strong>Purchases Remaining:</strong> ${result.purchases_remaining}</p>
+                    <p><strong>Free Token Used:</strong> ${result.free_token_used ? 'Yes' : 'No'}</p>
                     <h3>Distribution:</h3>
                     <p>OnayPonay: $${result.distribution.onayponay.toFixed(2)}</p>
                     <p>Bid Credits: $${result.distribution.bid_credits.toFixed(2)}</p>
@@ -776,6 +845,7 @@
             const bidderId = document.getElementById('bidder-id').value;
             const maxBid = parseFloat(document.getElementById('max-bid').value);
             const optBalance = parseFloat(document.getElementById('opt-balance').value);
+            const freeTokens = parseInt(document.getElementById('free-tokens').value);
             const businessVerified = document.getElementById('business-verified').checked;
             
             if (!bidderId) {
@@ -783,7 +853,7 @@
                 return;
             }
             
-            const result = onayPonaySystem.addBidder(bidderId, maxBid, optBalance, businessVerified);
+            const result = onayPonaySystem.addBidder(bidderId, maxBid, optBalance, freeTokens, businessVerified);
             if (result.status === 'error') {
                 alert(result.message);
             }
@@ -820,29 +890,41 @@
             // Random bid between min and max
             const randomBid = minBid + (Math.random() * (maxBid - minBid));
             
+            // Decide whether to use free token (if available)
+            const hasFreeTokens = onayPonaySystem.bidders[randomBidder].free_tokens > 0;
+            const useFreeToken = hasFreeTokens && (Math.random() > 0.5);
+            
             // Place the bid
-            const result = onayPonaySystem.placeBid(randomBidder, randomBid);
+            const result = onayPonaySystem.placeBid(randomBidder, randomBid, useFreeToken);
             if (result.status === 'error') {
                 alert(result.message);
             }
         }
 
-        function addPurchases() {
+        function useFreeToken() {
             const bidders = Object.keys(onayPonaySystem.bidders);
             if (bidders.length === 0) {
                 alert('No bidders registered. Please add bidders first.');
                 return;
             }
             
-            // Select a random bidder
-            const randomBidder = bidders[Math.floor(Math.random() * bidders.length)];
+            // Select a random bidder with free tokens
+            const biddersWithTokens = bidders.filter(bidder => 
+                onayPonaySystem.bidders[bidder].free_tokens > 0);
             
-            // Add a purchase
-            const result = onayPonaySystem.addPurchases(randomBidder, 1);
+            if (biddersWithTokens.length === 0) {
+                alert('No bidders with free tokens available.');
+                return;
+            }
+            
+            const randomBidder = biddersWithTokens[Math.floor(Math.random() * biddersWithTokens.length)];
+            
+            // Use a free token
+            const result = onayPonaySystem.useFreeToken(randomBidder);
             if (result.status === 'error') {
                 alert(result.message);
             } else {
-                alert(`Added 1 purchase to ${randomBidder}. Total: ${result.purchases_remaining}`);
+                alert(`${randomBidder} used a free token. ${result.free_tokens_remaining} tokens remaining.`);
             }
         }
 
