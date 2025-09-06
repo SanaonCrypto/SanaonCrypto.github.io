@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors(({
+app.use(cors({
     origin: isProduction 
         ? 'https://sanaoncrypto.github.io'  // Your GitHub Pages
         : ['http://localhost:3000', 'http://localhost:8080'] // Local development
