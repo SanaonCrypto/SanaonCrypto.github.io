@@ -1,3 +1,4 @@
+const isProduction = process.env.NODE_ENV === 'production';
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -6,7 +7,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors(({
+    origin: isProduction 
+        ? 'https://sanaoncrypto.github.io'  // Your GitHub Pages
+        : ['http://localhost:3000', 'http://localhost:8080'] // Local development
+}));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '.')));
 
