@@ -1,3 +1,4 @@
+// server.js - OnayPonay.net
 const isProduction = process.env.NODE_ENV === 'production';
 const express = require('express');
 const cors = require('cors');
@@ -9,8 +10,8 @@ const PORT = process.env.PORT || 3000;
 // Middleware - CORS configuration
 app.use(cors({
     origin: isProduction 
-        ? 'https://sanaoncrypto.github.io'  // Your GitHub Pages
-        : ['http://localhost:3000', 'http://localhost:8080'] // Local development
+        ? 'https://sanaoncrypto.github.io'
+        : ['http://localhost:3000', 'http://localhost:8080']
 }));
 
 app.use(express.json());
@@ -31,18 +32,15 @@ app.get('/api/health', (req, res) => {
 
 // Your auction endpoints
 app.post('/api/auctions', (req, res) => {
-  // Create auction logic
   res.json({ message: 'Auction created successfully' });
 });
 
 app.post('/api/bidders', (req, res) => {
-  // Add bidder logic
   res.json({ message: 'Bidder added successfully' });
 });
 
 app.post('/api/auctions/:id/run', (req, res) => {
   const auctionId = req.params.id;
-  // Run auction logic using auctionId
   res.json({ message: `Auction ${auctionId} run completed` });
 });
 

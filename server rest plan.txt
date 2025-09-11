@@ -1,0 +1,105 @@
+# Log of Removed Functions from Your Original server.js
+
+Here's what was temporarily removed from your server.js to fix the compatibility issues. You can add these back once the basic server is working:
+
+## 1. **CORS Configuration with Specific Origin**
+```javascript
+// REMOVED: Specific CORS origin configuration
+app.use(cors({
+    origin: 'https://sanaoncrypto.github.io' // Your frontend URL
+}));
+
+// CURRENT: Basic CORS
+app.use(cors());
+```
+
+## 2. **JSON Middleware**
+```javascript
+// REMOVED: Express JSON middleware for parsing request bodies
+app.use(express.json());
+```
+
+## 3. **Health Check Endpoint**
+```javascript
+// REMOVED: Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'OnayPonay backend is running' });
+});
+```
+
+## 4. **Auction API Endpoints**
+```javascript
+// REMOVED: Auction creation endpoint
+app.post('/api/auctions', (req, res) => {
+  // Create auction logic
+  res.json({ message: 'Auction created successfully' });
+});
+
+// REMOVED: Bidder registration endpoint
+app.post('/api/bidders', (req, res) => {
+  // Add bidder logic
+  res.json({ message: 'Bidder added successfully' });
+});
+
+// REMOVED: Auction execution endpoint
+app.post('/api/auctions/:id/run', (req, res) => {
+  const auctionId = req.params.id;
+  // Run auction logic using auctionId
+  res.json({ message: `Auction ${auctionId} run completed` });
+});
+```
+
+## Restoration Plan:
+Once your basic server is working with the simplified version, you can gradually add back these features:
+
+1. First, add back the CORS configuration and JSON middleware
+2. Then add the health check endpoint
+3. Finally, add the auction API endpoints one by one
+
+## To restore everything at once later, use this complete version:
+```javascript
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(cors({
+    origin: 'https://sanaoncrypto.github.io'
+}));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, '.')));
+
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'OnayPonay backend is running' });
+});
+
+// Auction endpoints
+app.post('/api/auctions', (req, res) => {
+  res.json({ message: 'Auction created successfully' });
+});
+
+app.post('/api/bidders', (req, res) => {
+  res.json({ message: 'Bidder added successfully' });
+});
+
+app.post('/api/auctions/:id/run', (req, res) => {
+  const auctionId = req.params.id;
+  res.json({ message: `Auction ${auctionId} run completed` });
+});
+
+// Serve frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+
+Save this log so you can reference it when you're ready to restore the full functionality!
