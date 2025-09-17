@@ -21,27 +21,54 @@ if (!isProduction) {
     app.use(express.static(path.join(__dirname, '.')));
 }
 
-// Basic routes
+// Mock auction data
+const mockAuctions = [
+  {
+    id: '1',
+    title: 'Test Auction Item',
+    description: 'This is a test auction item',
+    startingBid: 50,
+    currentBid: 75,
+    endTime: new Date(Date.now() + 2 * 60 * 60 * 1000) // 2 hours from now
+  }
+];
+
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'OnayPonay backend is running',
-    environment: isProduction ? 'production' : 'development'
+    timestamp: new Date().toISOString()
   });
 });
 
-// Your auction endpoints
+// Get all auctions
+app.get('/api/auctions', (req, res) => {
+  res.json(mockAuctions);
+});
+
+// Get specific auction
+app.get('/api/auctions/:id', (req, res) => {
+  const auction = mockAuctions.find(a => a.id === req.params.id);
+  if (!auction) return res.status(404).json({ error: 'Auction not found' });
+  res.json(auction);
+});
+
+// Create new auction
 app.post('/api/auctions', (req, res) => {
-  res.json({ message: 'Auction created successfully' });
-});
-
-app.post('/api/bidders', (req, res) => {
-  res.json({ message: 'Bidder added successfully' });
-});
-
-app.post('/api/auctions/:id/run', (req, res) => {
-  const auctionId = req.params.id;
-  res.json({ message: `Auction ${auctionId} run completed` });
+  const newAuction = {
+    id: Math.random().toString(36).substr(2, 9),
+    title: req.body.title || 'Untitled Auction',
+    description: req.body.description || '',
+    startingBid: req.body.startingBid || 0,
+    currentBid: req.body.startingBid || 0,
+    endTime: new Date(Date.now() + 24 * 60 * 60 * 1000) // 24 hours from now
+  };
+  mockAuctions.push(newAuction);
+  res.json({ 
+    message: 'Auction created successfully',
+    auctionId: newAuction.id
+  });
 });
 
 // Only serve index.html in development
