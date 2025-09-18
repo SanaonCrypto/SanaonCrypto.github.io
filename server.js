@@ -1,5 +1,5 @@
 // server.js - OnayPonay.net with PostgreSQL Integration
-require('dotenv').config(); // Load environment variables for local development
+//require('dotenv').config(); // Load environment variables for local development
 
 const isProduction = process.env.NODE_ENV === 'production';
 const express = require('express');
